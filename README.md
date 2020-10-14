@@ -1,2 +1,5 @@
 # ISEL-MSSN
-Coisas de MSSN
+## Autores:
+- Pedro Henriques
+- Vasco Apelido
+
