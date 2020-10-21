@@ -35,4 +35,5 @@ public class Hello implements IProcessingApp {
 		// TODO Auto-generated method stub
 
 	}
+
 }

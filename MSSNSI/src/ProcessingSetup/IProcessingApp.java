@@ -7,7 +7,7 @@ public interface IProcessingApp {
 	/**
 	 * Chamado a quando da inicializacao da app
 	 * 
-	 * @param p , instancia de PApplet que utiliza o motor do processing
+	 * @param p , instancia de PApplet que utiliza o@Override motor do processing
 	 */
 	public void setup(PApplet p);
 
@@ -43,10 +43,11 @@ public interface IProcessingApp {
 	/**
 	 * Lida com o evento mouseReleased.<br>
 	 * 
-	 * Chamado cada vez que apos um clique no rato, o utilizador solta o botao. Usar o metodo mouseButton para
-	 * descobrir que botão foi carregado.
+	 * Chamado cada vez que apos um clique no rato, o utilizador solta o botao. Usar
+	 * o metodo mouseButton para descobrir que botão foi carregado.
 	 * 
 	 * @param p
 	 */
 	void mouseReleased(PApplet p);
+
 }

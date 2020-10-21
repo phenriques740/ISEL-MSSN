@@ -2,6 +2,7 @@ package ProcessingSetup;
 
 import aula.aula1.BolaArcoIris;
 import aula.aula1.BouncingBall;
+import aula.aula1.BouncingDVD;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
@@ -52,7 +53,9 @@ public class ProcessingSetup extends PApplet {
 		// so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
 		// app = new Hello();
 		// app = new BolaArcoIris();
-		app = new BouncingBall();
+		// app = new BouncingBall();
+		app = new BouncingDVD();
+
 		PApplet.main(ProcessingSetup.class);
 	}
 
