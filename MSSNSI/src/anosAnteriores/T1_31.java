@@ -1,8 +1,9 @@
-package T1;
+package anosAnteriores;
 
+import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
 
-public class T1_31 implements InterfaceProcessingApp {
+public class T1_31 implements IProcessingApp {
 	boolean flag = false;
 
 	@Override
@@ -19,7 +20,7 @@ public class T1_31 implements InterfaceProcessingApp {
 			p.fill(p.random(0, 255), p.random(0, 255), p.random(0, 255));
 		}
 		if(p.keyPressed) {
-			//faser reset ao logo em termos de cor e posição. mudar o background para branco
+			//faser reset ao logo em termos de cor e posiï¿½ï¿½o. mudar o background para branco
 			if( p.key == 'c')
 				mouseX = 400;
 				mouseY = 300;
@@ -27,13 +28,13 @@ public class T1_31 implements InterfaceProcessingApp {
 				p.background(255,255,255);
 		}
 		if(p.keyPressed) {
-			// permite chegar ao logo so a mudar a posição X e poe o background a branco
+			// permite chegar ao logo so a mudar a posiï¿½ï¿½o X e poe o background a branco
 			if( p.key == 'b')
 				p.background(255,255,255);
 		}
 		// TODO Auto-generated method stub
 		kitKat(p, mouseX, mouseY);
-		//ideia: mudar estar coordenadas que são passadas
+		//ideia: mudar estar coordenadas que sï¿½o passadas
 		//de maneira a que quando mexo o rato desfacha as letras e enventualmente 
 		//volte a fazer o logo para ficar bacano!
 	}
@@ -52,7 +53,7 @@ public class T1_31 implements InterfaceProcessingApp {
 
 	public void kitKat( PApplet p, float oX, float oY ) {
 		//PS:NAO VOLTES A FAZER UMA COISA ASSIM ! ISTO E MUITA FRUTA !! ja estas a fazer isto a 4 horas....
-		// tens que acertar as posições, rotações.....
+		// tens que acertar as posiï¿½ï¿½es, rotaï¿½ï¿½es.....
 		if(flag) {
 			p.fill( p.color(255, 0, 0) );
 		}
@@ -70,7 +71,7 @@ public class T1_31 implements InterfaceProcessingApp {
 		p.rect(oX-150, oY-60, 15, 120);
 		p.rotate((float)p.PI/4.0f);
 		p.rect(oX+0, oY-380, 15, 120);
-		//zerar a rotação
+		//zerar a rotaï¿½ï¿½o
 		p.rotate(0);
 		p.rotate((float)p.PI/4.0f);
 		p.rotate((float)p.PI/4.0f);
@@ -95,7 +96,7 @@ public class T1_31 implements InterfaceProcessingApp {
 		p.rect(oX+30, oY-60, 15, 140);
 		p.rotate((float)p.PI/4.0f);
 		p.rect(oX+120, oY-500, 15, 120);
-		//zerar a rotação
+		//zerar a rotaï¿½ï¿½o
 		p.rotate(0);
 		p.rotate((float)p.PI/4.0f);
 		p.rotate((float)p.PI/4.0f);

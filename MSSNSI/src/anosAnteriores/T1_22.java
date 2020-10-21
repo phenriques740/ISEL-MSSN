@@ -1,8 +1,9 @@
-package T1;
+package anosAnteriores;
 
+import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
 
-public class T1_22 implements InterfaceProcessingApp{
+public class T1_22 implements IProcessingApp{
 	
 	private int backgroundColor = 50;
 	private int logoColor = 200;

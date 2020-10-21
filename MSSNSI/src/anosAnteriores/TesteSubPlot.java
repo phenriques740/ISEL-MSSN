@@ -1,8 +1,9 @@
-package T1;
+package anosAnteriores;
 
+import ProcessingSetup.IProcessingApp;
+import ProcessingSetup.SubPlot;
 import processing.core.PApplet;
-import T1.SubPlot;
-public class TesteSubPlot implements InterfaceProcessingApp {
+public class TesteSubPlot implements IProcessingApp {
 	
 	private SubPlot plot;
 	private float[] window = {-2,-2, 0, 4};
