@@ -66,9 +66,4 @@ public class MyAppHello implements IProcessingApp {
 
 	}
 
-	@Override
-	public void preload(PApplet p) {
-		// TODO Auto-generated method stub
-		
-	}
 }
