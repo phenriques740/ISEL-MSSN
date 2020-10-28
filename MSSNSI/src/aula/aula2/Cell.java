@@ -65,6 +65,12 @@ public class Cell {
 		}
 	}
 
+	/**
+	 * Conta os vizinhos vivos.<br>
+	 * 
+	 * <b> Só funciona em Automatos binarios, em que o estado vivo corresponde ao
+	 * estado 1</b>
+	 */
 	public void contarVizinhosVivos() {
 		Cell[] neigh = getNeighbors();
 

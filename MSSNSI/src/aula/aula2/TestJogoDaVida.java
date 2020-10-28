@@ -5,8 +5,8 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class TestJogoDaVida implements IProcessingApp {
-	private final int nrows = 10;
-	private final int ncols = 10;
+	private final int nrows = 100;
+	private final int ncols = 100;
 
 	private int radiusNeigh = 1;
 
@@ -16,7 +16,7 @@ public class TestJogoDaVida implements IProcessingApp {
 
 	@Override
 	public void setup(PApplet p) {
-		p.frameRate(5);
+		p.frameRate(10);
 		ca = new JogoDaVida(p, nrows, ncols, radiusNeigh);
 		// ca.initRandom();
 		ca.initDead();
