@@ -1,5 +1,7 @@
 package aula.aula2;
 
+import java.util.Arrays;
+
 import processing.core.PApplet;
 
 public class Cell {
@@ -9,6 +11,8 @@ public class Cell {
 	private Cell[] neighbors;
 	private CellularAutomata ca;
 
+	private int numVizinhosVivos;
+
 	public Cell(CellularAutomata ca, int row, int col) {
 		this.ca = ca;
 		this.row = row;
@@ -16,6 +20,8 @@ public class Cell {
 
 		this.state = 0;
 		this.neighbors = null;
+
+		this.numVizinhosVivos = 0;
 	}
 
 	public void setNeighbors(Cell[] neigh) {
@@ -42,6 +48,30 @@ public class Cell {
 	public void display(PApplet p) {
 		p.fill(ca.getStateColors()[state]);
 		p.rect(col * ca.getCellWidth(), row * ca.getCellHeight(), ca.getCellWidth(), ca.getCellHeight());
+	}
 
+	public void aplicarRegra() {
+		switch (state) {
+		case 0:
+			if (numVizinhosVivos == 3) {
+				setState(1);
+			}
+			break;
+		case 1:
+			if (numVizinhosVivos < 2 || numVizinhosVivos > 3) {
+				setState(0);
+			}
+			break;
+		}
+	}
+
+	public void contarVizinhosVivos() {
+		Cell[] neigh = getNeighbors();
+
+		int vivos = 0;
+		for (Cell cell : neigh) {
+			vivos += cell.getState();
+		}
+		numVizinhosVivos = vivos - state;
 	}
 }

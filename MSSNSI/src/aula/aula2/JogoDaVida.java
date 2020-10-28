@@ -19,39 +19,17 @@ public class JogoDaVida extends CellularAutomata {
 		for (int i = 0; i < this.getNrows(); i++) {
 			for (int j = 0; j < this.getNcols(); j++) {
 				Cell c = getCellInGrid(i, j);
-				int nVizinhosVivos = countLivingNeighboors(c);
+				c.contarVizinhosVivos();
+			}
+		}
 
-				boolean isAlive = c.getState() == 1 ? true : false;
-
-				if (isAlive) {
-					if (nVizinhosVivos > 3 || nVizinhosVivos < 2) {
-						// Matar a celula
-						c.setState(0);
-					}
-				} else {
-					if (nVizinhosVivos == 3) {
-						c.setState(1);
-					}
-				}
+		for (int i = 0; i < this.getNrows(); i++) {
+			for (int j = 0; j < this.getNcols(); j++) {
+				Cell c = getCellInGrid(i, j);
+				c.aplicarRegra();
 			}
 		}
 	}
 
-	/**
-	 * Como o jogo da vida só tem dois estados, se estiver no estado 0 a celula está
-	 * morta, se estiver no estado 1, está viva. Basta somar os estados a 1
-	 * 
-	 * @param c
-	 * @return numero de vizinhos vivos
-	 */
-	private int countLivingNeighboors(Cell c) {
-		Cell[] neigh = c.getNeighbors();
 
-		int vivos = 0;
-		for (Cell cell : neigh) {
-			vivos += cell.getState();
-		}
-		return vivos;
-
-	}
 }

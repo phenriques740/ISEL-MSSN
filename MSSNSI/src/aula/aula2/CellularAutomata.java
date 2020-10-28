@@ -8,6 +8,15 @@ public class CellularAutomata {
 	private final int radiusNeigh;
 
 	private Cell[][] cells;
+
+	public Cell[][] getCells() {
+		return cells;
+	}
+
+	public void setCells(Cell[][] cells) {
+		this.cells = cells;
+	}
+
 	private int[] colors;
 
 	private final int cellWidth, cellHeight;
@@ -87,7 +96,7 @@ public class CellularAutomata {
 	}
 
 	private void setMooreNeighbors() {
-		int NN = (int) Math.pow(2 * radiusNeigh + 1, 2) - 1;
+		int NN = (int) Math.pow(2 * radiusNeigh + 1, 2);
 
 		for (int i = 0; i < getNrows(); i++) {
 			for (int j = 0; j < getNcols(); j++) {
@@ -101,9 +110,8 @@ public class CellularAutomata {
 
 						int col = (j + jj + getNcols()) % getNcols();
 
-						if (row != i || col != j) {
-							neigh[n++] = getCellInGrid(row, col);
-						}
+						neigh[n++] = getCellInGrid(row, col);
+
 					}
 				}
 
