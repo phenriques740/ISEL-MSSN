@@ -4,6 +4,7 @@ import aula.aula1.BolaArcoIris;
 import aula.aula1.BouncingBall;
 import aula.aula1.BouncingDVD;
 import aula.aula2.TestCA;
+import aula.aula2.TestJogoDaVida;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
@@ -45,9 +46,9 @@ public class ProcessingSetup extends PApplet {
 		// app = new BolaArcoIris();
 		// app = new BouncingBall();
 		// app = new BouncingDVD();
+		// app = new TestCA();
 
-		app = new TestCA();
-
+		app = new TestJogoDaVida();
 		PApplet.main(ProcessingSetup.class);
 	}
 

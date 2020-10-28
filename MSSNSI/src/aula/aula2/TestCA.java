@@ -21,9 +21,7 @@ public class TestCA implements IProcessingApp {
 
 	@Override
 	public void draw(PApplet p, float dt) {
-		// TODO Auto-generated method stub
 		ca.display(p);
-
 	}
 
 	@Override
