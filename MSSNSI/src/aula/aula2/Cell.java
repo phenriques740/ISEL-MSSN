@@ -1,7 +1,5 @@
 package aula.aula2;
 
-import java.util.Arrays;
-
 import processing.core.PApplet;
 
 public class Cell {
@@ -46,11 +44,12 @@ public class Cell {
 	}
 
 	public void display(PApplet p) {
+		p.stroke(0);
 		p.fill(ca.getStateColors()[state]);
 		p.rect(col * ca.getCellWidth(), row * ca.getCellHeight(), ca.getCellWidth(), ca.getCellHeight());
 	}
 
-	public void aplicarRegra() {
+	public void aplicarRegraJogoDaVida() {
 		switch (state) {
 		case 0:
 			if (numVizinhosVivos == 3) {

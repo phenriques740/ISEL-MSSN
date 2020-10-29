@@ -5,8 +5,8 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 
 public class TestJogoDaVida implements IProcessingApp {
-	private final int nrows = 100;
-	private final int ncols = 100;
+	private final int nrows = 50;
+	private final int ncols = 50;
 
 	private int radiusNeigh = 1;
 
