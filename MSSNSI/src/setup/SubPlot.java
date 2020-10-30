@@ -1,4 +1,4 @@
-package ProcessingSetup;
+package setup;
 
 public class SubPlot {
 	

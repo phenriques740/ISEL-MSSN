@@ -1,7 +1,7 @@
 package anosAnteriores;
 
-import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
+import setup.IProcessingApp;
 
 public class MyAppHello implements IProcessingApp {
 	private int raio = 30;

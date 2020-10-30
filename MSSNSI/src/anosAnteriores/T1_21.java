@@ -1,7 +1,7 @@
 package anosAnteriores;
 
-import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
+import setup.IProcessingApp;
 
 public class T1_21 implements IProcessingApp{
 	

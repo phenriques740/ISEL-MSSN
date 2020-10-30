@@ -3,9 +3,9 @@ package aula.aula2.dla;
 import java.util.ArrayList;
 import java.util.List;
 
-import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class DLA implements IProcessingApp {
 	private List<Walker> walkers;

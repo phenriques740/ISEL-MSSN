@@ -1,9 +1,7 @@
 package aula.aula2.ca;
 
-import java.util.Arrays;
-
-import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
+import setup.IProcessingApp;
 
 public class TestCA implements IProcessingApp {
 	private final int nrows = 15;

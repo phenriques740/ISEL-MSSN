@@ -1,10 +1,5 @@
-package ProcessingSetup;
+package setup;
 
-import aula.aula1.BolaArcoIris;
-import aula.aula1.BouncingBall;
-import aula.aula1.BouncingDVD;
-import aula.aula2.ca.TestCA;
-import aula.aula2.ca.TestJogoDaVida;
 import aula.aula2.dla.DLA;
 import processing.core.PApplet;
 

@@ -1,8 +1,8 @@
 package anosAnteriores;
 
-import ProcessingSetup.IProcessingApp;
-import ProcessingSetup.SubPlot;
 import processing.core.PApplet;
+import setup.IProcessingApp;
+import setup.SubPlot;
 public class TesteSubPlot implements IProcessingApp {
 	
 	private SubPlot plot;

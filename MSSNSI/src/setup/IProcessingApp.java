@@ -1,4 +1,4 @@
-package ProcessingSetup;
+package setup;
 
 import processing.core.PApplet;
 

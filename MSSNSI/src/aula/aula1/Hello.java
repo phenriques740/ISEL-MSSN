@@ -1,7 +1,7 @@
 package aula.aula1;
 
-import ProcessingSetup.IProcessingApp;
 import processing.core.PApplet;
+import setup.IProcessingApp;
 
 public class Hello implements IProcessingApp {
 
