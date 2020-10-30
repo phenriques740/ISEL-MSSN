@@ -3,8 +3,8 @@ package ProcessingSetup;
 import aula.aula1.BolaArcoIris;
 import aula.aula1.BouncingBall;
 import aula.aula1.BouncingDVD;
-import aula.aula2.TestCA;
-import aula.aula2.TestJogoDaVida;
+import aula.aula2.ca.TestCA;
+import aula.aula2.ca.TestJogoDaVida;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {

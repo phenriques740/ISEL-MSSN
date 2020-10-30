@@ -1,4 +1,4 @@
-package aula.aula2;
+package aula.aula2.ca;
 
 import java.util.Arrays;
 
