@@ -2,6 +2,7 @@ package DLA;
 
 import java.awt.Color;
 import java.util.List;
+import java.util.Random;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -20,16 +21,21 @@ public class Walker {
 	public static int num_stopped = 0;
 	private Color START_COLOR = Color.BLUE;
 	private Color END_COLOR = Color.RED;
+	private double nextRand;
 
 	// constructor para o walker que vai andar até encontrar um parado
-	public Walker(PApplet p) {
-		 pos = new PVector( p.random(p.width), p.random(p.height) ); //começa numa posição aleatória, usar quando os walkers subirem
-		/*
-		pos = new PVector(p.width / 2, p.height / 2);
-		PVector r = PVector.random2D();
-		r.mult(p.width / 2);
-		pos.add(r);
-		*/
+	public Walker(PApplet p, int chosen) {
+		if(chosen == 2)
+			pos = new PVector( p.random(p.width), p.random(p.height) ); //começa numa posição aleatória, usar quando os walkers subirem
+		
+		if(chosen == 1) {
+			pos = new PVector(p.width / 2, p.height / 2);
+			PVector r = PVector.random2D();
+			r.mult(p.width / 2);
+			pos.add(r);
+		}
+		
+		 
 		setState(p, State.WANDER);
 	}
 
@@ -63,6 +69,8 @@ public class Walker {
 		pos.y = PApplet.constrain(pos.y, 0, p.height);
 	}
 
+	
+
 	public void display(PApplet p) {
 		p.fill(color);
 		p.circle(pos.x, pos.y, 2 * radius); // o radius é igual para todos os walkers, dai ser estatico
@@ -70,7 +78,13 @@ public class Walker {
 
 	public void defineColor(PApplet p) {
 		if (state == State.STOPPED) {
-			//float dist = PVector.dist(pos, new PVector(p.width / 2, p.height / 2));
+			float dist = PVector.dist(pos, new PVector(p.width / 2, p.height / 2));
+			color = p.lerpColor(START_COLOR.getRGB(), END_COLOR.getRGB(), dist * 0.003f);
+		}
+	}
+	
+	public void defineColorWanderUp(PApplet p) {
+		if (state == State.STOPPED) {
 			float dist = PVector.dist(pos, new PVector(pos.x, 0)); //esquema de cores para quando os walkers sobem
 			color = p.lerpColor(START_COLOR.getRGB(), END_COLOR.getRGB(), dist * 0.003f);
 		}

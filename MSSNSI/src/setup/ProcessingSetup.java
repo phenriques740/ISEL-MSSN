@@ -1,5 +1,6 @@
 package setup;
 
+import aula.aula2.ca.TestJogoDaVida;
 import aula.aula2.dla.DLA;
 import processing.core.PApplet;
 
@@ -43,9 +44,9 @@ public class ProcessingSetup extends PApplet {
 		// app = new BouncingBall();
 		// app = new BouncingDVD();
 		// app = new TestCA();
-		// app = new TestJogoDaVida();
+		app = new TestJogoDaVida();
 
-		app = new DLA();
+		//app = new DLA();
 		PApplet.main(ProcessingSetup.class);
 	}
 
