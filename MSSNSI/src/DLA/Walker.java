@@ -20,7 +20,7 @@ public class Walker {
 	public static int num_wanders = 0;
 	public static int num_stopped = 0;
 	private Color START_COLOR = Color.BLUE;
-	private Color END_COLOR = Color.RED;
+	private Color END_COLOR = Color.red;
 	private double nextRand;
 
 	// constructor para o walker que vai andar até encontrar um parado

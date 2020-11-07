@@ -7,9 +7,10 @@ import DLA.Walker.State;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
+import setup.IProcessingApp;
 import setup.InterfaceProcessingApp;
 
-public class DLA implements InterfaceProcessingApp {
+public class DLA implements IProcessingApp {
 
 	private List<Walker> walkers;
 	private int NUM_WALKERS = 100;
