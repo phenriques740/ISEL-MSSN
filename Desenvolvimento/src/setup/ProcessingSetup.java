@@ -1,7 +1,7 @@
 package setup;
 
-import aula.aula2.ca.TestJogoDaVida;
-import aula.aula2.dla.DLA;
+import ca.TestJogoDaVida;
+import DLA.DLA;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
@@ -40,11 +40,9 @@ public class ProcessingSetup extends PApplet {
 
 	public static void main(String[] args) {
 		// so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
-		// app = new BolaArcoIris();
-		// app = new BouncingBall();
-		// app = new BouncingDVD();
-		// app = new TestCA();
-		app = new TestJogoDaVida();
+		//app = new TestJogoDaVida();
+		app = new DLA();
+		
 
 		//app = new DLA();
 		PApplet.main(ProcessingSetup.class);

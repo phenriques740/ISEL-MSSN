@@ -8,6 +8,7 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
 import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
 public class DLA implements IProcessingApp {
 
