@@ -8,7 +8,6 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
 import setup.IProcessingApp;
-import setup.InterfaceProcessingApp;
 
 public class DLA implements IProcessingApp {
 
@@ -54,7 +53,7 @@ public class DLA implements IProcessingApp {
 		
 		if (number1Pressed || number2Pressed) {
 			for (int i = 0; i < NUM_STEPS_PER_FRAME; i++) {
-				// repara que aqui faço o wander e todos e depois e que faço o display
+				// repara que aqui faï¿½o o wander e todos e depois e que faï¿½o o display
 				for (Walker w : walkers) {
 					if (w.getState() == State.WANDER) {
 						if (number1Pressed) {
@@ -78,7 +77,7 @@ public class DLA implements IProcessingApp {
 
 			while (Walker.num_wanders < NUM_WALKERS) {
 				// System.out.println("Wanders em falta------>"+numWandersEmFalta);
-				// esta diferença é sempre positiva!
+				// esta diferenï¿½a ï¿½ sempre positiva!
 				if(number1Pressed) {
 					wToAdd = new Walker(p, 1);
 				}
@@ -90,7 +89,7 @@ public class DLA implements IProcessingApp {
 			}
 		} else {
 			p.fill(50);
-			p.text("Botão 1 a gravidade é para o centro. Botão 2 a gravidade é para cima.", 50, 50);
+			p.text("Botï¿½o 1 a gravidade ï¿½ para o centro. Botï¿½o 2 a gravidade ï¿½ para cima.", 50, 50);
 			p.text("LMB para fazer para criar walkers estaticos. RMB para parar.", 50, 70);
 		}
 		

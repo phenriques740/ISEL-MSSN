@@ -1,6 +1,6 @@
 package setup;
 
-import ca.TestJogoDaVida;
+import aula.aula2.ca.TestJogoDaVida;
 import DLA.DLA;
 import processing.core.PApplet;
 
