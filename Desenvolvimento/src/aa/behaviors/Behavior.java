@@ -1,4 +1,6 @@
-package aa;
+package aa.behaviors;
+
+import aa.IBehavior;
 
 public abstract class Behavior implements IBehavior {
 	private float weight;

@@ -1,5 +1,6 @@
-package aa;
+package aa.behaviors;
 
+import aa.Boid;
 import processing.core.PVector;
 
 public class Arrive extends Behavior {
@@ -10,9 +11,9 @@ public class Arrive extends Behavior {
 
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
-		PVector vd = PVector.sub(me.eye.target.getPos(), me.getPos());
+		PVector vd = PVector.sub(me.getEye().getTarget().getPos(), me.getPos());
 		float distance = vd.mag();
-		float R = me.dna.radiusArrive;
+		float R = me.getDna().radiusArrive;
 		if(distance < R) {
 			vd.mult(distance/R);
 		}

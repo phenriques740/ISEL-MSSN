@@ -1,5 +1,6 @@
-package aa;
+package aa.behaviors;
 
+import aa.Boid;
 import processing.core.PVector;
 
 public class Brake extends Behavior {

@@ -1,6 +1,8 @@
 package setup;
 
 import DLA.DLA;
+import aa.BoidApp;
+import aa.FlockTestApp;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
@@ -39,11 +41,7 @@ public class ProcessingSetup extends PApplet {
 
 	public static void main(String[] args) {
 		// so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
-		//app = new TestJogoDaVida();
-		app = new DLA();
-		
-
-		//app = new DLA();
+		app = new BoidApp();
 		PApplet.main(ProcessingSetup.class);
 	}
 

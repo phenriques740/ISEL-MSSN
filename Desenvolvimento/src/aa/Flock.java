@@ -3,6 +3,10 @@ package aa;
 import java.util.ArrayList;
 import java.util.List;
 
+import aa.behaviors.Align;
+import aa.behaviors.Cohesion;
+import aa.behaviors.Flee;
+import aa.behaviors.Separate;
 import graph.SubPlot;
 import physics.Body;
 import processing.core.PApplet;

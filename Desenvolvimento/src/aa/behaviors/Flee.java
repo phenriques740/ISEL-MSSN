@@ -1,8 +1,10 @@
-package aa;
+package aa.behaviors;
 
+import aa.Boid;
 import physics.Body;
 import processing.core.PVector;
-//igual ao Seek mas com uma velocidade simétrica
+
+//igual ao Seek mas com uma velocidade simï¿½trica
 public class Flee extends Behavior {
 
 	public Flee(float weight) {
@@ -12,7 +14,7 @@ public class Flee extends Behavior {
 
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
-		Body bodyTarget = me.eye.target;
+		Body bodyTarget = me.getEye().getTarget();
 		PVector vd = PVector.sub(bodyTarget.getPos(), me.getPos());
 		return vd.mult(-1);
 	}

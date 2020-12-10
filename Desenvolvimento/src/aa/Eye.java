@@ -10,15 +10,15 @@ import processing.core.PVector;
 
 public class Eye {
 	private List<Body>allTrackingBodies;//lista de todos os objectos que o BOID precisa de estar ciente
-	private List<Body>farSight;//visão ao longe
-	private List<Body>nearSight;//visão perto
+	private List<Body>farSight;//visï¿½o ao longe
+	private List<Body>nearSight;//visï¿½o perto
 	private Boid me;
-	protected Body target;
+	private Body target;
 	
 	public Eye(Boid me, List<Body> allTrackingBodies ) {
 		this.me = me;
 		this.allTrackingBodies = allTrackingBodies;
-		target = allTrackingBodies.get(0);
+		setTarget(allTrackingBodies.get(0));
 	}
 	
 	private boolean inSight(PVector target, float maxDistance, float maxAngle) {
@@ -84,6 +84,14 @@ public class Eye {
 
 	public List<Body> getNearSight() {
 		return nearSight;
+	}
+
+	public Body getTarget() {
+		return target;
+	}
+
+	public void setTarget(Body target) {
+		this.target = target;
 	}
 	
 }

@@ -1,5 +1,6 @@
-package aa;
+package aa.behaviors;
 
+import aa.Boid;
 import physics.Body;
 import processing.core.PVector;
 
@@ -12,10 +13,10 @@ public class Align extends Behavior {
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
 		PVector vd = me.getVel().copy();
-		for(Body b : me.eye.getFarSight()) {
+		for (Body b : me.getEye().getFarSight()) {
 			vd.add(b.getVel());	
 		}
-		return vd.div(me.eye.getFarSight().size()+1);//+1 porque o meu próprio boid não esta incluido nessas lista!												
+		return vd.div(me.getEye().getFarSight().size()+1);//+1 porque o meu prï¿½prio boid nï¿½o esta incluido nessas lista!												
 	}
 
 }

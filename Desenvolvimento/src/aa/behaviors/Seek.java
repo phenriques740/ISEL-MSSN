@@ -1,5 +1,6 @@
-package aa;
+package aa.behaviors;
 
+import aa.Boid;
 import physics.Body;
 import processing.core.PVector;
 
@@ -12,7 +13,7 @@ public class Seek extends Behavior {
 
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
-		Body bodyTarget = me.eye.target;
+		Body bodyTarget = me.getEye().getTarget();
 		return PVector.sub(bodyTarget.getPos(), me.getPos());
 	}
 

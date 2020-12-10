@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import aa.behaviors.Pursuit;
+import aa.behaviors.Seek;
+import aa.behaviors.Wander;
 import graph.SubPlot;
 import particleSystems.PSControl;
 import particleSystems.ParticleSystem;

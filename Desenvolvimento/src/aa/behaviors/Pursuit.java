@@ -1,5 +1,6 @@
-package aa;
+package aa.behaviors;
 
+import aa.Boid;
 import physics.Body;
 import processing.core.PVector;
 
@@ -11,24 +12,11 @@ public class Pursuit extends Behavior {
 
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
-		Body bodyTarget = me.eye.target;
-		PVector d = bodyTarget.getVel().mult(me.dna.deltaTPursuit);	//d e o vetor de deslocamento
+		Body bodyTarget = me.getEye().getTarget();
+		PVector d = bodyTarget.getVel().mult(me.getDna().deltaTPursuit); // d e o vetor de deslocamento
 		PVector target = PVector.add(bodyTarget.getPos(), d);
 		return PVector.sub(target, me.getPos());
-		
+
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
