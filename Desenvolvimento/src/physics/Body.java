@@ -1,8 +1,8 @@
 package physics;
 
+import graph.SubPlot;
 import processing.core.PApplet;
 import processing.core.PVector;
-import graph.SubPlot;
 
 public class Body extends Mover
 {

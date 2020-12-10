@@ -2,21 +2,20 @@ package particleSystems;
 
 import graph.SubPlot;
 import physics.Body;
-import physics.Mover;
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Particle extends Body {
 
 	private float lifespan;		//em segundos
-	private float timer;		//variavel interna que conta quando tempo já passou
+	private float timer;		//variavel interna que conta quando tempo jï¿½ passou
 	
 	
 	
 	protected Particle(PVector pos, PVector vel, float radius, int color, float lifespan) {
 		super(pos, vel, 0f, radius, color);
 		this.lifespan = lifespan;
-		timer = 0;			//quando a particula é criada o timer começa a zero!
+		timer = 0;			//quando a particula ï¿½ criada o timer comeï¿½a a zero!
 	}
 	
 	
@@ -34,13 +33,13 @@ public class Particle extends Body {
 	
 	@Override
 	public void display(PApplet p, SubPlot plt) {
-		//fazemos push e pop para guardar o estilo do desenho antes de alterar. para não estragar o que esta a ser desenhado!
+		//fazemos push e pop para guardar o estilo do desenho antes de alterar. para nï¿½o estragar o que esta a ser desenhado!
 		p.pushStyle();
 		float alpha = PApplet.map(timer, 0, lifespan, 255, 0);	//timer varia entre 0 e lifespan.| 0 corresponde a 255! e lifespan mapeado para 0
 		p.fill(color,alpha);
 		
-		//para fazer a conversão de coordenadas pixeis para as do meu mundo actual. necessário para mostrar a particula
-		float[] pp = plt.getPixelCoord(pos.x, pos.y);		//posições X e Y
+		//para fazer a conversï¿½o de coordenadas pixeis para as do meu mundo actual. necessï¿½rio para mostrar a particula
+		float[] pp = plt.getPixelCoord(pos.x, pos.y);		//posiï¿½ï¿½es X e Y
 		float[] rr = plt.getDimInPixel(radius, radius);		//raio 
 		p.noStroke();
 		p.circle(pp[0], pp[1], 2*rr[0]);

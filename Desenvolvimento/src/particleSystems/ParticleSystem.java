@@ -5,7 +5,6 @@ import java.util.List;
 
 import graph.SubPlot;
 import physics.Body;
-import physics.Mover;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -13,21 +12,21 @@ public class ParticleSystem extends Body {
 	
 	private List<Particle> particles;
 	private PSControl psc;
-	private float timer;		//variavel interna que conta quando tempo já passou
+	private float timer;		//variavel interna que conta quando tempo jï¿½ passou
 	private float lifespan;		//em segundos
 
 	public ParticleSystem(PVector pos, PVector vel, float mass, float radius, PSControl psc) {																															
-		super(pos, vel, mass, radius, 0);	//um particle system não tem cor,  as particulas individuais que o compõem é que têm!
-		//as particulas em si não têm massa, mas um conjunto de particulas têm massa!
-		//da jeito para aplicar forças!
+		super(pos, vel, mass, radius, 0);	//um particle system nï¿½o tem cor,  as particulas individuais que o compï¿½em ï¿½ que tï¿½m!
+		//as particulas em si nï¿½o tï¿½m massa, mas um conjunto de particulas tï¿½m massa!
+		//da jeito para aplicar forï¿½as!
 		this.psc = psc;
 		this.particles = new ArrayList<Particle>();
 	}
 	
 	public ParticleSystem(PVector pos, PVector vel, float mass, float radius, PSControl psc, float lifespan) {																															
-		super(pos, vel, mass, radius, 0);	//um particle system não tem cor,  as particulas individuais que o compõem é que têm!
-		//as particulas em si não têm massa, mas um conjunto de particulas têm massa!
-		//da jeito para aplicar forças!
+		super(pos, vel, mass, radius, 0);	//um particle system nï¿½o tem cor,  as particulas individuais que o compï¿½em ï¿½ que tï¿½m!
+		//as particulas em si nï¿½o tï¿½m massa, mas um conjunto de particulas tï¿½m massa!
+		//da jeito para aplicar forï¿½as!
 		this.psc = psc;
 		this.particles = new ArrayList<Particle>();
 		this.lifespan = lifespan;
@@ -48,7 +47,7 @@ public class ParticleSystem extends Body {
 		addParticles(dt);
 		for(int i = particles.size()-1; i >= 0; i--) {
 			Particle p = particles.get(i);
-			p.move(dt);		//depois, aqui e que desloco as particulas na sua direção com a sua velocidade random
+			p.move(dt);		//depois, aqui e que desloco as particulas na sua direï¿½ï¿½o com a sua velocidade random
 			if( p.isDead() ) {
 				particles.remove(i);
 			}
@@ -59,7 +58,7 @@ public class ParticleSystem extends Body {
 	private void addParticles(float dt) {
 		float particlesPerFrame = psc.getFlow() * dt;	//numero de particulas que tenho de gerar numa frame
 		int n = (int) particlesPerFrame;	//fico com a parte inteira
-		float f = particlesPerFrame - n;	//fico com a parte fracionária
+		float f = particlesPerFrame - n;	//fico com a parte fracionï¿½ria
 		for(int i = 0; i < n ; i++) {
 			addOneParticle();
 		}

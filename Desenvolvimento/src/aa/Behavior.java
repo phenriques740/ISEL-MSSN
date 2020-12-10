@@ -1,7 +1,5 @@
 package aa;
 
-import processing.core.PVector;
-
 public abstract class Behavior implements IBehavior {
 	private float weight;
 	

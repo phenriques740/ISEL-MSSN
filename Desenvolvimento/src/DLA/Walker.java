@@ -2,7 +2,6 @@ package DLA;
 
 import java.awt.Color;
 import java.util.List;
-import java.util.Random;
 
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -23,10 +22,10 @@ public class Walker {
 	private Color END_COLOR = Color.red;
 	private double nextRand;
 
-	// constructor para o walker que vai andar até encontrar um parado
+	// constructor para o walker que vai andar atï¿½ encontrar um parado
 	public Walker(PApplet p, int chosen) {
 		if(chosen == 2)
-			pos = new PVector( p.random(p.width), p.random(p.height) ); //começa numa posição aleatória, usar quando os walkers subirem
+			pos = new PVector( p.random(p.width), p.random(p.height) ); //comeï¿½a numa posiï¿½ï¿½o aleatï¿½ria, usar quando os walkers subirem
 		
 		if(chosen == 1) {
 			pos = new PVector(p.width / 2, p.height / 2);
@@ -46,12 +45,12 @@ public class Walker {
 	}
 
 	public void wander(PApplet p) {
-		PVector step = PVector.random2D(); // o agente anda para uma posição geradao automaticamente
+		PVector step = PVector.random2D(); // o agente anda para uma posiï¿½ï¿½o geradao automaticamente
 		pos.add(step);
-		// faço um lerp, para me ir dirigindo par ao meio do ecra, com uma itensidade de
+		// faï¿½o um lerp, para me ir dirigindo par ao meio do ecra, com uma itensidade de
 		// 0.002f!
 		pos.lerp(new PVector(p.width / 2, p.height / 2), 0.0002f);
-		// estes dois metodos constrain em baixo servem para a posição X e Y não
+		// estes dois metodos constrain em baixo servem para a posiï¿½ï¿½o X e Y nï¿½o
 		// excederem os limites da janela
 		pos.x = PApplet.constrain(pos.x, 0, p.width);
 		pos.y = PApplet.constrain(pos.y, 0, p.height);
@@ -60,10 +59,10 @@ public class Walker {
 	public void wanderUp(PApplet p) {
 		PVector step = PVector.random2D();
 		pos.add(step);
-		// faço um lerp, para me ir dirigindo par ao meio do ecra, com uma itensidade de
+		// faï¿½o um lerp, para me ir dirigindo par ao meio do ecra, com uma itensidade de
 		// 0.002f!
 		pos.lerp(new PVector(pos.x, 0), 0.0002f);
-		// estes dois metodos constrain em baixo servem para a posição X e Y não
+		// estes dois metodos constrain em baixo servem para a posiï¿½ï¿½o X e Y nï¿½o
 		// excederem os limites da janela
 		pos.x = PApplet.constrain(pos.x, 0, p.width);
 		pos.y = PApplet.constrain(pos.y, 0, p.height);
@@ -73,7 +72,7 @@ public class Walker {
 
 	public void display(PApplet p) {
 		p.fill(color);
-		p.circle(pos.x, pos.y, 2 * radius); // o radius é igual para todos os walkers, dai ser estatico
+		p.circle(pos.x, pos.y, 2 * radius); // o radius ï¿½ igual para todos os walkers, dai ser estatico
 	}
 
 	public void defineColor(PApplet p) {

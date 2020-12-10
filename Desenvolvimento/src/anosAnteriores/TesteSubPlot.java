@@ -2,12 +2,13 @@ package anosAnteriores;
 
 import processing.core.PApplet;
 import setup.IProcessingApp;
-import setup.SubPlot;
+import graph.SubPlot;
+
 public class TesteSubPlot implements IProcessingApp {
-	
+
 	private SubPlot plot;
-	private float[] window = {-2,-2, 0, 4};
-	private float[] viewport = {0.5f, 0.6f, 0.35f, 0.20f};
+	private double[] window = { -2, -2, 0, 4 };
+	private float[] viewport = { 0.5f, 0.6f, 0.35f, 0.20f };
 
 	@Override
 	public void setup(PApplet p) {
@@ -15,9 +16,9 @@ public class TesteSubPlot implements IProcessingApp {
 		plot = new SubPlot(window, viewport, p.width, p.height);
 		float[] oldc = plot.getPixelCoord(-2, square(-2));
 		int numeroPontos = 100;
-		float step = ( window[1] - window[0] ) / numeroPontos;
+		double step = (window[1] - window[0]) / numeroPontos;
 
-		for(float x = -2; x <= 2; x += step) {
+		for (float x = -2; x <= 2; x += step) {
 			float y = square(x);
 			float[] c = plot.getPixelCoord(x, y);
 			p.line(oldc[0], oldc[1], c[0], c[1]);
@@ -28,29 +29,29 @@ public class TesteSubPlot implements IProcessingApp {
 	@Override
 	public void draw(PApplet p, float dt) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void mousePressed(PApplet p) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(PApplet p) {
 		// TODO Auto-generated method stub
-		
+
 	}
-	
+
 	private float square(float x) {
-		return x*x;
+		return x * x;
 	}
 
 	@Override
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import graph.SubPlot;
-import setup.InterfaceProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
-public class ParticleSystemApp implements InterfaceProcessingApp {
+public class ParticleSystemApp implements IProcessingApp {
 
 	//private ParticleSystem ps;
 	private List<ParticleSystem> pss;
-	private double[] window = {-10 , 10, -10, 10};	//x entre -10 e 10| y entre 10 e -10. TODOS OS VALORES TÊM QUE ESTAR ENTRE ESTE INTERVALO!
-	private float[] viewport = {0, 0, 1, 1};		//vamos usar todo o ecrã
+	private double[] window = {-10 , 10, -10, 10};	//x entre -10 e 10| y entre 10 e -10. TODOS OS VALORES Tï¿½M QUE ESTAR ENTRE ESTE INTERVALO!
+	private float[] viewport = {0, 0, 1, 1};		//vamos usar todo o ecrï¿½
 	private SubPlot plt;
 	private float[] velParams = {PApplet.radians(90), PApplet.radians(20), 1, 3 };
 	private float[] lifetimeParams = {3, 5};
@@ -34,7 +34,7 @@ public class ParticleSystemApp implements InterfaceProcessingApp {
 		
 		
 		/*
-		//aplicar uma força tipo peso:
+		//aplicar uma forï¿½a tipo peso:
 		for(ParticleSystem ps : pss) {
 			ps.applyForce(new PVector(0,-1) );
 		}
@@ -47,7 +47,7 @@ public class ParticleSystemApp implements InterfaceProcessingApp {
 		}
 		
 		/*
-		//as liinhas de baixo permitem que se mexer o rato, a direcao dos particleSystems é alterada!
+		//as liinhas de baixo permitem que se mexer o rato, a direcao dos particleSystems ï¿½ alterada!
 		velParams[0] = PApplet.map(p.mouseX, 0, p.width, PApplet.radians(0), PApplet.radians(360) );	
 		for(ParticleSystem ps : pss) {	//percorrer todos os particleSystem's que ja foram instanciados
 			PSControl psc = ps.getPSControl();

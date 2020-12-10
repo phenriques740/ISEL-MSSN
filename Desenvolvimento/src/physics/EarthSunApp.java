@@ -6,12 +6,12 @@ import java.util.List;
 import graph.SubPlot;
 import particleSystems.PSControl;
 import particleSystems.ParticleSystem;
-import setup.InterfaceProcessingApp;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
-public class EarthSunApp implements InterfaceProcessingApp
+public class EarthSunApp implements IProcessingApp
 {
 	private float sunMass = 1.989e30f;
 	// https://www.sjsu.edu/faculty/watkins/orbital.htm //
@@ -46,7 +46,7 @@ public class EarthSunApp implements InterfaceProcessingApp
 		sun = new Body(new PVector(), new PVector(), sunMass, distEarthSun/10, 
 				p.color(255,128,0));
 		earth = new Body(new PVector(0, distEarthSun), 
-				new PVector(earthSpeed,0), earthMass, distEarthSun/15, p.color(0,130,190));		//tamanho do size é 20
+				new PVector(earthSpeed,0), earthMass, distEarthSun/15, p.color(0,130,190));		//tamanho do size ï¿½ 20
 		venus = new Body(new PVector(0, distVenusSun),
 				new PVector(venusSpeed,0), venusMass, distVenusSun/20, p.color(255,0,0 ) );
 		
@@ -133,8 +133,8 @@ public class EarthSunApp implements InterfaceProcessingApp
 		
 		p.fill(100);
 		if(showTips) {
-			p.text("RMB para criar planetas. LMB para destruir planetas.Quando os planetas são destruidos, crio um sistema de particulas", 50, 50);
-			p.text("Terra (azul) e Venus (vermelho) não podem ser destruidos", 50, 70);
+			p.text("RMB para criar planetas. LMB para destruir planetas.Quando os planetas sï¿½o destruidos, crio um sistema de particulas", 50, 50);
+			p.text("Terra (azul) e Venus (vermelho) nï¿½o podem ser destruidos", 50, 70);
 		}
 		
 		posToDestroy = null;
@@ -155,7 +155,7 @@ public class EarthSunApp implements InterfaceProcessingApp
 
 	@Override
 	public void mousePressed(PApplet p) {
-		//System.out.println("Diferença entre massas: "+sunMass/earthMass);
+		//System.out.println("Diferenï¿½a entre massas: "+sunMass/earthMass);
 		if(p.mouseButton == PConstants.RIGHT) {
 			//System.out.println("Criei um planeta");
 			double[] pp = plt.getWorldCoord(p.mouseX, p.mouseY);

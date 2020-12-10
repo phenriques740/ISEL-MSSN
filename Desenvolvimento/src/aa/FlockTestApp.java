@@ -10,9 +10,9 @@ import particleSystems.ParticleSystem;
 import physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
-public class FlockTestApp implements InterfaceProcessingApp {
+public class FlockTestApp implements IProcessingApp {
 	private Flock flock;
 	private float[] sacfWeights = { 0.2f, 0.7f, 0.5f, 0f };// SAC=separate,Align,Cohesion,Flee
 	private double[] window = { -10, 10, -10, 10 };
@@ -55,7 +55,7 @@ public class FlockTestApp implements InterfaceProcessingApp {
 		randInt = rand.nextInt( flock.boids.size()-1 );
 		targetBoid = flock.boids.get( randInt );
 
-		//adiconar a lista que o Boid vê o único void verde
+		//adiconar a lista que o Boid vï¿½ o ï¿½nico void verde
 		allTrackingBodies = new ArrayList<Body>();
 		allTrackingBodies.add(targetBoid);
 		//allTrackingBodies.addAll(flock.boids);
@@ -73,7 +73,7 @@ public class FlockTestApp implements InterfaceProcessingApp {
 		p.rect(boundingBox[0], boundingBox[1], boundingBox[2], boundingBox[3]);
 		//p.fill(255, 64);		//original do prof
 		//p.fill(50, 64);		//melhor aspecto, mas as vezes o computador fica lento
-		p.background(50);	//solução hibrida entre os dois de cima, sem o arrasto :(
+		p.background(50);	//soluï¿½ï¿½o hibrida entre os dois de cima, sem o arrasto :(
 		
 		
 		flock.applyBehavior(dt);
@@ -123,7 +123,7 @@ public class FlockTestApp implements InterfaceProcessingApp {
 			}
 		}
 		
-		//Codigo para o Boid especial e o seu target. o meu boid especial é um predador!	
+		//Codigo para o Boid especial e o seu target. o meu boid especial ï¿½ um predador!	
 		boidSpecial.applyBehaviors(dt);
 		if(!targetBoid.isFlagRemove()) {
 			//apenas vejo a visibilidade da presa Boid se estiver activa! se ja tiver sido removido nao preciso de ver
@@ -136,7 +136,7 @@ public class FlockTestApp implements InterfaceProcessingApp {
 		differenceBoid = PVector.sub(boidSpecial.getPos(), targetBoid.getPos());
 		if (differenceBoid.mag() < 1f && (!targetBoid.isFlagRemove()) ) {
 			//System.out.println("Comi o target!");
-			//a flag de cima e absolutamente necessária, caso contrário o boidEspecial cada vez que passa na posição antiga da presa, 
+			//a flag de cima e absolutamente necessï¿½ria, caso contrï¿½rio o boidEspecial cada vez que passa na posiï¿½ï¿½o antiga da presa, 
 			//fica com cada vez mais wanders, tornando o seek ineficaz! 
 			targetBoid.setFlagRemove(true);
 			boidSpecial.removeBehavior(seek);
@@ -147,15 +147,15 @@ public class FlockTestApp implements InterfaceProcessingApp {
 
 		
 		if(showTips) {
-			p.text("LMB/RMB para destruir Boid's. Quando um Boid é destruido desta maneira, crio um sistema de particulas durante poucos segundos", 20, 50);
-			p.text("Boid vermelho persegue o Boid que tem a visão. Após o Boid predador apanhar a presa, a presa é destruida", 20, 70);
-			p.text("Enquanto o Boid não tem um novo targer faz Wander. Para dar um novo target carrego T. para esconder mensagens H", 20, 90);
-			p.text("Vou Competir contra o Boid para ver quem destrói primeiro o target, através dos pontos", 20, 110);
+			p.text("LMB/RMB para destruir Boid's. Quando um Boid ï¿½ destruido desta maneira, crio um sistema de particulas durante poucos segundos", 20, 50);
+			p.text("Boid vermelho persegue o Boid que tem a visï¿½o. Apï¿½s o Boid predador apanhar a presa, a presa ï¿½ destruida", 20, 70);
+			p.text("Enquanto o Boid nï¿½o tem um novo targer faz Wander. Para dar um novo target carrego T. para esconder mensagens H", 20, 90);
+			p.text("Vou Competir contra o Boid para ver quem destrï¿½i primeiro o target, atravï¿½s dos pontos", 20, 110);
 		}
 		p.text("Pontos: "+playerPoints, 20, p.height-30);
 		
 		//System.out.println("Difference Boid--->"+differenceBoid.mag() );
-		//fazer reset a posição para destruir
+		//fazer reset a posiï¿½ï¿½o para destruir
 		posToDestroy = null;
 	}
 
@@ -169,7 +169,7 @@ public class FlockTestApp implements InterfaceProcessingApp {
 	public void keyPressed(PApplet p) {
 		if(p.key == 't' && (targetBoid.isFlagRemove())) {
 			//System.out.println("carreguei em T!");
-			//se carregar em T, vou escolher um novo boid aleatório para perseguir!
+			//se carregar em T, vou escolher um novo boid aleatï¿½rio para perseguir!
 			randInt = rand.nextInt( flock.boids.size()-1 );
 			targetBoid = flock.boids.get( (int) DNA.random(0, flock.boids.size()-1) );
 			boidSpecial.removeBehavior(wander);

@@ -7,9 +7,9 @@ import graph.SubPlot;
 import physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
-public class BoidApp implements InterfaceProcessingApp {
+public class BoidApp implements IProcessingApp {
 	private Boid b;
 	private double[] window = {-10, 10, -10, 10};
 	private float[] viewport = {0, 0, 1, 1};
