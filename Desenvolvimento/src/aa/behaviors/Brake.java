@@ -1,17 +1,35 @@
 package aa.behaviors;
 
 import aa.Boid;
+import processing.core.PApplet;
+import processing.core.PConstants;
 import processing.core.PVector;
 
 public class Brake extends Behavior {
+	private int strenght;
 
-	public Brake(float weight) {
+	public Brake(float weight, int strenght) {
 		super(weight);
+		setStrenght(strenght);
+	}
+
+	public int getStrenght() {
+		return strenght;
+	}
+
+	public void setStrenght(int strenght) {
+		this.strenght = strenght;
 	}
 
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
-		return new PVector();		//retorna (0,0)
+		PVector vel = me.getVel();
+
+		PVector target = PVector.sub(vel, new PVector(strenght, strenght));
+		target.x = PApplet.max(target.x, 0);
+		target.y = PApplet.max(target.y, 0);
+
+		return target;
 	}
 
 }

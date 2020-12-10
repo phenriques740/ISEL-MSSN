@@ -66,7 +66,6 @@ public class Boid extends Body {
 	}
 
 	public void applySingleBehavior(int i, float dt) {
-
 		if (eye != null) {
 			eye.look();
 		}

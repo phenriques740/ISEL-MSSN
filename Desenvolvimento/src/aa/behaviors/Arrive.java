@@ -19,7 +19,6 @@ public class Arrive extends Behavior {
 		}
 		return vd;
 	}
-
 }
 
 

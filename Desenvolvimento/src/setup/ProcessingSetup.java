@@ -3,6 +3,7 @@ package setup;
 import DLA.DLA;
 import aa.BoidApp;
 import aa.FlockTestApp;
+import aa.SingleBoidTestApp;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
@@ -11,7 +12,7 @@ public class ProcessingSetup extends PApplet {
 
 	@Override
 	public void settings() {
-		size(800, 800);
+		size(600, 600);
 	}
 
 	@Override
@@ -41,7 +42,7 @@ public class ProcessingSetup extends PApplet {
 
 	public static void main(String[] args) {
 		// so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
-		app = new BoidApp();
+		app = new SingleBoidTestApp();
 		PApplet.main(ProcessingSetup.class);
 	}
 
