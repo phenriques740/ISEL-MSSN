@@ -1,7 +1,10 @@
 package aa;
 
+import aa.behaviors.Brake;
+import aa.behaviors.Seek;
 import aa.behaviors.Wander;
 import graph.SubPlot;
+import physics.Body;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
@@ -12,14 +15,17 @@ public class SingleBoidTestApp implements IProcessingApp {
 	private double[] window = { -10, 10, -10, 10 };
 	private float[] viewport = { 0, 0, 1, 1 };
 	private SubPlot plt;
-
+	private Body target;
 	private int currBehaviour = 0;
 
 	@Override
 	public void setup(PApplet p) {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 		b = new Boid(new PVector(), 1, 0.5f, p.color(0), p, plt);
-		b.addBehavior(new Wander(1f));
+		target = new Body(new PVector(0, 0), new PVector(), 1f, 1.0f, p.color(255, 0, 0));
+		b.addBehavior(new Seek(1f));
+		b.addBehavior(new Brake(100f, 1));
+		b.getEye().setTarget(target);
 	}
 
 	@Override

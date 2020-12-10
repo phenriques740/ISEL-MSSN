@@ -23,13 +23,8 @@ public class Brake extends Behavior {
 
 	@Override
 	public PVector getDesiredVelocity(Boid me) {
-		PVector vel = me.getVel();
-
-		PVector target = PVector.sub(vel, new PVector(strenght, strenght));
-		target.x = PApplet.max(target.x, 0);
-		target.y = PApplet.max(target.y, 0);
-
-		return target;
+		me.applyForce(new PVector(-strenght, -strenght));
+		return new PVector();
 	}
 
 }
