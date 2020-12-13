@@ -191,11 +191,7 @@ public class FlockTestApp implements IProcessingApp {
 		}
 
 		if (p.key == 'h') {
-			if (showTips == false) {
-				showTips = true;
-			} else {
-				showTips = false;
-			}
+			showTips = !showTips;
 		}
 	}
 
