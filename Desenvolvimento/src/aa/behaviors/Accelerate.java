@@ -9,7 +9,6 @@ public class Accelerate extends Behavior {
 	public Accelerate(float weight, float strenght) {
 		super(weight);
 		setStrenght(strenght);
-
 	}
 
 	@Override

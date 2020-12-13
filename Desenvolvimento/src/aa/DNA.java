@@ -6,7 +6,7 @@ public class DNA {
 							// tipo PSControl
 	public float maxForce;
 	public float visionDistance;
-	public float visionSafeDistance; // para nao chocar com obst�culos
+	public float visionSafeDistance; // para nao chocar com obstaculos
 	public float visionAngle;
 	public float deltaTPursuit;
 	public float radiusArrive;

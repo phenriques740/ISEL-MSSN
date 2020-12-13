@@ -6,18 +6,18 @@ import processing.core.PConstants;
 import processing.core.PVector;
 
 public class Brake extends Behavior {
-	private int strenght;
+	private float strenght;
 
-	public Brake(float weight, int strenght) {
+	public Brake(float weight, float strenght) {
 		super(weight);
 		setStrenght(strenght);
 	}
 
-	public int getStrenght() {
+	public float getStrenght() {
 		return strenght;
 	}
 
-	public void setStrenght(int strenght) {
+	public void setStrenght(float strenght) {
 		this.strenght = strenght;
 	}
 
