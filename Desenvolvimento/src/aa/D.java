@@ -21,6 +21,7 @@ public class D implements IProcessingApp {
 	private ArrayList<Body> patrolPoints;
 	private float accWeight, brakeWeight;
 	private Behavior acc, brake;
+	private Patrol patrol;
 
 	@Override
 	public void setup(PApplet p) {
@@ -30,8 +31,8 @@ public class D implements IProcessingApp {
 		addPatrolPoints(p.color(0, 0, 255));
 		brake = new Brake(brakeWeight, 0.5f);
 		acc = new Accelerate(accWeight, 0.5f);
-
-		boid.addBehavior(new Patrol(1f, patrolPoints));
+		patrol = new Patrol(1f, patrolPoints);
+		boid.addBehavior(patrol);
 		boid.addBehavior(acc);
 		boid.addBehavior(brake);
 		boid.setEye(new Eye(boid, patrolPoints));
@@ -41,8 +42,8 @@ public class D implements IProcessingApp {
 		Body p1, p2, p3, p4;
 		p1 = new Body(new PVector(-5, 0), new PVector(), 0, 0.5f, color);
 		p2 = new Body(new PVector(-5, 5), new PVector(), 0, 0.5f, color);
-		p3 = new Body(new PVector(5, 0), new PVector(), 0, 0.5f, color);
-		p4 = new Body(new PVector(5, 5), new PVector(), 0, 0.5f, color);
+		p3 = new Body(new PVector(5, 5), new PVector(), 0, 0.5f, color);
+		p4 = new Body(new PVector(5, 0), new PVector(), 0, 0.5f, color);
 
 		patrolPoints.add(p1);
 		patrolPoints.add(p2);
@@ -71,6 +72,9 @@ public class D implements IProcessingApp {
 
 		if (p.mouseButton == PConstants.LEFT) {
 			patrolPoints.add(new Body(pos, new PVector(), 0, 0.5f, p.color(0, 255, 0)));
+			patrol.setPatrolPoints(patrolPoints);
+			// desnecessario porque o arraylist é o mesmo objeto nesta classe e no
+			// patrol. Mas assim fica mais explicito
 		} else if (p.mouseButton == PConstants.RIGHT) {
 			for (Body body : patrolPoints) {
 				if (body.isInside(pos)) {
