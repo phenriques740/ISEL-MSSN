@@ -3,6 +3,7 @@ package setup;
 import DLA.DLA;
 import aa.BoidApp;
 import aa.FlockTestApp;
+import aa.PatrolTestApp;
 import aa.SingleBoidTestApp;
 import processing.core.PApplet;
 
@@ -42,7 +43,7 @@ public class ProcessingSetup extends PApplet {
 
 	public static void main(String[] args) {
 		// so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
-		app = new SingleBoidTestApp();
+		app = new PatrolTestApp();
 		PApplet.main(ProcessingSetup.class);
 	}
 

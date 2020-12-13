@@ -24,7 +24,6 @@ public class SingleBoidTestApp implements IProcessingApp {
 		b = new Boid(new PVector(), 1, 0.5f, p.color(0), p, plt);
 		target = new Body(new PVector(0, 0), new PVector(), 1f, 1.0f, p.color(255, 0, 0));
 		b.addBehavior(new Seek(1f));
-		b.addBehavior(new Brake(100f, 1));
 		b.getEye().setTarget(target);
 	}
 
