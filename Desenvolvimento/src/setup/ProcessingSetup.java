@@ -3,6 +3,7 @@ package setup;
 import DLA.DLA;
 import aa.BoidApp;
 import aa.FlockTestApp;
+import physics.ControlGUIApp;
 import aa.D;
 import processing.core.PApplet;
 
@@ -41,11 +42,8 @@ public class ProcessingSetup extends PApplet {
 	}
 
 	public static void main(String[] args) {
-		// so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
-		app = new D();
+		app = new ControlGUIApp();
 		PApplet.main(ProcessingSetup.class);
 	}
 
 }
-
-//corre em primeiro lugar 1-settings, depois em segundo lugar o 2-setup, e depois fica a correr o draw() infinitamente!		
