@@ -1,16 +1,6 @@
 package setup;
 
-import ChaosGame.ChaosGameStatic;
-import JulaMandelBrot.DynamicJulia;
-import JulaMandelBrot.MandelBrot;
-import LidenMayer.LSystemApp1;
-import LidenMayer.LSystemApp2;
 import LidenMayer.LSystemApp3;
-import LidenMayer.LSystemApp4;
-import LidenMayer.LSystemApp5;
-import ChaosGame.ChaosGameDynamic;
-import aa.BoidApp;
-import aa.D;
 import processing.core.PApplet;
 
 public class Processing_Setup extends PApplet {

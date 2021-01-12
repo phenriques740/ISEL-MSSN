@@ -6,7 +6,6 @@ import java.util.Arrays;
 
 import graph.SubPlot;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import setup.InterfaceProcessingApp;
 
 public class ChaosGameDynamic implements InterfaceProcessingApp {
@@ -47,7 +46,7 @@ public class ChaosGameDynamic implements InterfaceProcessingApp {
 		// TODO Auto-generated method stub
 		for( int i = 0; i < arrPontos.length; i++) {
 			if( (arrPontos[i][0] != 0) && (arrPontos[i][1] != 0) ) {	//se ambas as coordenadas forem diferentes de 0
-				//tenho que fazer isto porque, o array e inicilizado com ZEROS invés de null....
+				//tenho que fazer isto porque, o array e inicilizado com ZEROS invï¿½s de null....
 				p.circle((float)arrPontos[i][0], (float)arrPontos[i][1], 4);
 				lastValidIndex = i;
 			}
@@ -70,7 +69,7 @@ public class ChaosGameDynamic implements InterfaceProcessingApp {
 		}
 
 		
-		p.text("LBM para criar vertices. RMB para fechar o poligono e começar a simulação", 200, 580);
+		p.text("LBM para criar vertices. RMB para fechar o poligono e comeï¿½ar a simulaï¿½ï¿½o", 200, 580);
 	}
 
 	@Override

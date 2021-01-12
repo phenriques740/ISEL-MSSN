@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aa.behaviors.Flee;
-import aa.behaviors.Patrol;
 import aa.behaviors.Seek;
 import aa.behaviors.Wander;
 import graph.SubPlot;

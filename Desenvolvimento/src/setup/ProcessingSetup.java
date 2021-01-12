@@ -1,10 +1,6 @@
 package setup;
 
-import DLA.DLA;
-import aa.BoidApp;
-import aa.FlockTestApp;
 import physics.ControlGUIApp;
-import aa.D;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
