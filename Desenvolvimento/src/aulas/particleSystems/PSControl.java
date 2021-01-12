@@ -1,9 +1,9 @@
-package particleSystems;
+package aulas.particleSystems;
 
 import processing.core.PVector;
 
 public class PSControl {
-	private float averageAngle; // direção media
+	private float averageAngle; // direï¿½ï¿½o media
 	private float dispersionAngle;
 	private float minVelocity;
 	private float maxVelocity;
@@ -43,7 +43,7 @@ public class PSControl {
 	
 	public PVector getRndVel() {
 		float angle = getRnd(averageAngle - dispersionAngle/2, averageAngle + dispersionAngle/2);
-		PVector v = PVector.fromAngle(angle);			//direção da velocidade
+		PVector v = PVector.fromAngle(angle);			//direï¿½ï¿½o da velocidade
 		v.mult( getRnd(minVelocity, maxVelocity) );		//magnitude da velocidade
 		return v;			//podia fazer logo return em cima
 	}

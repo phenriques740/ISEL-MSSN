@@ -1,8 +1,8 @@
-package LidenMayer;
+package aulas.LidenMayer;
 
-import graph.SubPlot;
+import aulas.graph.SubPlot;
+import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
 
 public class LSystemApp5 implements InterfaceProcessingApp {
 
@@ -22,27 +22,27 @@ public class LSystemApp5 implements InterfaceProcessingApp {
 	@Override
 	public void setup(PApplet parent) {
 		plot = new SubPlot(window,viewport,parent.width,parent.height);
-		//Primeira árvore
+		//Primeira ï¿½rvore
 		Regra[] rule = new Regra[1];
 		rule[0] = new Regra('F',"FF-[-F+F+F]+[+F-F-F]");
 		ls = new LSystem("F",rule);
 		turtle = new Turtle(parent, plot, 0.2f, PApplet.radians(23), false);
-		//Segunda árvore
+		//Segunda ï¿½rvore
 		Regra[] rule2 = new Regra[2];
 		rule2[0] = new Regra('F',"F[+F]G[-F][F]");
 		rule2[1] = new Regra('G',"GG");
 		ls2 = new LSystem("F",rule2);
 		turtle2 = new Turtle(parent, plot, 0.2f, PApplet.radians(20), false);
-		//Terceira árvore
+		//Terceira ï¿½rvore
 		Regra[] rule3 = new Regra[1];
 		rule3[0] = new Regra('F',"F[+F]F[-F]F");
 		ls3 = new LSystem("F",rule3);
 		turtle3 = new Turtle(parent, plot, 0.2f, PApplet.radians(26), false);
-		//Quarta árvore
+		//Quarta ï¿½rvore
 		turtle4 = new Turtle(parent, plot, 0.2f, PApplet.radians(26), false);
-		//Quinta árvore
+		//Quinta ï¿½rvore
 		turtle5 = new Turtle(parent, plot, 0.2f, PApplet.radians(20), false);
-		//Sexta árvore
+		//Sexta ï¿½rvore
 		turtle6 = new Turtle(parent, plot, 0.2f, PApplet.radians(23), false);
 
 	}

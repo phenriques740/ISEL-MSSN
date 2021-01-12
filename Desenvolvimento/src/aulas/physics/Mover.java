@@ -1,4 +1,4 @@
-package physics;
+package aulas.physics;
 import processing.core.PVector;
 
 public abstract class Mover 
@@ -33,7 +33,7 @@ public abstract class Mover
 	{
 	    PVector r = PVector.sub(pos, m.pos);
 	    float dist = r.mag();
-	    float strength = (float)(G*mass*m.mass/(dist*dist) );		//lei da gravitação universal de newton!
+	    float strength = (float)(G*mass*m.mass/(dist*dist) );		//lei da gravitaï¿½ï¿½o universal de newton!
 	    return (r.normalize().mult(strength));
 	}
 	

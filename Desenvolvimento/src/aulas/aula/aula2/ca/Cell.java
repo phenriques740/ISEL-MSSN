@@ -1,4 +1,4 @@
-package aula.aula2.ca;
+package aulas.aula.aula2.ca;
 
 import processing.core.PApplet;
 

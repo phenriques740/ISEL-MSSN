@@ -1,6 +1,6 @@
-package aa.behaviors;
+package aulas.aa.behaviors;
 
-import aa.Boid;
+import aulas.aa.Boid;
 import processing.core.PVector;
 
 public class Accelerate extends Behavior {

@@ -1,12 +1,12 @@
-package ChaosGame;
+package aulas.ChaosGame;
 
 
 
 import java.util.Arrays;
 
-import graph.SubPlot;
+import aulas.graph.SubPlot;
+import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
 
 public class ChaosGameDynamic implements InterfaceProcessingApp {
 

@@ -1,4 +1,4 @@
-package setup;
+package aulas.setup;
 
 import processing.core.PApplet;
 

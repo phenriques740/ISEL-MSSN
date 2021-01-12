@@ -1,11 +1,11 @@
-package aa;
+package aulas.aa;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import aa.behaviors.Behavior;
-import graph.SubPlot;
-import physics.Body;
+import aulas.aa.behaviors.Behavior;
+import aulas.graph.SubPlot;
+import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PShape;

@@ -1,7 +1,7 @@
-package anosAnteriores;
+package aulas.anosAnteriores;
 
+import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
-import setup.IProcessingApp;
 
 public class T1_23 implements IProcessingApp{
 	

@@ -1,7 +1,7 @@
-package aula.aula2.ca;
+package aulas.aula.aula2.ca;
 
+import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
-import setup.IProcessingApp;
 
 public class TestCA implements IProcessingApp {
 	private final int nrows = 15;

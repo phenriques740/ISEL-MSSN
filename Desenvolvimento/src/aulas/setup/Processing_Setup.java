@@ -1,6 +1,6 @@
-package setup;
+package aulas.setup;
 
-import LidenMayer.LSystemApp3;
+import aulas.LidenMayer.LSystemApp3;
 import processing.core.PApplet;
 
 public class Processing_Setup extends PApplet {

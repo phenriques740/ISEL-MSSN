@@ -1,4 +1,4 @@
-package DLA;
+package aulas.DLA;
 
 import java.awt.Color;
 import java.util.List;

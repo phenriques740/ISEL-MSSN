@@ -1,9 +1,9 @@
-package physics;
+package aulas.physics;
 
-import physics.RigidBody.ControlType;
+import aulas.physics.RigidBody.ControlType;
+import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.IProcessingApp;
 
 public class ControlGUIApp implements IProcessingApp {
 	private RigidBody rb;

@@ -1,6 +1,6 @@
-package physics;
+package aulas.physics;
 
-import physics.RigidBody.ControlType;
+import aulas.physics.RigidBody.ControlType;
 import processing.core.PApplet;
 import processing.core.PVector;
 

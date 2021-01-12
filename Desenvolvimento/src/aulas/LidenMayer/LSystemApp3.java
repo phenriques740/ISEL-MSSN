@@ -1,8 +1,8 @@
-package LidenMayer;
+package aulas.LidenMayer;
 
-import graph.SubPlot;
+import aulas.graph.SubPlot;
+import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
 
 public class LSystemApp3 implements InterfaceProcessingApp {
 
@@ -22,7 +22,7 @@ public class LSystemApp3 implements InterfaceProcessingApp {
 		rule[0] = new Regra('F', "F+F--F+F");
 		ls = new LSystem("+F--F--F",rule);
 		
-		//Koch curve - Dimensão fractal desta curva é log(4)/log(3) = 0,477
+		//Koch curve - Dimensï¿½o fractal desta curva ï¿½ log(4)/log(3) = 0,477
 		//Regra[] rule = new Regra[1];
 		//rule[0] = new Regra('F',"F+F--F+F");
 		//ls = new LSystem("F",rule);

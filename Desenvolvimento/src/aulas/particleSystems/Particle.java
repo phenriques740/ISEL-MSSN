@@ -1,7 +1,7 @@
-package particleSystems;
+package aulas.particleSystems;
 
-import graph.SubPlot;
-import physics.Body;
+import aulas.graph.SubPlot;
+import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
 

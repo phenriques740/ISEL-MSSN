@@ -1,4 +1,4 @@
-package LidenMayer;
+package aulas.LidenMayer;
 
 public class Regra {
 	

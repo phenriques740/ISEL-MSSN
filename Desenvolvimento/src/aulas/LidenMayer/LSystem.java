@@ -1,4 +1,4 @@
-package LidenMayer;
+package aulas.LidenMayer;
 
 
 public class LSystem 
@@ -53,7 +53,7 @@ public class LSystem
 		this.sequence = nextgen;
 	}
 	
-	//para os LSystem 3 e 4. Da outro tipo de fractal mas ainda é baseado em LindenMayer e dai estarem agrupados
+	//para os LSystem 3 e 4. Da outro tipo de fractal mas ainda ï¿½ baseado em LindenMayer e dai estarem agrupados
 	public void nextGeneration1() {
 		String nextGen = "";
 		generation ++ ;

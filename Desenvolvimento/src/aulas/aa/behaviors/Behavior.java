@@ -1,6 +1,6 @@
-package aa.behaviors;
+package aulas.aa.behaviors;
 
-import aa.IBehavior;
+import aulas.aa.IBehavior;
 
 public abstract class Behavior implements IBehavior {
 	private float weight;

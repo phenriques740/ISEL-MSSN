@@ -1,19 +1,19 @@
-package aa;
+package aulas.aa;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import aa.behaviors.Pursuit;
-import aa.behaviors.Seek;
-import aa.behaviors.Wander;
-import graph.SubPlot;
-import particleSystems.PSControl;
-import particleSystems.ParticleSystem;
-import physics.Body;
+import aulas.aa.behaviors.Pursuit;
+import aulas.aa.behaviors.Seek;
+import aulas.aa.behaviors.Wander;
+import aulas.graph.SubPlot;
+import aulas.particleSystems.PSControl;
+import aulas.particleSystems.ParticleSystem;
+import aulas.physics.Body;
+import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.IProcessingApp;
 
 public class FlockTestApp implements IProcessingApp {
 	private Flock flock;

@@ -1,10 +1,10 @@
-package particleSystems;
+package aulas.particleSystems;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import graph.SubPlot;
-import physics.Body;
+import aulas.graph.SubPlot;
+import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
 

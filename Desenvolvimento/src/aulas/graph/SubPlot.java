@@ -1,4 +1,4 @@
-package graph;
+package aulas.graph;
 
 public class SubPlot 
 {		

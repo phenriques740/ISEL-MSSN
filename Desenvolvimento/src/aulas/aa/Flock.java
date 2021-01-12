@@ -1,14 +1,14 @@
-package aa;
+package aulas.aa;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import aa.behaviors.Align;
-import aa.behaviors.Cohesion;
-import aa.behaviors.Flee;
-import aa.behaviors.Separate;
-import graph.SubPlot;
-import physics.Body;
+import aulas.aa.behaviors.Align;
+import aulas.aa.behaviors.Cohesion;
+import aulas.aa.behaviors.Flee;
+import aulas.aa.behaviors.Separate;
+import aulas.graph.SubPlot;
+import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
 

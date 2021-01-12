@@ -1,8 +1,8 @@
-package LidenMayer;
+package aulas.LidenMayer;
 
-import graph.SubPlot;
+import aulas.graph.SubPlot;
+import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
 
 public class LSystemApp4 implements InterfaceProcessingApp {
 
@@ -19,7 +19,7 @@ public class LSystemApp4 implements InterfaceProcessingApp {
 	@Override
 	public void setup(PApplet parent) {
 		plot = new SubPlot(window,viewport,parent.width,parent.height);
-		//Primeira árvore
+		//Primeira ï¿½rvore
 		Regra[] rule = new Regra[1];
 		rule[0] = new Regra('F',"FF-[-F+F+F]+[+F-F-F]");
 		ls = new LSystem("F",rule);

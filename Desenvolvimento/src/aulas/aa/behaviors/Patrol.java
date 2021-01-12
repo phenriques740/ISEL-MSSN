@@ -1,9 +1,9 @@
-package aa.behaviors;
+package aulas.aa.behaviors;
 
 import java.util.ArrayList;
 
-import aa.Boid;
-import physics.Body;
+import aulas.aa.Boid;
+import aulas.physics.Body;
 import processing.core.PVector;
 
 public class Patrol extends Behavior {

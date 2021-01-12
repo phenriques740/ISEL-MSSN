@@ -1,7 +1,7 @@
-package JulaMandelBrot;
+package aulas.JulaMandelBrot;
 
+import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
 
 //https://www.youtube.com/watch?v=6z7GQewK-Ks				--obrigado Daniel Shiffman pelo mandelBrott
 //https://www.youtube.com/watch?v=fAsaSkmbF5s				// obrigado tambem pelo Set de Julia
@@ -82,7 +82,7 @@ public class DynamicJulia implements InterfaceProcessingApp {
 							break;  // Bail
 						}
 						float twoab = 2.0f * a * b;
-						a = aa - bb + ca; //estas são as tais constantes que mudam aqui no julia set
+						a = aa - bb + ca; //estas sï¿½o as tais constantes que mudam aqui no julia set
 						b = twoab + cb;
 						n++;
 						absOld = abs;

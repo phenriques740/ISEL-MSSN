@@ -1,4 +1,4 @@
-package physics;
+package aulas.physics;
 
 import processing.core.PApplet;
 import processing.core.PVector;

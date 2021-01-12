@@ -1,6 +1,6 @@
-package LidenMayer;
+package aulas.LidenMayer;
 
-import graph.SubPlot;
+import aulas.graph.SubPlot;
 import processing.core.PApplet;
 
 public class Turtle 

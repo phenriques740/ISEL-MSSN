@@ -1,7 +1,7 @@
-package JulaMandelBrot;
+package aulas.JulaMandelBrot;
 
+import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
 
 public class MandelBrot implements InterfaceProcessingApp {
 
@@ -17,7 +17,7 @@ public class MandelBrot implements InterfaceProcessingApp {
 		// TODO Auto-generated method stub
 		if( drawMandelBrott) {
 			
-			//este w e h são a range, a janela
+			//este w e h sï¿½o a range, a janela
 			float w = 4;
 			float h = (w * p.height) / p.width;
 			float xmin = -w/2;

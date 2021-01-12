@@ -1,4 +1,4 @@
-package aa;
+package aulas.aa;
 
 //esta classe tem as caracteristicas iniciais do BOID! 
 public class DNA {

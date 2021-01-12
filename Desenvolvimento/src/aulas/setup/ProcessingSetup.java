@@ -1,6 +1,6 @@
-package setup;
+package aulas.setup;
 
-import physics.ControlGUIApp;
+import aulas.physics.ControlGUIApp;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {

@@ -1,6 +1,6 @@
-package physics;
+package aulas.physics;
 
-import graph.SubPlot;
+import aulas.graph.SubPlot;
 import processing.core.PApplet;
 import processing.core.PVector;
 

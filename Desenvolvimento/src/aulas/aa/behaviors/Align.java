@@ -1,7 +1,7 @@
-package aa.behaviors;
+package aulas.aa.behaviors;
 
-import aa.Boid;
-import physics.Body;
+import aulas.aa.Boid;
+import aulas.physics.Body;
 import processing.core.PVector;
 
 public class Align extends Behavior {
