@@ -8,10 +8,10 @@ import aulas.aa.behaviors.Brake;
 import aulas.aa.behaviors.Patrol;
 import aulas.graph.SubPlot;
 import aulas.physics.Body;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class D implements IProcessingApp {
 	private double[] window = { -10, 10, -10, 10 };

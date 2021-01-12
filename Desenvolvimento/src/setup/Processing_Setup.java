@@ -1,4 +1,4 @@
-package aulas.setup;
+package setup;
 
 import aulas.LidenMayer.LSystemApp3;
 import processing.core.PApplet;

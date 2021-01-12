@@ -1,7 +1,7 @@
 package aulas.JulaMandelBrot;
 
-import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
+import setup.InterfaceProcessingApp;
 
 //https://www.youtube.com/watch?v=6z7GQewK-Ks				--obrigado Daniel Shiffman pelo mandelBrott
 //https://www.youtube.com/watch?v=fAsaSkmbF5s				// obrigado tambem pelo Set de Julia

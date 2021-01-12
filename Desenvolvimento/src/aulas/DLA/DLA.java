@@ -4,10 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aulas.DLA.Walker.State;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class DLA implements IProcessingApp {
 

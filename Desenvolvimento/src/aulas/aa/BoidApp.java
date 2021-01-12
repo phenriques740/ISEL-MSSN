@@ -8,9 +8,9 @@ import aulas.aa.behaviors.Seek;
 import aulas.aa.behaviors.Wander;
 import aulas.graph.SubPlot;
 import aulas.physics.Body;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class BoidApp implements IProcessingApp {
 	private Boid b;

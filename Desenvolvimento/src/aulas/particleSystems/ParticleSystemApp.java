@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import aulas.graph.SubPlot;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class ParticleSystemApp implements IProcessingApp {
 

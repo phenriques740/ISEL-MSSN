@@ -1,8 +1,8 @@
 package aulas.LidenMayer;
 
 import aulas.graph.SubPlot;
-import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
+import setup.InterfaceProcessingApp;
 
 public class LSystemApp1 implements InterfaceProcessingApp 
 {

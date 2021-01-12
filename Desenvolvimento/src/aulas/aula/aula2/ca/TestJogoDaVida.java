@@ -1,8 +1,8 @@
 package aulas.aula.aula2.ca;
 
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PConstants;
+import setup.IProcessingApp;
 
 public class TestJogoDaVida implements IProcessingApp {
 	private final int nrows = 50;

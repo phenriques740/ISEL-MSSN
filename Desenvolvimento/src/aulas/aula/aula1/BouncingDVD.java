@@ -1,8 +1,8 @@
 package aulas.aula.aula1;
 
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PImage;
+import setup.IProcessingApp;
 
 public class BouncingDVD implements IProcessingApp {
 	private int x, y;

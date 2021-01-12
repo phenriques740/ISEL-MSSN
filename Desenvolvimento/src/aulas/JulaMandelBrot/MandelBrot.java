@@ -1,7 +1,7 @@
 package aulas.JulaMandelBrot;
 
-import aulas.setup.InterfaceProcessingApp;
 import processing.core.PApplet;
+import setup.InterfaceProcessingApp;
 
 public class MandelBrot implements InterfaceProcessingApp {
 

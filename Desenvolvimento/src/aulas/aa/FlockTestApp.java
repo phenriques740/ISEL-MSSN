@@ -11,9 +11,9 @@ import aulas.graph.SubPlot;
 import aulas.particleSystems.PSControl;
 import aulas.particleSystems.ParticleSystem;
 import aulas.physics.Body;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class FlockTestApp implements IProcessingApp {
 	private Flock flock;

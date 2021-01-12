@@ -6,10 +6,10 @@ import java.util.List;
 import aulas.graph.SubPlot;
 import aulas.particleSystems.PSControl;
 import aulas.particleSystems.ParticleSystem;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
+import setup.IProcessingApp;
 
 public class EarthSunApp implements IProcessingApp
 {

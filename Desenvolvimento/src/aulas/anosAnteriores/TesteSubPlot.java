@@ -1,8 +1,8 @@
 package aulas.anosAnteriores;
 
 import aulas.graph.SubPlot;
-import aulas.setup.IProcessingApp;
 import processing.core.PApplet;
+import setup.IProcessingApp;
 
 public class TesteSubPlot implements IProcessingApp {
 
