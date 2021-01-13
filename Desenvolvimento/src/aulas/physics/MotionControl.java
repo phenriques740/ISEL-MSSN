@@ -16,10 +16,11 @@ public class MotionControl {
 	}
 
 	public void setVector(PVector vector) {
+		System.out.println("BBBB");
+
 		this.vector = vector;
 		switch (ct) {
 		case POSITION:
-			rb.setPos(vector);
 			break;
 		case VELOCITY:
 			rb.setVel(vector);

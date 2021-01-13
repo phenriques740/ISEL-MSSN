@@ -53,20 +53,14 @@ public class RigidBody {
 		return vel;
 	}
 
-	public void setVel(PVector vel) {
-		this.vel = vel;
+	public void setVel(PVector vector) {
+		this.vel = vector;
 	}
 
 	public void applyForce(PVector force) {
+		System.out.println("CCCCC");
+
 		this.acc = PVector.div(force, mass);
-	}
-
-	public PVector getAcc() {
-		return acc;
-	}
-
-	public void setAcc(PVector acc) {
-		this.acc = acc;
 	}
 
 }

@@ -11,10 +11,6 @@ public class ControlGUIApp implements IProcessingApp {
 	private float mass = 1f;
 	private ControlType ct = ControlType.POSITION;
 
-	public ControlGUIApp() {
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void setup(PApplet p) {
 		rb = new RigidBody(mass);
@@ -35,6 +31,8 @@ public class ControlGUIApp implements IProcessingApp {
 		float x = p.mouseX - p.width / 2;
 		float y = p.mouseY - p.height / 2;
 		mc.setVector(new PVector(x, y));
+
+		System.out.println("Force: X " + x + " y " + y);
 	}
 
 	@Override
