@@ -1,12 +1,12 @@
 package aulas.JulaMandelBrot;
 
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
 //https://www.youtube.com/watch?v=6z7GQewK-Ks				--obrigado Daniel Shiffman pelo mandelBrott
 //https://www.youtube.com/watch?v=fAsaSkmbF5s				// obrigado tambem pelo Set de Julia
 
-public class DynamicJulia implements InterfaceProcessingApp {
+public class DynamicJulia implements IProcessingApp {
 	private boolean drawMandelBrott = false;
 	private boolean drawJulia = true;
 	private boolean mouseInteract = true;

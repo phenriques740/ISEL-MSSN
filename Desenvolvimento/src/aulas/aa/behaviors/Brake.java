@@ -1,8 +1,6 @@
 package aulas.aa.behaviors;
 
 import aulas.aa.Boid;
-import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PVector;
 
 public class Brake extends Behavior {

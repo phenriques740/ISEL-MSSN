@@ -2,9 +2,9 @@ package aulas.LidenMayer;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
-public class LSystemApp1 implements InterfaceProcessingApp 
+public class LSystemApp1 implements IProcessingApp 
 {
 	private LSystem lsys;
 	private Turtle turtle;

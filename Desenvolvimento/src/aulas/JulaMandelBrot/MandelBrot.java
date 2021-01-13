@@ -1,9 +1,9 @@
 package aulas.JulaMandelBrot;
 
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
-public class MandelBrot implements InterfaceProcessingApp {
+public class MandelBrot implements IProcessingApp {
 
 	private boolean drawMandelBrott;
 	@Override

@@ -2,9 +2,9 @@ package aulas.ChaosGame;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
-public class ChaosGameStatic implements InterfaceProcessingApp {
+public class ChaosGameStatic implements IProcessingApp {
 
 	private double[] window = {-1,1,0,1};
 	private float[] viewport = {0.1f,0.1f,0.8f,0.8f};

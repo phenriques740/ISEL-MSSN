@@ -2,9 +2,9 @@ package aulas.LidenMayer;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.InterfaceProcessingApp;
+import setup.IProcessingApp;
 
-public class LSystemApp4 implements InterfaceProcessingApp {
+public class LSystemApp4 implements IProcessingApp {
 
 	private double[] window = {0,2,0,3};
 	private float[] viewport = {0.1f,0.1f,0.8f,0.8f};
