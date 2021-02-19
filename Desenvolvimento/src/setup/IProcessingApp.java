@@ -2,7 +2,8 @@ package setup;
 
 import processing.core.PApplet;
 
-public interface InterfaceProcessingApp {
+public interface IProcessingApp {
+
 	/**
 	 * Chamado a quando da inicializacao da app
 	 * 
@@ -47,15 +48,6 @@ public interface InterfaceProcessingApp {
 	 * 
 	 * @param p
 	 */
-	public void mouseReleased(PApplet p);
+	void mouseReleased(PApplet p);
 
-	/**
-	 * Lida com o evento keyReleased.<br>
-	 * 
-	 * Chamado cada vez que apos um clique de uma tecla, o utilizador solta o botao.
-	 * Usar o metodo mouseButton para descobrir que botão foi carregado.
-	 * 
-	 * @param p
-	 */
-	public void keyReleased(PApplet p);
 }
