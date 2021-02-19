@@ -9,7 +9,8 @@ public class RigidBody {
 	private PVector acc;
 	private float mass;
 
-	public enum ControlType {
+	public enum ControlType
+	{
 		POSITION, VELOCITY, FORCE
 	}
 

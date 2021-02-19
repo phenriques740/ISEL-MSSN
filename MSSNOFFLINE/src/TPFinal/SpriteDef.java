@@ -71,14 +71,10 @@ public class SpriteDef {
 
 	
 	public void setSpeed(float speed) {
+	
+		I like trains
 		this.speed = speed;
 	}
-	
-	
-	
-	
-	
-
 }
 
 
