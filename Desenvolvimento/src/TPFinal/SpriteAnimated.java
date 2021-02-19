@@ -19,6 +19,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	ArrayList<PImage> animation, animationMC, animationBone; // vai ter cada frame
 
 	ArrayList<SpriteDef> enemies, bones; // conjunto de cavalos
+	ArrayList<Body> enemiesBody, bonesBody;
 
 	private Body MCBody;
 	private double[] window = { -10, 10, -10, 10 };
@@ -29,8 +30,11 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	SpriteDef MC; // MC = main Character
 	private float[] MCStartingPos = new float[] { 20, 400 };
 	private float MCStartingVel = 0f;
+	private float enemiesStartingVel = 0.5f;
 	private int spriteH, spriteW;
 	private boolean amIMoving = false;
+	private int numberOfEnemies = 5;
+	private boolean goingR = false, goingL = false;
 
 	@Override
 	public void setup(PApplet p) {
@@ -52,10 +56,24 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 			animation.add(img);
 		}
 
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < numberOfEnemies; i++) {
 			// vou instanciar o meu boneco principal na posição especificada. util ter isto
 			// numa lista para depois adicionar multiplo meteoritos/objectos a cair
-			enemies.add(new SpriteDef(animation, 50, i * 75, 0.5f, p));
+			enemies.add(new SpriteDef(animation, 50, i * 75, enemiesStartingVel, p));
+		}
+
+		plt = new SubPlot(window, viewport, p.width, p.height);
+
+		enemiesBody = new ArrayList<Body>();
+		for (int i = 0; i < numberOfEnemies; ++i) {
+			PVector worldCoordToPlt = new PVector(
+					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[0],
+					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[1]);
+			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1, 1,
+					p.color(255, 128, 0));
+			enemiesBody.add(enemyBody);
+			// System.out.println("adicionei um body!");
+
 		}
 
 		// para o personagem principal: (fazer load da primeira animação.
@@ -79,13 +97,12 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 																								// nao faz diferença
 																								// entr [0] e [1]
 
-		plt = new SubPlot(window, viewport, p.width, p.height);
 		PVector worldCoordToPlt = new PVector((float) plt.getWorldCoord(MCStartingPos)[0],
 				(float) plt.getWorldCoord(MCStartingPos)[1]); // fazer a conversão de coordenadas do mundo (em pixeis)
 																// para
 		// as cordenadas do viewport que os rigid bodies utilizam !
 		MCBody = new Body(worldCoordToPlt, new PVector(MCStartingVel, 0), 1, 1, p.color(255, 128, 0));
-		//iniciar a lista que vai ter os ossos:
+		// iniciar a lista que vai ter os ossos:
 		bones = new ArrayList<SpriteDef>();
 
 	}
@@ -99,40 +116,63 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		MCBody.move(dt * 15); // este * 15 e porque na classe da sprite multiplico por 10 para ser mais
 								// rápido, para acompanhar a animação ponho 15
 		MCBody.display(p, plt);
-		if (plt.getPixelCoord(MCBody.getPos().x, MCBody.getPos().y)[0] > p.width) {
-			System.out.println("saiu!!");
+		/*
+		 * if (plt.getPixelCoord(MCBody.getPos().x, MCBody.getPos().y)[0] > p.width) {
+		 * System.out.println("saiu!!");
+		 * 
+		 * double[] arr = plt.getWorldCoord(MCBody.getPos().x, MCBody.getPos().y);
+		 * PVector debug = new PVector((float) arr[0], (float) arr[1]);
+		 * MCBody.setPos(debug);
+		 * 
+		 * }
+		 */
 
-			double[] arr = plt.getWorldCoord(MCBody.getPos().x, MCBody.getPos().y);
-			PVector debug = new PVector((float) arr[0], (float) arr[1]);
-			MCBody.setPos(debug);
-
-		}
-
+		// fazer animação do personagem principal
 		if (MC != null) {
+			/*
+			if(goingR) {
+				loadRunRightAnimation(p);
+			}
+			else if(goingL) {
+				loadRunLeftAnimation(p);
+			}
+			*/
 			MC.show();
 			MC.animate();
 		}
 
 		makeBodyFollowAnimation(MCBody, MC);
 
-		if(!bones.isEmpty()) {
-			System.out.println("bones não esta empty!");
-			for(SpriteDef bone : bones) {
+		// mostrar ossos, caso existam
+		if (!bones.isEmpty()) {
+			// System.out.println("bones não esta empty!");
+			for (SpriteDef bone : bones) {
 				bone.show();
 				bone.animateVertical();
-				//bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para trás
+				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para trás
 			}
 		}
-		
-		//para remover os ossos da lista, nao posso usar for-each e tenho que começar do fim! caso contrário tenho uma excepção!
-		for(int i = bones.size()-1; i >= 0  ; --i) {
-			SpriteDef boneActual = bones.get(i);
-			if(boneActual.isRemoveMe() ) {
-				bones.remove( boneActual );
-			}
-		}
-		
 
+		// para remover os ossos da lista, nao posso usar for-each e tenho que começar
+		// do fim! caso contrário tenho uma excepção!
+		for (int i = bones.size() - 1; i >= 0; --i) {
+			SpriteDef boneActual = bones.get(i);
+			if (boneActual.isRemoveMe()) {
+				bones.remove(boneActual);
+			}
+		}
+
+		// corpos dos inimigos
+		int index = 0;
+		for (Body enemieBody : enemiesBody) {
+			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
+			enemieBody.move(dt * 15);
+			enemieBody.display(p, plt);
+			makeBodyFollowAnimation(enemieBody, enemies.get(index));
+			index++;
+
+		}
+		// animacoes dos inimigos
 		for (SpriteDef enemie : enemies) {
 			enemie.show();
 			enemie.animate();
@@ -156,11 +196,14 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		if (!amIMoving && (p.key == 'd' || p.key == 'a')) {
 			MC.setSpeed(0.2f);
 			if (p.key == 'd') {
-				// System.out.println("carreguei no D");
+				goingR = true;
+				System.out.println("carreguei no D");
 				loadRunRightAnimation(p);
 				amIMoving = true;
 				// System.out.println("value da p.key d --->"+p.keyCode);
-			} else if (p.key == 'a') {
+			} 
+			if (p.key == 'a') {
+				goingL = true;
 				loadRunLeftAnimation(p);
 				amIMoving = true;
 				// System.out.println("value da p.key d --->"+p.keyCode);
@@ -169,7 +212,6 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		}
 		if (p.key == ' ') {
 			loadShootBoneAnimation(p);
-			
 			// System.out.println("value da p.key d --->"+p.keyCode);
 		}
 
@@ -189,12 +231,17 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
 			animationBone.add(imgBone);
+
 		}
-		while (true) {
-			bones.add(new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p));
-			//bone = new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p);
-			break;
-		}
+		bones.add(new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p));
+		//bones.add(new SpriteDef(animationBone, MC.getX()+10, MC.getY(), 1f, p));
+		
+		// PVector worldCoordToPlt = new PVector((float)
+		// plt.getWorldCoord(enemies.get(i).getX(),enemies.get(i).getY())[0], (float)
+		// plt.getWorldCoord(enemies.get(i).getX(),enemies.get(i).getY())[1]);
+		// Body enemyBody = new Body(worldCoordToPlt, new
+		// PVector(enemies.get(i).getSpeed(), 0), 1, 1, p.color(255, 128, 0));
+		// enemiesBody.add(enemyBody);
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {
@@ -248,10 +295,12 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stubdddd
 		if (p.key == 'd') {
+			goingR = false;
 			MC.setSpeed(0f);
 			amIMoving = false;
 		}
 		if (p.key == 'a') {
+			goingL = false;
 			MC.setSpeed(0f);
 			amIMoving = false;
 		}
@@ -265,24 +314,3 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
