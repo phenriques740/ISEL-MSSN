@@ -20,6 +20,14 @@ public class SpriteDef {
 	private int speedUpFactor = 10;
 	private boolean removeMe = false;
 
+	public boolean isRemoveMe() {
+		return removeMe;
+	}
+
+	public void setRemoveMe(boolean removeMe) {
+		this.removeMe = removeMe;
+	}
+
 	public int getSpeedUpFactor() {
 		return speedUpFactor;
 	}

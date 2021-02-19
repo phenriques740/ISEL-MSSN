@@ -69,7 +69,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 			PVector worldCoordToPlt = new PVector(
 					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[0],
 					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[1]);
-			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1, 1,
+			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1, 1.4f,
 					p.color(255, 128, 0));
 			enemiesBody.add(enemyBody);
 			// System.out.println("adicionei um body!");
