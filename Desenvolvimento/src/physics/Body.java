@@ -11,9 +11,19 @@ public class Body extends Mover
 	private boolean flagRemove = false;
 	protected float radius;
 	float[] boudingBox;
+	private float width, height;
 	
 	public Body(PVector pos, PVector vel, float mass, float radius, int color){
 		super(pos, vel, mass);
+		this.color = color;
+		this.radius = radius;
+		this.flagRemove = false;
+	}
+	
+	public Body(PVector pos, PVector vel, float mass, float width, float height, int color){
+		super(pos, vel, mass);
+		this.height = height;
+		this.width = width;
 		this.color = color;
 		this.radius = radius;
 		this.flagRemove = false;
@@ -54,6 +64,7 @@ public class Body extends Mover
 		//p.circle(pp[0], pp[1], r[0]);
 		boudingBox = new float[] {pp[0], pp[1], width, height};
 		p.rect(boudingBox[0], boudingBox[1], boudingBox[2], boudingBox[3]);
+		
 		
 		//p.circle(pp[0], pp[1], 2*r[0]);
 	}

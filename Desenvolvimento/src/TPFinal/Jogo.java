@@ -72,7 +72,7 @@ public class Jogo implements InterfaceProcessingApp {
 			PVector worldCoordToPlt = new PVector(
 					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[0],
 					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[1]);
-			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1, 1,
+			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1f, 1f,
 					p.color(255, 128, 0));
 			enemiesBody.add(enemyBody);
 			// System.out.println("adicionei um body!");
@@ -125,7 +125,7 @@ public class Jogo implements InterfaceProcessingApp {
 		MCBody.setVel(new PVector(MCStartingVel, 0));
 		MCBody.move(dt * 15); // este * 15 e porque na classe da sprite multiplico por 10 para ser mais
 								// r�pido, para acompanhar a anima��o ponho 15
-		MCBody.display(p, plt);
+		MCBody.display(p, plt, 50, 60);
 		/*
 		 * if (plt.getPixelCoord(MCBody.getPos().x, MCBody.getPos().y)[0] > p.width) {
 		 * System.out.println("saiu!!");
@@ -168,7 +168,7 @@ public class Jogo implements InterfaceProcessingApp {
 		for (Body enemieBody : enemiesBody) {
 			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
 			enemieBody.move(dt * 15);
-			enemieBody.display(p, plt);
+			enemieBody.display(p, plt, 60, 50);
 			makeBodyFollowAnimation(enemieBody, enemies.get(index));
 			index++;
 
