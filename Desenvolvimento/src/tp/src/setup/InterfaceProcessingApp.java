@@ -1,8 +1,8 @@
-package setup;
+package tp.src.setup;
 
 import processing.core.PApplet;
 
-public interface IProcessingApp {
+public interface InterfaceProcessingApp {
 
 	/**
 	 * Chamado a quando da inicializacao da app
@@ -50,4 +50,5 @@ public interface IProcessingApp {
 	 */
 	void mouseReleased(PApplet p);
 
+	void keyReleased(PApplet p);
 }
