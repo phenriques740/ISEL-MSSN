@@ -5,6 +5,12 @@ import java.util.ArrayList;
 import processing.core.PApplet;
 import processing.core.PImage;
 
+/**
+ * Gere a classe e fornece definicoes sobre o sprite
+ * 
+ * @author vasco
+ *
+ */
 public class SpriteDef {
 
 	float x, y, w, speed, indexF;
@@ -13,14 +19,6 @@ public class SpriteDef {
 	private PApplet p;
 	private int speedUpFactor = 10;
 	private boolean removeMe = false;
-
-	public boolean isRemoveMe() {
-		return removeMe;
-	}
-
-	public void setRemoveMe(boolean removeMe) {
-		this.removeMe = removeMe;
-	}
 
 	public int getSpeedUpFactor() {
 		return speedUpFactor;
@@ -38,6 +36,7 @@ public class SpriteDef {
 		this.animation = animation;
 		this.w = animation.get(0).width;
 		this.len = animation.size();
+		// System.out.println("len size----->"+len);
 		this.removeMe = false;
 		// System.out.println("len size----->"+len);
 	}
@@ -46,17 +45,20 @@ public class SpriteDef {
 		return w;
 	}
 
+	public void setW(float w) {
+		this.w = w;
+	}
+
 	/*
 	 * este index e calculado com o index anterior e o tamanho total de frames na
-	 * sprite. é aumentando com base no speed dado para nao haver aquele efeito de
-	 * patinhar que alguns jogos têm quando uso esse index para desenhar a imagem,
-	 * faco o floor para eliminar a parte decimal, pois o array so tem posições
+	 * sprite. ï¿½ aumentando com base no speed dado para nao haver aquele efeito de
+	 * patinhar que alguns jogos tï¿½m quando uso esse index para desenhar a imagem,
+	 * faco o floor para eliminar a parte decimal, pois o array so tem posiï¿½ï¿½es
 	 * inteiras e se o meu cavalo tiver speed de 0.3 significa que so na quarta
 	 * frame e que vou desenhar a proxima imagem diferente!
 	 */
 	public void show() {
 		indexF = (this.indexF) % this.len;
-
 		p.image(animation.get(PApplet.floor(indexF)), x, y);
 	}
 
@@ -64,7 +66,6 @@ public class SpriteDef {
 		// System.out.println("speed---->"+speed);
 		indexF += speed;
 		this.x += speed * speedUpFactor;
-
 		if (x > p.width) {
 			x = 0;
 		}
@@ -73,17 +74,17 @@ public class SpriteDef {
 		}
 
 	}
-	
+
 	public void animateVertical() {
 		// System.out.println("speed---->"+speed);
 		indexF += speed;
 		this.y += -speed * speedUpFactor;
 
-		if (y > (p.height+30) ) {
+		if (y > (p.height + 30)) {
 			x = 0;
 			this.removeMe = true;
 		}
-		
+
 		if (y < -30) {
 			y = p.height;
 			this.removeMe = true;
