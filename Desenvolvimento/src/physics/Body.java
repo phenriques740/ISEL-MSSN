@@ -4,22 +4,13 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import graph.SubPlot;
 
-public class Body extends Mover
-{
-	//public static final double G = 1e-4f;
+public class Body extends Mover {
+	// public static final double G = 1e-4f;
 	protected int color;
 	private boolean flagRemove = false;
 	protected float radius;
 	float[] boudingBox;
 	private float width, height;
-	
-	public Body(PVector pos, PVector vel, float mass, float radius, int color){
-		super(pos, vel, mass);
-		this.color = color;
-		this.radius = radius;
-		this.flagRemove = false;
-	}
-	
 	public Body(PVector pos, PVector vel, float mass, float width, float height, int color){
 		super(pos, vel, mass);
 		this.height = height;
@@ -28,7 +19,6 @@ public class Body extends Mover
 		this.radius = radius;
 		this.flagRemove = false;
 	}
-	
 	public int getColor() {
 		return color;
 	}
@@ -48,14 +38,26 @@ public class Body extends Mover
 	public void display(PApplet p, SubPlot plt) {
 		float[] pp = plt.getPixelCoord(pos.x, pos.y);
 		float[] r = plt.getDimInPixel(radius, radius);
-		
+
 		p.fill(color);
-		//p.circle(pp[0], pp[1], r[0]);
-		boudingBox = new float[] {pp[0], pp[1], r[0], r[1]*-2};
+		// p.circle(pp[0], pp[1], r[0]);
+		boudingBox = new float[] { pp[0], pp[1], r[0], r[1] * -2 };
 		p.rect(boudingBox[0], boudingBox[1], boudingBox[2], boudingBox[3]);
-		
-		//p.circle(pp[0], pp[1], 2*r[0]);
+
+		// p.circle(pp[0], pp[1], 2*r[0]);
 	}
+
+	public void display(PApplet p, SubPlot plt, float width, float height) {
+		float[] pp = plt.getPixelCoord(pos.x, pos.y);
+
+		p.fill(color);
+		// p.circle(pp[0], pp[1], r[0]);
+		boudingBox = new float[] { pp[0], pp[1], width, height };
+		p.rect(boudingBox[0], boudingBox[1], boudingBox[2], boudingBox[3]);
+
+		// p.circle(pp[0], pp[1], 2*r[0]);
+	}
+<<<<<<< Updated upstream
 	
 	public void display(PApplet p, SubPlot plt, float width, float height) {
 		float[] pp = plt.getPixelCoord(pos.x, pos.y);
@@ -69,6 +71,8 @@ public class Body extends Mover
 		//p.circle(pp[0], pp[1], 2*r[0]);
 	}
 	
+=======
+>>>>>>> Stashed changes
 
 	public float[] getBoudingBox() {
 		return boudingBox;
@@ -81,26 +85,10 @@ public class Body extends Mover
 	public void setFlagRemove(boolean flagRemove) {
 		this.flagRemove = flagRemove;
 	}
-	
-	//para a parte do pedro funcionar:
+
+	// para a parte do pedro funcionar:
 	public boolean isInside(PVector pos) {
 		return PVector.dist(pos, this.pos) <= getRadius();
 	}
-	
-	
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
