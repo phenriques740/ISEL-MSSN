@@ -70,7 +70,9 @@ public class SpriteDef {
 	}
 
 	
+	
 	public void setSpeed(float speed) {
+		//comnentar asdasdasd
 		this.speed = speed;
 	}
 	
