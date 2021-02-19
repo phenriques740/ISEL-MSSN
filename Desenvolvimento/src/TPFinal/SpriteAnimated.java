@@ -43,7 +43,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		for (int i = 0; i < frames.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = frames.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informação que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
 																// (o numero, o x, y)
 			// System.out.println("---->"+pos);
 			// PImage img = spritesheet.get(pos.getInt("x"), pos.getInt("y"),
@@ -53,12 +53,12 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		}
 
 		for (int i = 0; i < 5; i++) {
-			// vou instanciar o meu boneco principal na posição especificada. util ter isto
+			// vou instanciar o meu boneco principal na posiï¿½ï¿½o especificada. util ter isto
 			// numa lista para depois adicionar multiplo meteoritos/objectos a cair
 			enemies.add(new SpriteDef(animation, 50, i * 75, 0.5f, p));
 		}
 
-		// para o personagem principal: (fazer load da primeira animação.
+		// para o personagem principal: (fazer load da primeira animaï¿½ï¿½o.
 		animationMC = new ArrayList<PImage>();
 		spritedataMC = p.loadJSONObject("resources/skeletonRun.json");
 		spritesheetMC = p.loadImage("resources/skeleton.png");
@@ -67,7 +67,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informação que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
 			PImage imgMC = spritesheetMC.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
@@ -76,16 +76,16 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		MC = new SpriteDef(animationMC, MCStartingPos[0], MCStartingPos[1], MCStartingVel, p); // a MCStartingVel tem os
 																								// valores iguais em
 																								// ambas as componentes,
-																								// nao faz diferença
+																								// nao faz diferenï¿½a
 																								// entr [0] e [1]
 
 		plt = new SubPlot(window, viewport, p.width, p.height);
 		PVector worldCoordToPlt = new PVector((float) plt.getWorldCoord(MCStartingPos)[0],
-				(float) plt.getWorldCoord(MCStartingPos)[1]); // fazer a conversão de coordenadas do mundo (em pixeis)
+				(float) plt.getWorldCoord(MCStartingPos)[1]); // fazer a conversï¿½o de coordenadas do mundo (em pixeis)
 																// para
 		// as cordenadas do viewport que os rigid bodies utilizam !
 		MCBody = new Body(worldCoordToPlt, new PVector(MCStartingVel, 0), 1, 1, p.color(255, 128, 0));
-		//iniciar a lista que vai ter os ossos:
+		// iniciar a lista que vai ter os ossos:
 		bones = new ArrayList<SpriteDef>();
 
 	}
@@ -97,7 +97,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 
 		MCBody.setVel(new PVector(MCStartingVel, 0));
 		MCBody.move(dt * 15); // este * 15 e porque na classe da sprite multiplico por 10 para ser mais
-								// rápido, para acompanhar a animação ponho 15
+								// rï¿½pido, para acompanhar a animaï¿½ï¿½o ponho 15
 		MCBody.display(p, plt);
 		if (plt.getPixelCoord(MCBody.getPos().x, MCBody.getPos().y)[0] > p.width) {
 			System.out.println("saiu!!");
@@ -115,23 +115,23 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 
 		makeBodyFollowAnimation(MCBody, MC);
 
-		if(!bones.isEmpty()) {
-			System.out.println("bones não esta empty!");
-			for(SpriteDef bone : bones) {
+		if (!bones.isEmpty()) {
+			System.out.println("bones nï¿½o esta empty!");
+			for (SpriteDef bone : bones) {
 				bone.show();
 				bone.animateVertical();
-				//bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para trás
+				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para trï¿½s
 			}
 		}
-		
-		//para remover os ossos da lista, nao posso usar for-each e tenho que começar do fim! caso contrário tenho uma excepção!
-		for(int i = bones.size()-1; i >= 0  ; --i) {
+
+		// para remover os ossos da lista, nao posso usar for-each e tenho que comeï¿½ar
+		// do fim! caso contrï¿½rio tenho uma excepï¿½ï¿½o!
+		for (int i = bones.size() - 1; i >= 0; --i) {
 			SpriteDef boneActual = bones.get(i);
-			if(boneActual.isRemoveMe() ) {
-				bones.remove( boneActual );
+			if (boneActual.isRemoveMe()) {
+				bones.remove(boneActual);
 			}
 		}
-		
 
 		for (SpriteDef enemie : enemies) {
 			enemie.show();
@@ -169,7 +169,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		}
 		if (p.key == ' ') {
 			loadShootBoneAnimation(p);
-			
+
 			// System.out.println("value da p.key d --->"+p.keyCode);
 		}
 
@@ -184,7 +184,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		for (int i = 0; i < framesBone.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesBone.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informação que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
 			PImage imgBone = spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
@@ -192,7 +192,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		}
 		while (true) {
 			bones.add(new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p));
-			//bone = new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p);
+			// bone = new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p);
 			break;
 		}
 	}
@@ -206,14 +206,14 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informação que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
 			PImage imgMC = spritesheetMC.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
 			animationMC.add(imgMC);
 		}
 		MC = new SpriteDef(animationMC, MC.getX(), MC.getY(), MC.getSpeed(), p);
-		MC.setSpeedUpFactor(MC.getSpeedUpFactor() * -1); // de forma a andar para trás
+		MC.setSpeedUpFactor(MC.getSpeedUpFactor() * -1); // de forma a andar para trï¿½s
 	}
 
 	public void loadRunRightAnimation(PApplet p) {
@@ -225,14 +225,14 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informação que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
 			PImage imgMC = spritesheetMC.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
 			animationMC.add(imgMC);
 		}
 		MC = new SpriteDef(animationMC, MC.getX(), MC.getY(), MC.getSpeed(), p);
-		// este IF e para saber se ja estou a andar na direção certa ou se preciso de
+		// este IF e para saber se ja estou a andar na direï¿½ï¿½o certa ou se preciso de
 		// inverter !
 		if (MC.getSpeedUpFactor() > 0) {
 			MC.setSpeedUpFactor(MC.getSpeedUpFactor());
@@ -265,24 +265,3 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
