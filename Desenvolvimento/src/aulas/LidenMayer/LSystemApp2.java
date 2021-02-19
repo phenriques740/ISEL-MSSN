@@ -2,9 +2,9 @@ package aulas.LidenMayer;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class LSystemApp2 implements IProcessingApp 
+public class LSystemApp2 implements InterfaceProcessingApp 
 {
 	private LSystem lsys;
 	private Turtle turtle;
@@ -52,6 +52,12 @@ public class LSystemApp2 implements IProcessingApp
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 		
 	}

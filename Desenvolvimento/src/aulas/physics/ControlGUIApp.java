@@ -3,9 +3,9 @@ package aulas.physics;
 import aulas.physics.RigidBody.ControlType;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class ControlGUIApp implements IProcessingApp {
+public class ControlGUIApp implements InterfaceProcessingApp {
 	private RigidBody rb;
 	private MotionControl mc;
 	private float mass = 1f;
@@ -55,6 +55,12 @@ public class ControlGUIApp implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

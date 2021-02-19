@@ -7,9 +7,9 @@ import aulas.DLA.Walker.State;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class DLA implements IProcessingApp {
+public class DLA implements InterfaceProcessingApp {
 
 	private List<Walker> walkers;
 	private int NUM_WALKERS = 100;
@@ -144,6 +144,12 @@ public class DLA implements IProcessingApp {
 			heldLMB = false;
 		}
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/*

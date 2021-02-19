@@ -2,9 +2,9 @@ package aulas.LidenMayer;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class LSystemApp4 implements IProcessingApp {
+public class LSystemApp4 implements InterfaceProcessingApp {
 
 	private double[] window = {0,2,0,3};
 	private float[] viewport = {0.1f,0.1f,0.8f,0.8f};
@@ -56,6 +56,12 @@ public class LSystemApp4 implements IProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 		
 	}

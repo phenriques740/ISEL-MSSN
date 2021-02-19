@@ -1,9 +1,9 @@
 package aulas.aula.aula2.ca;
 
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class TestCA implements IProcessingApp {
+public class TestCA implements InterfaceProcessingApp {
 	private final int nrows = 15;
 	private final int ncols = 20;
 	private int nStates = 4;
@@ -42,6 +42,12 @@ public class TestCA implements IProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
 	}

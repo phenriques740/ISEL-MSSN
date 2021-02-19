@@ -2,9 +2,9 @@ package aulas.aula.aula1;
 
 import processing.core.PApplet;
 import processing.core.PImage;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class BouncingDVD implements IProcessingApp {
+public class BouncingDVD implements InterfaceProcessingApp {
 	private int x, y;
 	private float xspeed, yspeed;
 
@@ -68,5 +68,11 @@ public class BouncingDVD implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 }

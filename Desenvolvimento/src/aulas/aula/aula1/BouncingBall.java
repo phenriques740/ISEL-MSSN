@@ -1,9 +1,9 @@
 package aulas.aula.aula1;
 
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class BouncingBall implements IProcessingApp {
+public class BouncingBall implements InterfaceProcessingApp {
 	private int x, y;
 	private float xspeed, yspeed;
 
@@ -54,5 +54,10 @@ public class BouncingBall implements IProcessingApp {
 
 	}
 
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

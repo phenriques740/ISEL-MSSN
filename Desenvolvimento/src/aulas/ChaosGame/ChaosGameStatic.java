@@ -2,9 +2,9 @@ package aulas.ChaosGame;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class ChaosGameStatic implements IProcessingApp {
+public class ChaosGameStatic implements InterfaceProcessingApp {
 
 	private double[] window = {-1,1,0,1};
 	private float[] viewport = {0.1f,0.1f,0.8f,0.8f};
@@ -106,6 +106,12 @@ public class ChaosGameStatic implements IProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 		
 	}

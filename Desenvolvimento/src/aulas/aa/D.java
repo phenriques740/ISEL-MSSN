@@ -11,9 +11,9 @@ import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class D implements IProcessingApp {
+public class D implements InterfaceProcessingApp {
 	private double[] window = { -10, 10, -10, 10 };
 	private float[] viewport = { 0, 0, 1, 1 };
 	private SubPlot plt;
@@ -108,6 +108,12 @@ public class D implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

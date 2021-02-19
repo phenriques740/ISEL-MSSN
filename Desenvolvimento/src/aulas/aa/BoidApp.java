@@ -10,9 +10,9 @@ import aulas.graph.SubPlot;
 import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class BoidApp implements IProcessingApp {
+public class BoidApp implements InterfaceProcessingApp {
 	private Boid b;
 	private double[] window = { -10, 10, -10, 10 };
 	private float[] viewport = { 0, 0, 1, 1 };
@@ -61,6 +61,12 @@ public class BoidApp implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

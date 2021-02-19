@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class ChaosGameDynamic implements IProcessingApp {
+public class ChaosGameDynamic implements InterfaceProcessingApp {
 
 	private double[] window = { 0, 1, 0, 1 };
 	private float[] viewport = { 0.15f, 0.15f, 0.7f, 0.7f };
@@ -103,6 +103,12 @@ public class ChaosGameDynamic implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

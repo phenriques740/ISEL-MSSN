@@ -2,9 +2,9 @@ package aulas.anosAnteriores;
 
 import aulas.graph.SubPlot;
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class TesteSubPlot implements IProcessingApp {
+public class TesteSubPlot implements InterfaceProcessingApp {
 
 	private SubPlot plot;
 	private double[] window = { -2, -2, 0, 4 };
@@ -50,6 +50,12 @@ public class TesteSubPlot implements IProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
 	}

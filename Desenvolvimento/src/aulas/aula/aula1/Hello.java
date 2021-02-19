@@ -1,9 +1,9 @@
 package aulas.aula.aula1;
 
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class Hello implements IProcessingApp {
+public class Hello implements InterfaceProcessingApp {
 
 	@Override
 	public void setup(PApplet p) {
@@ -32,6 +32,12 @@ public class Hello implements IProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
 	}

@@ -34,7 +34,7 @@ public class Processing_Setup extends PApplet {
 					//circle(mouseX, mouseY, raio);
 		int now = millis();
 		float dt = (now - lastUpdate) / 1000f;	//1000 para dar em milisegundo
-		//System.out.println("FPS->"+1f/dt);		//dt é a diferença entre a frame anterior e a frame actual. isto mostra os FPS
+		//System.out.println("FPS->"+1f/dt);		//dt ï¿½ a diferenï¿½a entre a frame anterior e a frame actual. isto mostra os FPS
 		lastUpdate= now;
 		app.draw(this, dt);
 	}
@@ -68,8 +68,5 @@ public class Processing_Setup extends PApplet {
 	}
 
 }
-
-//corre em primeiro lugar 1-settings, depois em segundo lugar o 2-setup, e depois fica a correr o draw() infinitamente!		
-
 
 

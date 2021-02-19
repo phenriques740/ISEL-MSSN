@@ -13,9 +13,9 @@ import aulas.particleSystems.ParticleSystem;
 import aulas.physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class FlockTestApp implements IProcessingApp {
+public class FlockTestApp implements InterfaceProcessingApp {
 	private Flock flock;
 	private float[] sacfWeights = { 0.2f, 0.7f, 0.5f, 0f };// SAC=separate,Align,Cohesion,Flee
 	private double[] window = { -10, 10, -10, 10 };
@@ -199,6 +199,12 @@ public class FlockTestApp implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

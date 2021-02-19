@@ -1,9 +1,9 @@
 package aulas.aula.aula1;
 
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class BolaArcoIris implements IProcessingApp {
+public class BolaArcoIris implements InterfaceProcessingApp {
 
 	private int fillColor;
 
@@ -37,6 +37,12 @@ public class BolaArcoIris implements IProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
 	}

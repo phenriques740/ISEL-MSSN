@@ -1,9 +1,9 @@
 package aulas.anosAnteriores;
 
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class T1_23 implements IProcessingApp{
+public class T1_23 implements InterfaceProcessingApp{
 	
 	boolean flag = true;
 	private int backgroundColor = 50;
@@ -98,6 +98,12 @@ public class T1_23 implements IProcessingApp{
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
 		// TODO Auto-generated method stub
 		
 	}

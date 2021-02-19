@@ -2,9 +2,9 @@ package aulas.aula.aula2.ca;
 
 import processing.core.PApplet;
 import processing.core.PConstants;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class TestJogoDaVida implements IProcessingApp {
+public class TestJogoDaVida implements InterfaceProcessingApp {
 	private final int nrows = 50;
 	private final int ncols = 50;
 
@@ -64,5 +64,11 @@ public class TestJogoDaVida implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 }

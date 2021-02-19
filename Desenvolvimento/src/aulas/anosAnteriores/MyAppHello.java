@@ -1,9 +1,9 @@
 package aulas.anosAnteriores;
 
 import processing.core.PApplet;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class MyAppHello implements IProcessingApp {
+public class MyAppHello implements InterfaceProcessingApp {
 	private int raio = 30;
 
 	float radius = 0, theta = 0;
@@ -30,7 +30,7 @@ public class MyAppHello implements IProcessingApp {
 		theta += 0.25;
 
 		p.rect(scrX + p.width / 2, scrY + p.height / 2, 1, 1);
-		p.println("X: " + scrX + " Y: " + scrY);
+		PApplet.println("X: " + scrX + " Y: " + scrY);
 
 	}
 
@@ -64,6 +64,12 @@ public class MyAppHello implements IProcessingApp {
 	public void mouseReleased(PApplet p) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

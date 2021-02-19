@@ -9,9 +9,9 @@ import aulas.particleSystems.ParticleSystem;
 import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PVector;
-import setup.IProcessingApp;
+import setup.InterfaceProcessingApp;
 
-public class EarthSunApp implements IProcessingApp
+public class EarthSunApp implements InterfaceProcessingApp
 {
 	private float sunMass = 1.989e30f;
 	// https://www.sjsu.edu/faculty/watkins/orbital.htm //
@@ -178,6 +178,12 @@ public class EarthSunApp implements IProcessingApp
 
 	@Override
 	public void mouseReleased(PApplet p) {
+		
+	}
+
+	@Override
+	public void keyReleased(PApplet p) {
+		// TODO Auto-generated method stub
 		
 	}
 }
