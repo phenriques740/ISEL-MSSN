@@ -1,0 +1,25 @@
+{
+	"frames": [
+		{
+			"filename": "bone.png",
+			"position": {
+				"x": 1,
+				"y": 1,
+				"w": 900,
+				"h": 416
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 900,
+				"h": 416
+			},
+			"sourceSize": {
+				"w": 900,
+				"h": 416
+			}
+		}
+	]
+}
