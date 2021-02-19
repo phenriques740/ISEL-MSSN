@@ -2,6 +2,7 @@ package setup;
 
 
 import TPFinal.SpriteAnimated;
+
 import processing.core.PApplet;
 
 public class Processing_Setup extends PApplet {

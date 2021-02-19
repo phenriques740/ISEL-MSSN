@@ -30,6 +30,7 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	private float[] MCStartingPos = new float[] {20,400};
 	private float MCStartingVel = 0f;
 	private int spriteH, spriteW;
+	private boolean amIMoving = false;
 
 	@Override
 	public void setup(PApplet p) {
@@ -121,18 +122,22 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 
 	@Override
 	public void keyPressed(PApplet p) {
-		// TODO Auto-generated method stub
-		if (p.key == 'd') {
-			//System.out.println("carreguei no D");
-			loadRunRightAnimation(p);
+		if(!amIMoving && (p.key == 'd' || p.key=='a' ) ) {
 			MC.setSpeed(0.2f);
-			//System.out.println("value da p.key d --->"+p.keyCode);
+			if (p.key == 'd') {
+				//System.out.println("carreguei no D");
+				loadRunRightAnimation(p);
+				amIMoving= true;
+				//System.out.println("value da p.key d --->"+p.keyCode);
+			}
+			else if (p.key == 'a') {
+				loadRunLeftAnimation(p);
+				amIMoving =true;
+				//System.out.println("value da p.key d --->"+p.keyCode);
+			}
+			
 		}
-		else if (p.key == 'a') {
-			loadRunLeftAnimation(p);
-			MC.setSpeed(0.2f);
-			//System.out.println("value da p.key d --->"+p.keyCode);
-		}
+		
 
 	}
 	
@@ -184,13 +189,16 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	
 	@Override
 	public void keyReleased(PApplet p) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stubdddd
 		if (p.key == 'd') {
 			MC.setSpeed(0f);
+			amIMoving = false;
 		}
 		if (p.key == 'a') {
 			MC.setSpeed(0f);
+			amIMoving = false;
 		}
+		
 	}
 	
 	
