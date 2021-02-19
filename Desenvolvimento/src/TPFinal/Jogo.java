@@ -11,7 +11,7 @@ import processing.data.JSONArray;
 import processing.data.JSONObject;
 import setup.InterfaceProcessingApp;
 
-public class SpriteAnimated implements InterfaceProcessingApp {
+public class Jogo implements InterfaceProcessingApp {
 
 	PImage spritesheet, spritesheetMC, spritesheetBone;
 	JSONObject spritedata, spritedataMC, spritedataBone;
@@ -35,6 +35,9 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	private boolean amIMoving = false;
 	private int numberOfEnemies = 5;
 	private boolean goingR = false, goingL = false;
+	private JSONObject spritedataMCLeft;
+	private PImage spritesheetMCLeft;
+	private ArrayList<PImage> animationMCLeft;
 
 	@Override
 	public void setup(PApplet p) {
@@ -105,6 +108,13 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		// iniciar a lista que vai ter os ossos:
 		bones = new ArrayList<SpriteDef>();
 
+		animationMCLeft = new ArrayList<PImage>();
+		spritedataMCLeft = p.loadJSONObject("resources/skeletonLRun.json");
+		spritesheetMCLeft = p.loadImage("resources/skeleton.png");
+
+		animationMC = new ArrayList<PImage>();
+		spritedataMC = p.loadJSONObject("resources/skeletonRun.json");
+		spritesheetMC = p.loadImage("resources/skeleton.png");
 	}
 
 	@Override
@@ -127,21 +137,12 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 		 * }
 		 */
 
-		// fazer anima��o do personagem principal
+		// fazer animacao do personagem principal
 		if (MC != null) {
-			/*
-			if(goingR) {
-				loadRunRightAnimation(p);
-			}
-			else if(goingL) {
-				loadRunLeftAnimation(p);
-			}
-			*/
 			MC.show();
 			MC.animate();
+			makeBodyFollowAnimation(MCBody, MC);
 		}
-
-		makeBodyFollowAnimation(MCBody, MC);
 
 		// mostrar ossos, caso existam
 		if (!bones.isEmpty()) {
@@ -197,11 +198,9 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 			MC.setSpeed(0.2f);
 			if (p.key == 'd') {
 				goingR = true;
-				System.out.println("carreguei no D");
 				loadRunRightAnimation(p);
 				amIMoving = true;
-				// System.out.println("value da p.key d --->"+p.keyCode);
-			} 
+			}
 			if (p.key == 'a') {
 				goingL = true;
 				loadRunLeftAnimation(p);
@@ -234,8 +233,8 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 
 		}
 		bones.add(new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p));
-		//bones.add(new SpriteDef(animationBone, MC.getX()+10, MC.getY(), 1f, p));
-		
+		// bones.add(new SpriteDef(animationBone, MC.getX()+10, MC.getY(), 1f, p));
+
 		// PVector worldCoordToPlt = new PVector((float)
 		// plt.getWorldCoord(enemies.get(i).getX(),enemies.get(i).getY())[0], (float)
 		// plt.getWorldCoord(enemies.get(i).getX(),enemies.get(i).getY())[1]);
@@ -245,28 +244,22 @@ public class SpriteAnimated implements InterfaceProcessingApp {
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {
-		animationMC = new ArrayList<PImage>();
-		spritedataMC = p.loadJSONObject("resources/skeletonLRun.json");
-		spritesheetMC = p.loadImage("resources/skeleton.png");
-		JSONArray framesMC = spritedataMC.getJSONArray("frames");
+		JSONArray framesMC = spritedataMCLeft.getJSONArray("frames");
 		// System.out.println("framesMC size---->"+framesMC.size() );
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
 			JSONObject pos = frame.getJSONObject("position"); // tem toda a informa��o que esta no JSON sobre cada frame
-			PImage imgMC = spritesheetMC.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
+			PImage imgMC = spritesheetMCLeft.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
-			animationMC.add(imgMC);
+			animationMCLeft.add(imgMC);
 		}
-		MC = new SpriteDef(animationMC, MC.getX(), MC.getY(), MC.getSpeed(), p);
+		MC = new SpriteDef(animationMCLeft, MC.getX(), MC.getY(), MC.getSpeed(), p);
 		MC.setSpeedUpFactor(MC.getSpeedUpFactor() * -1); // de forma a andar para tr�s
 	}
 
 	public void loadRunRightAnimation(PApplet p) {
-		animationMC = new ArrayList<PImage>();
-		spritedataMC = p.loadJSONObject("resources/skeletonRun.json");
-		spritesheetMC = p.loadImage("resources/skeleton.png");
 		JSONArray framesMC = spritedataMC.getJSONArray("frames");
 		// System.out.println("framesMC size---->"+framesMC.size() );
 		for (int i = 0; i < framesMC.size(); i++) {

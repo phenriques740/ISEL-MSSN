@@ -1,7 +1,7 @@
 package setup;
 
 
-import TPFinal.SpriteAnimated;
+import TPFinal.Jogo;
 
 import processing.core.PApplet;
 
@@ -63,7 +63,7 @@ public class Processing_Setup extends PApplet {
 	
 	public static void main(String[] args) {
 		//so acrescentar linhas aqui!! NAO MEXER EM MAIS NADA!
-		app = new SpriteAnimated();
+		app = new Jogo();
 		PApplet.main(Processing_Setup.class);
 	}
 
