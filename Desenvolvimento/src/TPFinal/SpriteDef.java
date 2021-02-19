@@ -4,6 +4,13 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+
+/**
+ * Gere a classe e fornece definicoes sobre o sprite
+ * 
+ * @author vasco
+ *
+ */
 public class SpriteDef {
 
 	float x, y, w, speed, indexF;
@@ -11,7 +18,7 @@ public class SpriteDef {
 	ArrayList<PImage> animation;
 	private PApplet p;
 	private int speedUpFactor = 10;
-	
+
 	public int getSpeedUpFactor() {
 		return speedUpFactor;
 	}
@@ -28,7 +35,7 @@ public class SpriteDef {
 		this.animation = animation;
 		this.w = animation.get(0).width;
 		this.len = animation.size();
-		//System.out.println("len size----->"+len);
+		// System.out.println("len size----->"+len);
 	}
 
 	public float getW() {
@@ -41,26 +48,29 @@ public class SpriteDef {
 
 	public void show() {
 		indexF = (this.indexF) % this.len;
-		//este index e calculado com o index anterior e o tamanho total de frames na sprite. é aumentando com base no speed dado para nao haver aquele efeito de patinhar que alguns jogos têm
-		//quando uso esse index para desenhar a imagem, faco o floor para eliminar a parte decimal, pois o array so tem posições inteiras e se o meu cavalo tiver speed de 0.3 significa que 
-		//so na quarta frame e que vou desenhar a proxima imagem diferente!
-		//System.out.println("index------->"+indexF);
-		//System.out.println("indexF---->"+indexF+" floor desse resultado--->"+PApplet.floor(indexF));
+		// este index e calculado com o index anterior e o tamanho total de frames na
+		// sprite. ï¿½ aumentando com base no speed dado para nao haver aquele efeito de
+		// patinhar que alguns jogos tï¿½m
+		// quando uso esse index para desenhar a imagem, faco o floor para eliminar a
+		// parte decimal, pois o array so tem posiï¿½ï¿½es inteiras e se o meu cavalo tiver
+		// speed de 0.3 significa que
+		// so na quarta frame e que vou desenhar a proxima imagem diferente!
+		// System.out.println("index------->"+indexF);
+		// System.out.println("indexF---->"+indexF+" floor desse
+		// resultado--->"+PApplet.floor(indexF));
 		p.image(animation.get(PApplet.floor(indexF)), x, y);
 	}
-	
-	public void animate() {
-		//System.out.println("speed---->"+speed);
-		indexF += speed;
-	    this.x += speed * speedUpFactor;
 
-	    if (x > p.width ) {
-	      x = -w;
-	    }
-	    
-	  }
-	
-	
+	public void animate() {
+		// System.out.println("speed---->"+speed);
+		indexF += speed;
+		this.x += speed * speedUpFactor;
+
+		if (x > p.width) {
+			x = -w;
+		}
+
+	}
 
 	public float getX() {
 		return x;
@@ -78,7 +88,6 @@ public class SpriteDef {
 		this.y = y;
 	}
 
-	
 	public float getSpeed() {
 		return speed;
 	}
@@ -86,21 +95,5 @@ public class SpriteDef {
 	public void setSpeed(float speed) {
 		this.speed = speed;
 	}
-	
-	
-	
-	
-	
 
 }
-
-
-
-
-
-
-
-
-
-
-
