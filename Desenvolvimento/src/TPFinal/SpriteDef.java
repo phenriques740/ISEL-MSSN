@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+import processing.core.PVector;
 
 /**
  * Gere a classe e fornece definicoes sobre o sprite
@@ -13,12 +14,28 @@ import processing.core.PImage;
  */
 public class SpriteDef {
 
-	float x, y, w, speed, indexF;
-	int len;
-	ArrayList<PImage> animation;
+	private float x, y, w, indexF;
+	private int len;
+	private ArrayList<PImage> animation;
 	private PApplet p;
 	private int speedUpFactor = 10;
 	private boolean removeMe = false;
+	private float speedX, speedY;
+	private PVector speed;
+
+	public SpriteDef(ArrayList<PImage> animation, PVector startingPos, PVector startingVel, PApplet p) {
+		this.p = p;
+		this.x = startingPos.x;
+		this.y = startingPos.y;
+
+		this.speed = startingVel;
+		this.speedX = startingVel.x;
+		this.speedY = startingVel.y;
+		this.animation = animation;
+		this.w = animation.get(0).width;
+		this.len = animation.size();
+		this.removeMe = false;
+	}
 
 	public boolean isRemoveMe() {
 		return removeMe;
@@ -34,19 +51,6 @@ public class SpriteDef {
 
 	public void setSpeedUpFactor(int speedUpFactor) {
 		this.speedUpFactor = speedUpFactor;
-	}
-
-	public SpriteDef(ArrayList<PImage> animation, float x, float y, float speed, PApplet p) {
-		this.p = p;
-		this.x = x;
-		this.y = y;
-		this.speed = speed;
-		this.animation = animation;
-		this.w = animation.get(0).width;
-		this.len = animation.size();
-		// System.out.println("len size----->"+len);
-		this.removeMe = false;
-		// System.out.println("len size----->"+len);
 	}
 
 	public float getW() {
@@ -70,10 +74,10 @@ public class SpriteDef {
 		p.image(animation.get(PApplet.floor(indexF)), x, y);
 	}
 
-	public void animate() {
-		// System.out.println("speed---->"+speed);
-		indexF += speed;
-		this.x += speed * speedUpFactor;
+	public void animateHorizontal() {
+//		System.out.println("speed---->" + speed);
+		indexF += speed.x;
+		this.x += speed.x * speedUpFactor;
 		if (x > p.width) {
 			x = 0;
 		}
@@ -85,8 +89,8 @@ public class SpriteDef {
 
 	public void animateVertical() {
 		// System.out.println("speed---->"+speed);
-		indexF += speed;
-		this.y += -speed * speedUpFactor;
+		indexF += speed.y;
+		this.y += -speed.y * speedUpFactor;
 
 		if (y > (p.height + 30)) {
 			x = 0;
@@ -98,6 +102,15 @@ public class SpriteDef {
 			this.removeMe = true;
 		}
 
+	}
+
+	public void setCoords(float[] coords) {
+		this.x = coords[0];
+		this.y = coords[1];
+	}
+
+	public float[] getCoords() {
+		return new float[] { this.x, this.y };
 	}
 
 	public float getX() {
@@ -116,12 +129,17 @@ public class SpriteDef {
 		this.y = y;
 	}
 
-	public float getSpeed() {
+	public PVector getVel() {
 		return speed;
 	}
 
-	public void setSpeed(float speed) {
+	public void setSpeed(PVector speed) {
 		this.speed = speed;
+	}
+
+	public PVector getPos() {
+		// TODO Auto-generated method stub
+		return new PVector(getX(), getY());
 	}
 
 }

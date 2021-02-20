@@ -1,10 +1,9 @@
 package setup;
 
 import TPFinal.Jogo;
-
 import processing.core.PApplet;
 
-public class Processing_Setup extends PApplet {
+public class ProcessingSetup extends PApplet {
 	private static InterfaceProcessingApp app;
 	private int lastUpdate;
 
@@ -49,7 +48,6 @@ public class Processing_Setup extends PApplet {
 
 	public static void main(String[] args) {
 		app = new Jogo();
-		PApplet.main(Processing_Setup.class);
+		PApplet.main(ProcessingSetup.class);
 	}
-
 }

@@ -1,8 +1,8 @@
 package physics;
 
+import graph.SubPlot;
 import processing.core.PApplet;
 import processing.core.PVector;
-import graph.SubPlot;
 
 public class Body extends Mover {
 	// public static final double G = 1e-4f;
@@ -78,7 +78,7 @@ public class Body extends Mover {
 
 	public void display(PApplet p, SubPlot plt) {
 		float[] pp = plt.getPixelCoord(pos.x, pos.y);
-		float[] r = plt.getDimInPixel(radius, radius);
+		float[] r = plt.getDimInPixel(width, height);
 
 		p.fill(color);
 		// p.circle(pp[0], pp[1], r[0]);
