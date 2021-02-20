@@ -75,9 +75,9 @@ public class ParticleSystem extends Body {
 	}																																																					
 	
 	
-	public void displayParticle(PApplet p, SubPlot plt) {
+	public void displayParticleSystem(PApplet p, SubPlot plt) {
 		for(Particle particle: particles) {		//correr a lista "particles"
-			particle.displayParticle(p, plt);
+			particle.display(p, plt);
 		}
 	}
 

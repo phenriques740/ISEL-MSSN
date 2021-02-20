@@ -45,6 +45,19 @@ public class Particle extends Body {
 		
 		p.popStyle();
 	}
+	
+	public void display(PApplet p, SubPlot plt) {
+		p.pushStyle();
+		float alpha = PApplet.map(timer, 0, lifespan, 255, 0);	//timer varia entre 0 e lifespan.| 0 corresponde a 255! e lifespan mapeado para 0
+		p.fill(color,alpha);
+		float[] pp = plt.getPixelCoord(pos.x, pos.y);
+		float[] r = plt.getDimInPixel(radius, radius);
+		p.noStroke();
+		p.fill(color);
+		p.circle(pp[0], pp[1], r[0]);
+		// p.circle(pp[0], pp[1], 2*r[0]);
+		p.popStyle();
+	}
 
 }
 

@@ -16,9 +16,9 @@ public class Body extends Mover {
 	
 	PSControl psc;
 	private float[] velParams = {PApplet.radians(0), PApplet.radians(360), 1f, 1f };
-	private float[] lifetimeParams = {500, 700};
-	private float[] radiusParams = {1, 1.2f};
-	private float flow = 50f;
+	private float[] lifetimeParams = {1, 1.4f};
+	private float[] radiusParams = {0.3f, 0.5f};
+	private float flow = 20f;
 
 	public Body(PVector pos, PVector vel, float mass, float width, float height, int color) {
 		super(pos, vel, mass);
@@ -32,7 +32,7 @@ public class Body extends Mover {
 	
 	public ParticleSystem explodeMe() {
 		//vai começar o sistema de particulas
-		return new ParticleSystem(this.getPos(), this.getVel(), 1, 1f, psc, 10f );	//este particle system vai ser criado quando o inimigo morrer
+		return new ParticleSystem(this.getPos(), this.getVel(), 1, 1f, psc, 1.5f );	//este particle system vai ser criado quando o inimigo morrer
 		//System.out.println("explodes me chamado");
 	}
 

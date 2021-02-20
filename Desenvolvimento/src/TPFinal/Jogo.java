@@ -46,6 +46,7 @@ public class Jogo implements InterfaceProcessingApp {
 
 	private ArrayList<SpriteDef> bones = new ArrayList<SpriteDef>();
 	private ArrayList<Body> bonesBody;
+	private ArrayList<ParticleSystem> pss;
 
 	@Override
 	public void setup(PApplet p) {
@@ -93,6 +94,7 @@ public class Jogo implements InterfaceProcessingApp {
 
 		bones = new ArrayList<SpriteDef>();
 		bonesBody = new ArrayList<Body>();
+		pss = new ArrayList<ParticleSystem>();
 	}
 
 	@Override
@@ -169,13 +171,26 @@ public class Jogo implements InterfaceProcessingApp {
 					// enemyBody.setColor(255);
 
 					ParticleSystem ps = enemyBody.explodeMe();
-					ps.move(dt);
-					ps.displayParticle(p, plt);
+					pss.add(ps);
 
-					boneBody.setFlagRemove(true); // marcar o osso para ser removido no proximo draw
+					boneBody.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto tenho piercing bones !
 					enemyBody.setFlagRemove(true);// inimigop também tem que ser removido no proximo draw!
 
 				}
+			}
+		}
+		
+		//mostrar os particle Systems
+		for(ParticleSystem ps : pss) {
+			ps.move(dt);
+			ps.displayParticleSystem(p, plt);	//usar o displayParticle de ParticleSystem!
+		}
+		
+		//remover os particle Systems se já tiver passado o seu tempo:
+		for(int i = pss.size()-1; i >= 0; i--) {
+			ParticleSystem psActual = pss.get(i);
+			if(psActual.isDead()) {
+				pss.remove(psActual);
 			}
 		}
 
