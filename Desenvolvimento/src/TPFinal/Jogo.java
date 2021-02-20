@@ -1,6 +1,7 @@
 package TPFinal;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import TPFinal.entidades.Inimigo;
 import graph.SubPlot;
@@ -78,13 +79,17 @@ public class Jogo implements InterfaceProcessingApp {
 
 	@Override
 	public void draw(PApplet p, float dt) {
+//		MC.draw();
+//		for (Inimigo inimigo : inimigos) {
+//			inimigo.draw();
+//		}
+
 		// TODO Auto-generated method stub
 		p.background(127);
 
 		MCBody.setVel(MCStartingVel);
 		MCBody.move(dt * 15); // este * 15 e porque na classe da sprite multiplico por 10 para ser mais
 								// r�pido, para acompanhar a anima��o ponho 15
-		MCBody.display(p, plt, 50, 60);
 		// fazer animacao do personagem principal
 		if (MC != null) {
 			MCBody.display(p, plt);
@@ -121,6 +126,19 @@ public class Jogo implements InterfaceProcessingApp {
 				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para
 				// tras
 			}
+		}
+		index = 0;
+		for (Body enemieBody : enemiesBody) {
+			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
+			enemieBody.move(dt * 15);
+			enemieBody.display(p, plt, enemiesCollisionBox[0], enemiesCollisionBox[1]);
+			makeBodyFollowAnimation(enemieBody, enemies.get(index));
+			index++;
+
+		}
+		for (SpriteDef enemie : enemies) {
+			enemie.show();
+			enemie.animateHorizontal();
 		}
 
 		for (Body boneBody : bonesBody) {
@@ -185,19 +203,18 @@ public class Jogo implements InterfaceProcessingApp {
 		for (int i = 0; i < framesBone.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesBone.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informa��o que esta no JSON sobre cada
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
 																// frame
 			PImage imgBone = spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			animationBone.add(imgBone);
 
 		}
 		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
-		SpriteDef boneSpriteToAdd = new SpriteDef(animationBone, MC.getPos(), MC.getVel(), p);
+		SpriteDef boneSpriteToAdd = new SpriteDef(animationBone, MC.getPos(), new PVector(0, attackVel), p);
 		bones.add(boneSpriteToAdd);
-		// System.out.println("2---->MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
-		PVector worldCoordToPlt = new PVector(
-				(float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[0],
-				(float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[1]);
+
+		double[] temp = plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY());
+		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);
 		Body boneBody = new Body(worldCoordToPlt, new PVector(attackVel, 0), 1f, boneColisionBox[0], boneColisionBox[1],
 				p.color(255, 0, 0));
 		bonesBody.add(boneBody);

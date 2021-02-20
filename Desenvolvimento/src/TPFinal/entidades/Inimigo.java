@@ -29,4 +29,10 @@ public class Inimigo extends Entidade {
 		return super.getAnimator().getSpriteDef();
 	}
 
+	@Override
+	public void draw(PApplet p) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

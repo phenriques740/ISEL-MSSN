@@ -24,4 +24,10 @@ public class Osso extends Entidade {
 		return null;
 	}
 
+	@Override
+	public void draw(PApplet p) {
+		// TODO Auto-generated method stub
+
+	}
+
 }

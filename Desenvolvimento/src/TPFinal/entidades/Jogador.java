@@ -33,14 +33,10 @@ public class Jogador extends Entidade {
 		return new Body(super.getPos(), super.getVel(), 1f, 1f, 1f, p.color(255, 128, 0));
 	}
 
-	public void animate() {
-		// TODO
-
-	}
-
-	public void show(boolean showBody) {
-		if (showBody) {
-
+	@Override
+	public void draw(PApplet p, boolean drawBoundingBox) {
+		if (drawBoundingBox) {
+			super.getBody()
 		}
 	}
 

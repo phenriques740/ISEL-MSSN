@@ -10,7 +10,6 @@ public abstract class Entidade {
 	private PVector vel;
 	private Animador anim;
 	private Body body;
-	private PApplet p;
 
 	public static final String resources = "resources/";
 
@@ -32,6 +31,8 @@ public abstract class Entidade {
 	public abstract Animador criarAnimador(PApplet p);
 
 	public abstract Body criarBody(PApplet p);
+
+	public abstract void draw(PApplet p, boolean drawBoundingBox);
 
 	public Animador getAnimator() {
 		return this.anim;
