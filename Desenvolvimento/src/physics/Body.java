@@ -1,6 +1,8 @@
 package physics;
 
 import graph.SubPlot;
+import particleSystems.PSControl;
+import particleSystems.ParticleSystem;
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -11,6 +13,12 @@ public class Body extends Mover {
 	protected float radius;
 	float[] boudingBox;
 	private float width, height;
+	
+	PSControl psc;
+	private float[] velParams = {PApplet.radians(0), PApplet.radians(360), 1f, 1f };
+	private float[] lifetimeParams = {500, 700};
+	private float[] radiusParams = {1, 1.2f};
+	private float flow = 50f;
 
 	public Body(PVector pos, PVector vel, float mass, float width, float height, int color) {
 		super(pos, vel, mass);
@@ -19,14 +27,17 @@ public class Body extends Mover {
 		this.color = color;
 		this.radius = radius;
 		this.flagRemove = false;
+		psc = new PSControl(velParams, lifetimeParams, radiusParams, flow, this.color);
+	}
+	
+	public ParticleSystem explodeMe() {
+		//vai começar o sistema de particulas
+		return new ParticleSystem(this.getPos(), this.getVel(), 1, 1f, psc, 10f );	//este particle system vai ser criado quando o inimigo morrer
+		//System.out.println("explodes me chamado");
 	}
 
 	public float getWidth() {
 		return width;
-	}
-
-	public void selfDestruct(Body body) {
-		body = null;
 	}
 
 	/**

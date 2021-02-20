@@ -54,4 +54,9 @@ public class Body extends Mover {
 		
 		return PVector.dist(pos, this.pos) <= getRadius();
 	}
+
+	public void displayParticle(PApplet p, SubPlot plt) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -1,5 +1,4 @@
 package TPFinal.entidades;
-
 import TPFinal.Animador;
 import TPFinal.SpriteDef;
 import graph.SubPlot;
@@ -10,6 +9,7 @@ import processing.core.PVector;
 public class Inimigo extends Entidade {
 
 	private float width, height;
+	
 	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
 		super(p, startingPos, startingVel, width, height);
 		// TODO Auto-generated constructor stub
@@ -36,5 +36,6 @@ public class Inimigo extends Entidade {
 		// TODO Auto-generated method stub
 		
 	}
+	
 
 }

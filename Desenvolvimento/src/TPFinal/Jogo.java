@@ -5,6 +5,7 @@ import java.util.Iterator;
 
 import TPFinal.entidades.Inimigo;
 import graph.SubPlot;
+import particleSystems.ParticleSystem;
 import physics.Body;
 import processing.core.PApplet;
 import processing.core.PConstants;
@@ -51,7 +52,8 @@ public class Jogo implements InterfaceProcessingApp {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 
 		for (int i = 0; i < numberOfEnemies; i++) {
-			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0), enemiesCollisionBox[0], enemiesCollisionBox[1]);
+			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0),
+					enemiesCollisionBox[0], enemiesCollisionBox[1]);
 			inimigos.add(temp);
 			enemies.add(temp.getSpriteDef());
 			enemiesBody.add(temp.getBody());
@@ -62,20 +64,20 @@ public class Jogo implements InterfaceProcessingApp {
 		Animador mcAnimLeft = new Animador(p, resources + "skeletonLRun.json", resources + "skeleton.png",
 				MCStartingPos, MCStartingVel);
 		/*
-		 * animationBone = new ArrayList<PImage>();
-		spritedataBone = p.loadJSONObject("resources/bone.json");
-		spritesheetBone = p.loadImage("resources/boneR.png");
-		JSONArray framesBone = spritedataBone.getJSONArray("frames");
-		// System.out.println("framesMC size---->"+framesMC.size() );
-		for (int i = 0; i < framesBone.size(); i++) {
-			// System.out.println("frames size --->"+frames.size());
-			JSONObject frame = framesBone.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
-																// frame
-			PImage imgBone = spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
-			animationBone.add(imgBone);
-
-		}
+		 * animationBone = new ArrayList<PImage>(); spritedataBone =
+		 * p.loadJSONObject("resources/bone.json"); spritesheetBone =
+		 * p.loadImage("resources/boneR.png"); JSONArray framesBone =
+		 * spritedataBone.getJSONArray("frames"); //
+		 * System.out.println("framesMC size---->"+framesMC.size() ); for (int i = 0; i
+		 * < framesBone.size(); i++) { //
+		 * System.out.println("frames size --->"+frames.size()); JSONObject frame =
+		 * framesBone.getJSONObject(i); JSONObject pos =
+		 * frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta
+		 * no JSON sobre cada // frame PImage imgBone =
+		 * spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"),
+		 * pos.getInt("h")); animationBone.add(imgBone);
+		 * 
+		 * }
 		 */
 
 		mcRight = mcAanimRight.getSpriteDef();
@@ -123,9 +125,9 @@ public class Jogo implements InterfaceProcessingApp {
 		// do fim! caso contr�rio tenho uma excep��o!
 		for (int i = bones.size() - 1; i >= 0; --i) {
 			SpriteDef boneActual = bones.get(i);
-			if (boneActual.isRemoveMe()) {
+			if (boneActual.isRemoveMe() || bonesBody.get(i).isFlagRemove()) {
 				bones.remove(boneActual);
-				bonesBody.remove(i);	//added
+				bonesBody.remove(i); // added
 			}
 		}
 
@@ -134,7 +136,7 @@ public class Jogo implements InterfaceProcessingApp {
 		if (!bones.isEmpty()) {
 			for (SpriteDef bone : bones) {
 				Body currentBone = bonesBody.get(index);
-				System.out.println("index---->"+index);
+				// System.out.println("index---->"+index);
 				currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
 				currentBone.move(dt * 15);
 				makeBodyFollowAnimationBone(currentBone, bone);
@@ -163,10 +165,27 @@ public class Jogo implements InterfaceProcessingApp {
 			for (Body enemyBody : enemiesBody) {
 				// System.out.println("entrei");
 				if (boneBody.collision(enemyBody, plt)) {
-					//System.out.println("Colisao detectada!");
-					enemyBody.setColor(255);
-					
+					// System.out.println("Colisao detectada!");
+					// enemyBody.setColor(255);
+
+					ParticleSystem ps = enemyBody.explodeMe();
+					ps.move(dt);
+					ps.displayParticle(p, plt);
+
+					boneBody.setFlagRemove(true); // marcar o osso para ser removido no proximo draw
+					enemyBody.setFlagRemove(true);// inimigop tamb�m tem que ser removido no proximo draw!
+
 				}
+			}
+		}
+
+		// para remover os ossos da lista, nao posso usar for-each e tenho que come�ar
+		// do fim! caso contr�rio tenho uma excep��o!
+		for (int i = enemies.size() - 1; i >= 0; --i) {
+			SpriteDef enemyActual = enemies.get(i);
+			if (enemyActual.isRemoveMe() || enemiesBody.get(i).isFlagRemove()) {
+				enemies.remove(enemyActual);
+				enemiesBody.remove(i); // added
 			}
 		}
 
@@ -215,8 +234,10 @@ public class Jogo implements InterfaceProcessingApp {
 
 	public void loadShootBoneAnimation(PApplet p) {
 		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
-		Animador mcBoneAttackUp = new Animador(p, resources + "bone.json", resources + "boneR.png", MCStartingPos, new PVector(attackVel,0) );
-		SpriteDef boneSpriteToAdd = new SpriteDef(mcBoneAttackUp.getAnimation(), MC.getPos(), new PVector(0, attackVel), p);
+		Animador mcBoneAttackUp = new Animador(p, resources + "bone.json", resources + "boneR.png", MCStartingPos,
+				new PVector(attackVel, 0));
+		SpriteDef boneSpriteToAdd = new SpriteDef(mcBoneAttackUp.getAnimation(), MC.getPos(), new PVector(0, attackVel),
+				p);
 
 		double[] temp = plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY());
 		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);
@@ -224,7 +245,7 @@ public class Jogo implements InterfaceProcessingApp {
 				p.color(255, 0, 0));
 		bonesBody.add(boneBody);
 		bones.add(boneSpriteToAdd);
-		//System.out.println("Bones body size--->"+bonesBody.size());
+		// System.out.println("Bones body size--->"+bonesBody.size());
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {
@@ -262,8 +283,3 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 }
-
-
-
-
-
