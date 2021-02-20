@@ -25,7 +25,7 @@ public class Osso extends Entidade {
 	}
 
 	@Override
-	public void draw(PApplet p) {
+	public void draw(PApplet p, boolean drawBoundingBox) {
 		// TODO Auto-generated method stub
 
 	}
