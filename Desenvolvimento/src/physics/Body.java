@@ -11,7 +11,8 @@ public class Body extends Mover {
 	protected float radius;
 	float[] boudingBox;
 	private float width, height;
-	public Body(PVector pos, PVector vel, float mass, float width, float height, int color){
+
+	public Body(PVector pos, PVector vel, float mass, float width, float height, int color) {
 		super(pos, vel, mass);
 		this.height = height;
 		this.width = width;
@@ -19,6 +20,7 @@ public class Body extends Mover {
 		this.radius = radius;
 		this.flagRemove = false;
 	}
+
 	public int getColor() {
 		return color;
 	}
@@ -57,22 +59,6 @@ public class Body extends Mover {
 
 		// p.circle(pp[0], pp[1], 2*r[0]);
 	}
-<<<<<<< Updated upstream
-	
-	public void display(PApplet p, SubPlot plt, float width, float height) {
-		float[] pp = plt.getPixelCoord(pos.x, pos.y);
-		
-		p.fill(color);
-		//p.circle(pp[0], pp[1], r[0]);
-		boudingBox = new float[] {pp[0], pp[1], width, height};
-		p.rect(boudingBox[0], boudingBox[1], boudingBox[2], boudingBox[3]);
-		
-		
-		//p.circle(pp[0], pp[1], 2*r[0]);
-	}
-	
-=======
->>>>>>> Stashed changes
 
 	public float[] getBoudingBox() {
 		return boudingBox;
