@@ -28,9 +28,11 @@ public class Jogo implements InterfaceProcessingApp {
 	private SubPlot plt;
 
 	SpriteDef MC; // MC = main Character
-	private float[] MCStartingPos = new float[] { 20, 400 };
+	private float[] MCStartingPos = new float[] { 20, 520 };
 	private float MCStartingVel = 0f;
 	private float enemiesStartingVel = 0.5f;
+	private float[] boneColisionBox = {20, 30};
+	private float attackVel = 1f;
 	private int spriteH, spriteW;
 	private boolean amIMoving = false;
 	private int numberOfEnemies = 5;
@@ -38,6 +40,7 @@ public class Jogo implements InterfaceProcessingApp {
 	private JSONObject spritedataMCLeft;
 	private PImage spritesheetMCLeft;
 	private ArrayList<PImage> animationMCLeft;
+	private float DT ;	//este DT e o dt minusculo que vem do processing setup. e a diferença entre frames
 
 	@Override
 	public void setup(PApplet p) {
@@ -50,7 +53,8 @@ public class Jogo implements InterfaceProcessingApp {
 		for (int i = 0; i < frames.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = frames.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
+																// frame
 																// (o numero, o x, y)
 			// System.out.println("---->"+pos);
 			// PImage img = spritesheet.get(pos.getInt("x"), pos.getInt("y"),
@@ -60,7 +64,8 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 
 		for (int i = 0; i < numberOfEnemies; i++) {
-			// vou instanciar o meu boneco principal na posiï¿½ï¿½o especificada. util ter isto
+			// vou instanciar o meu boneco principal na posiï¿½ï¿½o especificada. util ter
+			// isto
 			// numa lista para depois adicionar multiplo meteoritos/objectos a cair
 			enemies.add(new SpriteDef(animation, 50, i * 75, enemiesStartingVel, p));
 		}
@@ -88,7 +93,8 @@ public class Jogo implements InterfaceProcessingApp {
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
+																// frame
 			PImage imgMC = spritesheetMC.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
@@ -107,6 +113,7 @@ public class Jogo implements InterfaceProcessingApp {
 		MCBody = new Body(worldCoordToPlt, new PVector(MCStartingVel, 0), 1f, 1f, 1f, p.color(255, 128, 0));
 		// iniciar a lista que vai ter os ossos:
 		bones = new ArrayList<SpriteDef>();
+		bonesBody = new ArrayList<Body>();
 
 		animationMCLeft = new ArrayList<PImage>();
 		spritedataMCLeft = p.loadJSONObject("resources/skeletonLRun.json");
@@ -115,17 +122,19 @@ public class Jogo implements InterfaceProcessingApp {
 		animationMC = new ArrayList<PImage>();
 		spritedataMC = p.loadJSONObject("resources/skeletonRun.json");
 		spritesheetMC = p.loadImage("resources/skeleton.png");
+
 	}
 
 	@Override
 	public void draw(PApplet p, float dt) {
+		DT = dt;
 		// TODO Auto-generated method stub
 		p.background(127);
 
 		MCBody.setVel(new PVector(MCStartingVel, 0));
 		MCBody.move(dt * 15); // este * 15 e porque na classe da sprite multiplico por 10 para ser mais
 								// rï¿½pido, para acompanhar a animaï¿½ï¿½o ponho 15
-		MCBody.display(p, plt);
+		MCBody.display(p, plt, 50, 60);
 		/*
 		 * if (plt.getPixelCoord(MCBody.getPos().x, MCBody.getPos().y)[0] > p.width) {
 		 * System.out.println("saiu!!");
@@ -144,31 +153,54 @@ public class Jogo implements InterfaceProcessingApp {
 			makeBodyFollowAnimation(MCBody, MC);
 		}
 
-		// mostrar ossos, caso existam
-		if (!bones.isEmpty()) {
-			// System.out.println("bones nï¿½o esta empty!");
-			for (SpriteDef bone : bones) {
-				bone.show();
-				bone.animateVertical();
-				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para trï¿½s
-			}
-		}
-
 		// para remover os ossos da lista, nao posso usar for-each e tenho que comeï¿½ar
 		// do fim! caso contrï¿½rio tenho uma excepï¿½ï¿½o!
 		for (int i = bones.size() - 1; i >= 0; --i) {
 			SpriteDef boneActual = bones.get(i);
 			if (boneActual.isRemoveMe()) {
 				bones.remove(boneActual);
+				bonesBody.get(i);
 			}
 		}
 
-		// corpos dos inimigos
 		int index = 0;
+		// mostrar ossos, caso existam
+		if (!bones.isEmpty()) {
+			// System.out.println("bones nï¿½o esta empty!");
+			for (SpriteDef bone : bones) {
+				Body currentBone = bonesBody.get(index);
+				currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1] );
+				currentBone.move(dt*15);
+				makeBodyFollowAnimationBone(currentBone, bone);
+				bone.show();
+				bone.animateVertical();
+				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para
+				// trï¿½s
+			}
+		}
+
+		/*
+		int index = 0;   
+		for (Body boneBody : bonesBody) {
+			if(bones.size()>0 && !bones.isEmpty() && bones.get(index) != null ) {
+				//System.out.println("size---->"+bones.size());
+				boneBody.setVel(new PVector(attackVel, 0));
+				boneBody.move(dt * 15);
+				boneBody.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
+				//System.out.println("index---->"+index);
+				makeBodyFollowAnimation(boneBody, bones.get(index));
+				index++;
+			}
+			index = 0;	//tenho que por este index a zero, senão quando o voltar a percorrer a lista ja vou estar em index = 1, apesar de so ter 1 osso (que é supsto ser index[0] )
+		}
+		*/
+
+		// corpos dos inimigos
+		index = 0;
 		for (Body enemieBody : enemiesBody) {
 			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
 			enemieBody.move(dt * 15);
-			enemieBody.display(p, plt);
+			enemieBody.display(p, plt, 60, 50);
 			makeBodyFollowAnimation(enemieBody, enemies.get(index));
 			index++;
 
@@ -185,10 +217,18 @@ public class Jogo implements InterfaceProcessingApp {
 		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX(), (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
+	
+	public void makeBodyFollowAnimationBone(Body body, SpriteDef spriteDef) {
+		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX()-5, (float) spriteDef.getY());
+		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
+	}
 
 	@Override
 	public void mousePressed(PApplet p) {
 		// TODO Auto-generated method stub
+        if(p.mouseButton == p.LEFT) {
+        	loadShootBoneAnimation(p);
+		}
 
 	}
 
@@ -225,22 +265,21 @@ public class Jogo implements InterfaceProcessingApp {
 		for (int i = 0; i < framesBone.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesBone.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
+																// frame
 			PImage imgBone = spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
 			animationBone.add(imgBone);
 
 		}
-		bones.add(new SpriteDef(animationBone, MC.getX(), MC.getY(), 1f, p));
-		// bones.add(new SpriteDef(animationBone, MC.getX()+10, MC.getY(), 1f, p));
-
-		// PVector worldCoordToPlt = new PVector((float)
-		// plt.getWorldCoord(enemies.get(i).getX(),enemies.get(i).getY())[0], (float)
-		// plt.getWorldCoord(enemies.get(i).getX(),enemies.get(i).getY())[1]);
-		// Body enemyBody = new Body(worldCoordToPlt, new
-		// PVector(enemies.get(i).getSpeed(), 0), 1, 1, p.color(255, 128, 0));
-		// enemiesBody.add(enemyBody);
+		//System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
+		SpriteDef boneSpriteToAdd = new SpriteDef(animationBone, MC.getX(), MC.getY(), attackVel, p);
+		bones.add(boneSpriteToAdd);
+		//System.out.println("2---->MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
+		PVector worldCoordToPlt = new PVector((float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[0], (float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[1]);
+		Body boneBody = new Body(worldCoordToPlt, new PVector(attackVel, 0), 1f, boneColisionBox[0], boneColisionBox[1], p.color(255, 0, 0));
+		bonesBody.add(boneBody);
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {
@@ -249,7 +288,8 @@ public class Jogo implements InterfaceProcessingApp {
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
+																// frame
 			PImage imgMC = spritesheetMCLeft.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
@@ -265,14 +305,16 @@ public class Jogo implements InterfaceProcessingApp {
 		for (int i = 0; i < framesMC.size(); i++) {
 			// System.out.println("frames size --->"+frames.size());
 			JSONObject frame = framesMC.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada frame
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
+																// frame
 			PImage imgMC = spritesheetMC.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			spriteH = pos.getInt("h");
 			spriteW = pos.getInt("w");
 			animationMC.add(imgMC);
 		}
 		MC = new SpriteDef(animationMC, MC.getX(), MC.getY(), MC.getSpeed(), p);
-		// este IF e para saber se ja estou a andar na direï¿½ï¿½o certa ou se preciso de
+		// este IF e para saber se ja estou a andar na direï¿½ï¿½o certa ou se preciso
+		// de
 		// inverter !
 		if (MC.getSpeedUpFactor() > 0) {
 			MC.setSpeedUpFactor(MC.getSpeedUpFactor());
@@ -302,7 +344,7 @@ public class Jogo implements InterfaceProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
 
 	}
 
