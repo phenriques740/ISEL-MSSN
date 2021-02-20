@@ -35,7 +35,7 @@ public class Jogo implements InterfaceProcessingApp {
 	private float[] enemiesCollisionBox = { 60, 50 };
 	private float attackVel = 1f;
 	private boolean amIMoving = false;
-	private int numberOfEnemies = 1;
+	private int numberOfEnemies = 5;
 	private String resources = "resources/";
 	private SpriteDef mcRight, mcLeft;
 
@@ -51,7 +51,7 @@ public class Jogo implements InterfaceProcessingApp {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 
 		for (int i = 0; i < numberOfEnemies; i++) {
-			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0));
+			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0), enemiesCollisionBox[0], enemiesCollisionBox[1]);
 			inimigos.add(temp);
 			enemies.add(temp.getSpriteDef());
 			enemiesBody.add(temp.getBody());
@@ -255,3 +255,8 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 }
+
+
+
+
+

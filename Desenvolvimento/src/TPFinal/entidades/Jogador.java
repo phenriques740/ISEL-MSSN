@@ -2,6 +2,7 @@ package TPFinal.entidades;
 
 import TPFinal.Animador;
 import TPFinal.SpriteDef;
+import graph.SubPlot;
 import physics.Body;
 import processing.core.PApplet;
 import processing.core.PVector;
@@ -11,9 +12,10 @@ public class Jogador extends Entidade {
 	private float MCStartingVel = 0f;
 	private SpriteDef mcRight;
 	private SpriteDef mcLeft;
+	private float width, height;	//altura e largura das bouding boxes
 
-	public Jogador(PApplet p, PVector startingPos, PVector startingVel) {
-		super(p, startingPos, startingVel);
+	public Jogador(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
+		super(p, startingPos, startingVel, width, height);
 	}
 
 	@Override
@@ -29,14 +31,14 @@ public class Jogador extends Entidade {
 	}
 
 	@Override
-	public Body criarBody(PApplet p) {
-		return new Body(super.getPos(), super.getVel(), 1f, 1f, 1f, p.color(255, 128, 0));
+	public Body criarBody(PApplet p, float width, float height) {
+		return new Body(super.getPos(), super.getVel(), 1f, width, height, p.color(255, 128, 0));
 	}
 
 	@Override
-	public void draw(PApplet p, boolean drawBoundingBox) {
+	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox) {
 		if (drawBoundingBox) {
-			super.getBody()
+			super.getBody().display(p, plt);;
 		}
 	}
 
