@@ -21,6 +21,45 @@ public class Body extends Mover {
 		this.flagRemove = false;
 	}
 
+	public float getWidth() {
+		return width;
+	}
+	
+	public void selfDestruct(Body body) {
+		body = null;
+	}
+	
+	public boolean collision(Body body, SubPlot plt) {
+		//System.out.println("height----->"+body.getHeight());
+		//System.out.println("X--->"+body.getPos().x+" Y--->"+body.getPos().y+" width---->"+body.getWidth()+" height---->"+body.getHeight());	//estas coordenadas estao em viewport. tenho que as converter para plt
+		float[] bodyCoordPix = plt.getPixelCoord(body.getPos().x, body.getPos().y);			//rect1
+		float[] bodyCoordPixMyself = plt.getPixelCoord(this.getPos().x, this.getPos().y);	//rect2
+		//System.out.println("localX---->"+bodyCoordPixMyself[0] +" localY----->"+bodyCoordPixMyself[1]);
+		//System.out.println("X----->"+bodyCoordPix[0]+" Y---->"+bodyCoordPix[1] );
+		if( bodyCoordPix[0] < bodyCoordPixMyself[0]+this.getWidth() && 
+			bodyCoordPix[0] + body.getWidth() > bodyCoordPixMyself[0] &&
+			bodyCoordPix[1] < bodyCoordPixMyself[1]+this.getHeight() &&
+			bodyCoordPix[1] + body.getHeight() > bodyCoordPixMyself[1]) {
+			
+			return true;
+		}
+		
+		
+		return false;
+	}
+
+	public void setWidth(float width) {
+		this.width = width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
+
+	public void setHeight(float height) {
+		this.height = height;
+	}
+
 	public int getColor() {
 		return color;
 	}

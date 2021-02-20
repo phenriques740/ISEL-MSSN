@@ -31,16 +31,18 @@ public class Jogo implements InterfaceProcessingApp {
 	private float[] MCStartingPos = new float[] { 20, 520 };
 	private float MCStartingVel = 0f;
 	private float enemiesStartingVel = 0.5f;
-	private float[] boneColisionBox = {20, 30};
+	private float[] boneColisionBox = { 20, 30 };
+	private float[] enemiesCollisionBox = {60, 50};
 	private float attackVel = 1f;
 	private int spriteH, spriteW;
 	private boolean amIMoving = false;
-	private int numberOfEnemies = 5;
+	private int numberOfEnemies = 1;
 	private boolean goingR = false, goingL = false;
 	private JSONObject spritedataMCLeft;
 	private PImage spritesheetMCLeft;
 	private ArrayList<PImage> animationMCLeft;
-	private float DT ;	//este DT e o dt minusculo que vem do processing setup. e a diferença entre frames
+	private float DT; // este DT e o dt minusculo que vem do processing setup. e a diferença entre
+						// frames
 
 	@Override
 	public void setup(PApplet p) {
@@ -67,7 +69,7 @@ public class Jogo implements InterfaceProcessingApp {
 			// vou instanciar o meu boneco principal na posiï¿½ï¿½o especificada. util ter
 			// isto
 			// numa lista para depois adicionar multiplo meteoritos/objectos a cair
-			enemies.add(new SpriteDef(animation, 50, i * 75, enemiesStartingVel, p));
+			enemies.add(new SpriteDef(animation, 50, i+1 * 75, enemiesStartingVel, p));
 		}
 
 		plt = new SubPlot(window, viewport, p.width, p.height);
@@ -77,7 +79,7 @@ public class Jogo implements InterfaceProcessingApp {
 			PVector worldCoordToPlt = new PVector(
 					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[0],
 					(float) plt.getWorldCoord(enemies.get(i).getX(), enemies.get(i).getY())[1]);
-			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1f, 1f, 1f,
+			Body enemyBody = new Body(worldCoordToPlt, new PVector(enemies.get(i).getSpeed(), 0), 1f, enemiesCollisionBox[0], enemiesCollisionBox[1],
 					p.color(255, 128, 0));
 			enemiesBody.add(enemyBody);
 			// System.out.println("adicionei um body!");
@@ -159,7 +161,7 @@ public class Jogo implements InterfaceProcessingApp {
 			SpriteDef boneActual = bones.get(i);
 			if (boneActual.isRemoveMe()) {
 				bones.remove(boneActual);
-				bonesBody.get(i);
+				
 			}
 		}
 
@@ -169,8 +171,8 @@ public class Jogo implements InterfaceProcessingApp {
 			// System.out.println("bones nï¿½o esta empty!");
 			for (SpriteDef bone : bones) {
 				Body currentBone = bonesBody.get(index);
-				currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1] );
-				currentBone.move(dt*15);
+				currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
+				currentBone.move(dt * 15);
 				makeBodyFollowAnimationBone(currentBone, bone);
 				bone.show();
 				bone.animateVertical();
@@ -180,27 +182,23 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 
 		/*
-		int index = 0;   
-		for (Body boneBody : bonesBody) {
-			if(bones.size()>0 && !bones.isEmpty() && bones.get(index) != null ) {
-				//System.out.println("size---->"+bones.size());
-				boneBody.setVel(new PVector(attackVel, 0));
-				boneBody.move(dt * 15);
-				boneBody.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
-				//System.out.println("index---->"+index);
-				makeBodyFollowAnimation(boneBody, bones.get(index));
-				index++;
-			}
-			index = 0;	//tenho que por este index a zero, senão quando o voltar a percorrer a lista ja vou estar em index = 1, apesar de so ter 1 osso (que é supsto ser index[0] )
-		}
-		*/
+		 * int index = 0; for (Body boneBody : bonesBody) { if(bones.size()>0 &&
+		 * !bones.isEmpty() && bones.get(index) != null ) {
+		 * //System.out.println("size---->"+bones.size()); boneBody.setVel(new
+		 * PVector(attackVel, 0)); boneBody.move(dt * 15); boneBody.display(p, plt,
+		 * boneColisionBox[0], boneColisionBox[1]);
+		 * //System.out.println("index---->"+index); makeBodyFollowAnimation(boneBody,
+		 * bones.get(index)); index++; } index = 0; //tenho que por este index a zero,
+		 * senão quando o voltar a percorrer a lista ja vou estar em index = 1, apesar
+		 * de so ter 1 osso (que é supsto ser index[0] ) }
+		 */
 
 		// corpos dos inimigos
 		index = 0;
 		for (Body enemieBody : enemiesBody) {
 			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
 			enemieBody.move(dt * 15);
-			enemieBody.display(p, plt, 60, 50);
+			enemieBody.display(p, plt, enemiesCollisionBox[0], enemiesCollisionBox[1]);
 			makeBodyFollowAnimation(enemieBody, enemies.get(index));
 			index++;
 
@@ -211,23 +209,33 @@ public class Jogo implements InterfaceProcessingApp {
 			enemie.animate();
 		}
 
+		for (Body boneBody : bonesBody) {
+			for(Body enemyBody : enemiesBody) {
+				//System.out.println("entrei");
+				if( boneBody.collision(enemyBody, plt) ) {
+					System.out.println("Colisao detectada!");
+					enemyBody.setColor(255);
+				}
+			}
+		}
+
 	}
 
 	public void makeBodyFollowAnimation(Body body, SpriteDef spriteDef) {
 		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX(), (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
-	
+
 	public void makeBodyFollowAnimationBone(Body body, SpriteDef spriteDef) {
-		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX()-5, (float) spriteDef.getY());
+		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX() - 5, (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
 
 	@Override
 	public void mousePressed(PApplet p) {
 		// TODO Auto-generated method stub
-        if(p.mouseButton == p.LEFT) {
-        	loadShootBoneAnimation(p);
+		if (p.mouseButton == p.LEFT) {
+			loadShootBoneAnimation(p);
 		}
 
 	}
@@ -273,12 +281,15 @@ public class Jogo implements InterfaceProcessingApp {
 			animationBone.add(imgBone);
 
 		}
-		//System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
+		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
 		SpriteDef boneSpriteToAdd = new SpriteDef(animationBone, MC.getX(), MC.getY(), attackVel, p);
 		bones.add(boneSpriteToAdd);
-		//System.out.println("2---->MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
-		PVector worldCoordToPlt = new PVector((float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[0], (float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[1]);
-		Body boneBody = new Body(worldCoordToPlt, new PVector(attackVel, 0), 1f, boneColisionBox[0], boneColisionBox[1], p.color(255, 0, 0));
+		// System.out.println("2---->MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
+		PVector worldCoordToPlt = new PVector(
+				(float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[0],
+				(float) plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY())[1]);
+		Body boneBody = new Body(worldCoordToPlt, new PVector(attackVel, 0), 1f, boneColisionBox[0], boneColisionBox[1],
+				p.color(255, 0, 0));
 		bonesBody.add(boneBody);
 	}
 
@@ -344,8 +355,22 @@ public class Jogo implements InterfaceProcessingApp {
 
 	@Override
 	public void mouseReleased(PApplet p) {
-		// TODO Auto-generated method stub	
+		// TODO Auto-generated method stub
 
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
