@@ -27,8 +27,8 @@ public class Jogo implements InterfaceProcessingApp {
 	private float[] viewport = { 0f, 0f, 1f, 1f };
 	private SubPlot plt;
 
-	SpriteDef MC; // MC = main Character
-	private PVector MCStartingPos = new PVector(20, 400);
+	SpriteDef MC, bone; // MC = main Character
+	private PVector MCStartingPos = new PVector(20, 520);
 	private PVector MCStartingVel = new PVector();
 	private float enemiesStartingVel = 0.5f;
 	private float[] boneColisionBox = { 20, 30 };
@@ -37,7 +37,7 @@ public class Jogo implements InterfaceProcessingApp {
 	private boolean amIMoving = false;
 	private int numberOfEnemies = 5;
 	private String resources = "resources/";
-	private SpriteDef mcRight, mcLeft;
+	private SpriteDef mcRight, mcLeft, boneSprite;
 
 	private ArrayList<Inimigo> inimigos = new ArrayList<Inimigo>();;
 	private ArrayList<SpriteDef> enemies = new ArrayList<SpriteDef>();
@@ -61,6 +61,22 @@ public class Jogo implements InterfaceProcessingApp {
 				MCStartingPos, MCStartingVel);
 		Animador mcAnimLeft = new Animador(p, resources + "skeletonLRun.json", resources + "skeleton.png",
 				MCStartingPos, MCStartingVel);
+		/*
+		 * animationBone = new ArrayList<PImage>();
+		spritedataBone = p.loadJSONObject("resources/bone.json");
+		spritesheetBone = p.loadImage("resources/boneR.png");
+		JSONArray framesBone = spritedataBone.getJSONArray("frames");
+		// System.out.println("framesMC size---->"+framesMC.size() );
+		for (int i = 0; i < framesBone.size(); i++) {
+			// System.out.println("frames size --->"+frames.size());
+			JSONObject frame = framesBone.getJSONObject(i);
+			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
+																// frame
+			PImage imgBone = spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
+			animationBone.add(imgBone);
+
+		}
+		 */
 
 		mcRight = mcAanimRight.getSpriteDef();
 		mcLeft = mcAnimLeft.getSpriteDef();
@@ -109,7 +125,7 @@ public class Jogo implements InterfaceProcessingApp {
 			SpriteDef boneActual = bones.get(i);
 			if (boneActual.isRemoveMe()) {
 				bones.remove(boneActual);
-
+				bonesBody.remove(i);	//added
 			}
 		}
 
@@ -118,11 +134,13 @@ public class Jogo implements InterfaceProcessingApp {
 		if (!bones.isEmpty()) {
 			for (SpriteDef bone : bones) {
 				Body currentBone = bonesBody.get(index);
+				System.out.println("index---->"+index);
 				currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
 				currentBone.move(dt * 15);
 				makeBodyFollowAnimationBone(currentBone, bone);
 				bone.show();
 				bone.animateVertical();
+				index++;
 				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para
 				// tras
 			}
@@ -145,8 +163,9 @@ public class Jogo implements InterfaceProcessingApp {
 			for (Body enemyBody : enemiesBody) {
 				// System.out.println("entrei");
 				if (boneBody.collision(enemyBody, plt)) {
-					System.out.println("Colisao detectada!");
+					//System.out.println("Colisao detectada!");
 					enemyBody.setColor(255);
+					
 				}
 			}
 		}
@@ -195,29 +214,17 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 	public void loadShootBoneAnimation(PApplet p) {
-		animationBone = new ArrayList<PImage>();
-		spritedataBone = p.loadJSONObject("resources/bone.json");
-		spritesheetBone = p.loadImage("resources/boneR.png");
-		JSONArray framesBone = spritedataBone.getJSONArray("frames");
-		// System.out.println("framesMC size---->"+framesMC.size() );
-		for (int i = 0; i < framesBone.size(); i++) {
-			// System.out.println("frames size --->"+frames.size());
-			JSONObject frame = framesBone.getJSONObject(i);
-			JSONObject pos = frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no JSON sobre cada
-																// frame
-			PImage imgBone = spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
-			animationBone.add(imgBone);
-
-		}
 		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
-		SpriteDef boneSpriteToAdd = new SpriteDef(animationBone, MC.getPos(), new PVector(0, attackVel), p);
-		bones.add(boneSpriteToAdd);
+		Animador mcBoneAttackUp = new Animador(p, resources + "bone.json", resources + "boneR.png", MCStartingPos, new PVector(attackVel,0) );
+		SpriteDef boneSpriteToAdd = new SpriteDef(mcBoneAttackUp.getAnimation(), MC.getPos(), new PVector(0, attackVel), p);
 
 		double[] temp = plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY());
 		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);
 		Body boneBody = new Body(worldCoordToPlt, new PVector(attackVel, 0), 1f, boneColisionBox[0], boneColisionBox[1],
 				p.color(255, 0, 0));
 		bonesBody.add(boneBody);
+		bones.add(boneSpriteToAdd);
+		//System.out.println("Bones body size--->"+bonesBody.size());
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {

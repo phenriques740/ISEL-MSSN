@@ -24,6 +24,10 @@ public class Animador {
 	private SpriteDef animatedSprites;
 	private JSONArray frames;
 
+	public ArrayList<PImage> getAnimation() {
+		return animation;
+	}
+
 	/**
 	 * Constructor de animador. Parte integrante de entidade
 	 * 
