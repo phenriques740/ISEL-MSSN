@@ -56,8 +56,6 @@ public class Body extends Mover {
 		// p.circle(pp[0], pp[1], r[0]);
 		boudingBox = new float[] { pp[0], pp[1], width, height };
 		p.rect(boudingBox[0], boudingBox[1], boudingBox[2], boudingBox[3]);
-
-		// p.circle(pp[0], pp[1], 2*r[0]);
 	}
 
 	public float[] getBoudingBox() {
