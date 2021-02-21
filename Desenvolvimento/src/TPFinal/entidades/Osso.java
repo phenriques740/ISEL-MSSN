@@ -24,7 +24,7 @@ public class Osso extends Entidade {
 	}
 	
 	public boolean isFlagRemove() {
-		return flagRemove;
+		return flagRemove || this.getAnimator().getSpriteDef().isRemoveMe();
 	}
 
 	public void setFlagRemove(boolean flagRemove) {

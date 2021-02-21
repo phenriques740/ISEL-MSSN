@@ -35,7 +35,7 @@ public class Jogador extends Entidade {
 	}
 
 	@Override
-	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox) {
+	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox,float dt) {
 		if (drawBoundingBox) {
 			super.getBody().display(p, plt);
 		}
