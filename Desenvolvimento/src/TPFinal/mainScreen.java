@@ -37,6 +37,10 @@ public class mainScreen {
 		backGroundSprite2.show();
 		backGroundSprite2.setSpeedUpFactor( -10 );
 		backGroundSprite2.animateHorizontal();
+		
+		
+		
+		
 	}
 	
 	
