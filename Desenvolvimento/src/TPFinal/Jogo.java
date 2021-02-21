@@ -46,6 +46,9 @@ public class Jogo implements InterfaceProcessingApp {
 	private ArrayList<Body> enemiesBody = new ArrayList<>();
 
 	private ArrayList<ParticleSystem> pss;
+	
+	private int[] startGameRect;
+	private int[] showTipsRect;
 
 	@Override
 	public void setup(PApplet p) {
@@ -76,12 +79,21 @@ public class Jogo implements InterfaceProcessingApp {
 		pss = new ArrayList<ParticleSystem>();
 
 		// mainMenu:
-		ms = new mainScreen(p, resources + "mainScreen.json", resources + "mainScreen.png", "Play", "How to Play");
+		ms = new mainScreen(p, resources + "mainScreen.json", resources + "mainScreen.png", "Play", "How to Play", resources + "aKey.json", resources + "aKey.png", resources+"dKey.json", resources+"dKey.png", 
+								resources + "LMB.json", resources + "LMB.png");
+		startGameRect = ms.getStartGameRect();
+		showTipsRect = ms.getShowTipsRect();
+
+		//som:
+		
+		
 	}
+	
+
 
 	@Override
 	public void draw(PApplet p, float dt) {
-		if (ms.isStartGame()) {
+		if (!ms.isStartGame()) {
 			ms.drawMenu(p);
 		}
 
@@ -183,8 +195,25 @@ public class Jogo implements InterfaceProcessingApp {
 		if (p.mouseButton == PConstants.LEFT) {
 			loadShootBoneAnimation(p);
 		}
+		
+		if( isInsideRect(p.mouseX, p.mouseY, startGameRect[0], startGameRect[2], startGameRect[1], startGameRect[3] ) ) {
+			ms.setStartGame(true);
+		}
+		
+		if( isInsideRect(p.mouseX, p.mouseY, showTipsRect[0], showTipsRect[2], showTipsRect[1], showTipsRect[3] ) ) {
+			ms.setShowTips(true);
+		}
+		
 
 	}
+	
+	public boolean isInsideRect(int mouseX, int mouseY, int rectX, int rectWidth, int rectY, int rectHeight) {
+		if (mouseX > rectX && mouseX < rectX +rectWidth && mouseY > rectY && mouseY < rectY +rectHeight){
+			return true;
+		}
+		return false;
+	}
+	
 
 	@Override
 	public void keyPressed(PApplet p) {
@@ -200,6 +229,11 @@ public class Jogo implements InterfaceProcessingApp {
 				// System.out.println("value da p.key d --->"+p.keyCode);
 			}
 
+		}
+		if (p.key == 'b') {
+			System.out.println("carreguei no b!");
+			ms.setShowTips(false);
+			ms.setStartGame(false);
 		}
 
 	}
