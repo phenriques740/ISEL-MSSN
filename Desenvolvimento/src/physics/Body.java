@@ -48,7 +48,7 @@ public class Body extends Mover {
 	 *             pontos locais, e as dimensoes em pixeis globais.
 	 * @return
 	 */
-
+	
 	public boolean collision(Body body, SubPlot plt) {
 		float[] bodyCoordPix = plt.getPixelCoord(body.getPos().x, body.getPos().y); // rect1
 		float[] bodyCoordPixMyself = plt.getPixelCoord(this.getPos().x, this.getPos().y); // rect2

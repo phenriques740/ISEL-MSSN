@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import TPFinal.entidades.Inimigo;
+import TPFinal.entidades.Osso;
 import graph.SubPlot;
 import particleSystems.ParticleSystem;
 import physics.Body;
@@ -29,23 +30,21 @@ public class Jogo implements InterfaceProcessingApp {
 	private SubPlot plt;
 
 	SpriteDef MC, bone; // MC = main Character
+	private float enemiesStartingVel = 0.5f;
+	private float[] enemiesCollisionBox = { 60, 50 };
 	private PVector MCStartingPos = new PVector(20, 520);
 	private PVector MCStartingVel = new PVector();
-	private float enemiesStartingVel = 0.5f;
-	private float[] boneColisionBox = { 20, 30 };
-	private float[] enemiesCollisionBox = { 60, 50 };
 	private float attackVel = 1f;
 	private boolean amIMoving = false;
 	private int numberOfEnemies = 5;
 	private String resources = "resources/";
 	private SpriteDef mcRight, mcLeft, boneSprite;
 
-	private ArrayList<Inimigo> inimigos = new ArrayList<Inimigo>();;
+	private ArrayList<Inimigo> inimigos = new ArrayList<Inimigo>();
+	private ArrayList<Osso> ossos = new ArrayList<Osso>();
 	private ArrayList<SpriteDef> enemies = new ArrayList<SpriteDef>();
 	private ArrayList<Body> enemiesBody = new ArrayList<>();
 
-	private ArrayList<SpriteDef> bones = new ArrayList<SpriteDef>();
-	private ArrayList<Body> bonesBody;
 	private ArrayList<ParticleSystem> pss;
 
 	@Override
@@ -53,11 +52,12 @@ public class Jogo implements InterfaceProcessingApp {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 
 		for (int i = 0; i < numberOfEnemies; i++) {
-			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0),
-					enemiesCollisionBox[0], enemiesCollisionBox[1]);
+			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0), enemiesCollisionBox[0], enemiesCollisionBox[1]);
 			inimigos.add(temp);
+			
 			enemies.add(temp.getSpriteDef());
 			enemiesBody.add(temp.getBody());
+			
 		}
 
 		Animador mcAanimRight = new Animador(p, resources + "skeletonRun.json", resources + "skeleton.png",
@@ -73,8 +73,8 @@ public class Jogo implements InterfaceProcessingApp {
 		 * < framesBone.size(); i++) { //
 		 * System.out.println("frames size --->"+frames.size()); JSONObject frame =
 		 * framesBone.getJSONObject(i); JSONObject pos =
-		 * frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta
-		 * no JSON sobre cada // frame PImage imgBone =
+		 * frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no
+		 * JSON sobre cada // frame PImage imgBone =
 		 * spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"),
 		 * pos.getInt("h")); animationBone.add(imgBone);
 		 * 
@@ -92,8 +92,7 @@ public class Jogo implements InterfaceProcessingApp {
 		MCBody = new Body(worldCoordToPlt, MCStartingVel, 1f, 1f, 1f, p.color(255, 128, 0));
 		// iniciar a lista que vai ter os ossos:
 
-		bones = new ArrayList<SpriteDef>();
-		bonesBody = new ArrayList<Body>();
+		ossos = new ArrayList<Osso>();
 		pss = new ArrayList<ParticleSystem>();
 	}
 
@@ -120,99 +119,94 @@ public class Jogo implements InterfaceProcessingApp {
 			mcLeft.setY(MC.getY());
 			mcRight.setX(MC.getX());
 			mcRight.setY(MC.getY());
-			makeBodyFollowAnimation(MCBody, MC);
+			makeBodyFollowAnimation(MCBody, MC, plt);
 		}
 
 		// para remover os ossos da lista, nao posso usar for-each e tenho que come�ar
 		// do fim! caso contr�rio tenho uma excep��o!
-		for (int i = bones.size() - 1; i >= 0; --i) {
-			SpriteDef boneActual = bones.get(i);
-			if (boneActual.isRemoveMe() || bonesBody.get(i).isFlagRemove()) {
-				bones.remove(boneActual);
-				bonesBody.remove(i); // added
+		for (int i = inimigos.size() - 1; i >= 0; --i) {
+			
+			Inimigo inimigo = inimigos.get(i);
+			if (inimigo.isFlagRemove()) {
+				inimigos.remove(inimigo);
+				
 			}
 		}
 
-		int index = 0;
 		// mostrar ossos, caso existam
-		if (!bones.isEmpty()) {
-			for (SpriteDef bone : bones) {
-				Body currentBone = bonesBody.get(index);
-				// System.out.println("index---->"+index);
-				currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
-				currentBone.move(dt * 15);
-				makeBodyFollowAnimationBone(currentBone, bone);
-				bone.show();
-				bone.animateVertical();
-				index++;
-				// bone.setSpeedUpFactor(bone.getSpeedUpFactor()); // de forma a andar para
-				// tras
+		if (!ossos.isEmpty()) {
+			//System.out.println("Entrei no nao empty!");
+			for (Osso osso : ossos) {
+				osso.draw(p, plt, true, dt);
 			}
 		}
-		index = 0;
-		for (Body enemieBody : enemiesBody) {
-			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
-			enemieBody.move(dt * 15);
-			enemieBody.display(p, plt, enemiesCollisionBox[0], enemiesCollisionBox[1]);
-			makeBodyFollowAnimation(enemieBody, enemies.get(index));
-			index++;
-
+		
+		for(Inimigo inimigo : inimigos) {
+			inimigo.draw(p, plt, true, dt);;
+			
 		}
-		for (SpriteDef enemie : enemies) {
-			enemie.show();
-			enemie.animateHorizontal();
-		}
+		
 
-		for (Body boneBody : bonesBody) {
-			for (Body enemyBody : enemiesBody) {
+		for (Osso osso : ossos) {
+			for (Inimigo inimigo : inimigos) {
 				// System.out.println("entrei");
-				if (boneBody.collision(enemyBody, plt)) {
+				if (osso.getBody().collision(inimigo.getBody(), plt)) {
 					// System.out.println("Colisao detectada!");
 					// enemyBody.setColor(255);
 
-					ParticleSystem ps = enemyBody.explodeMe();
+					ParticleSystem ps = inimigo.getBody().explodeMe();
 					pss.add(ps);
 
-					boneBody.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto tenho piercing bones !
-					enemyBody.setFlagRemove(true);// inimigop tamb�m tem que ser removido no proximo draw!
+					osso.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto
+													// tenho piercing bones !
+					inimigo.setFlagRemove(true);// inimigop tamb�m tem que ser removido no proximo draw!
 
 				}
 			}
 		}
-		
-		//mostrar os particle Systems
-		for(ParticleSystem ps : pss) {
+
+		// mostrar os particle Systems
+		for (ParticleSystem ps : pss) {
 			ps.move(dt);
-			ps.displayParticleSystem(p, plt);	//usar o displayParticle de ParticleSystem!
+			ps.displayParticleSystem(p, plt); // usar o displayParticle de ParticleSystem!
 		}
-		
-		//remover os particle Systems se j� tiver passado o seu tempo:
-		for(int i = pss.size()-1; i >= 0; i--) {
+
+		// remover os particle Systems se j� tiver passado o seu tempo:
+		for (int i = pss.size() - 1; i >= 0; i--) {
 			ParticleSystem psActual = pss.get(i);
-			if(psActual.isDead()) {
+			if (psActual.isDead()) {
 				pss.remove(psActual);
 			}
 		}
 
 		// para remover os ossos da lista, nao posso usar for-each e tenho que come�ar
 		// do fim! caso contr�rio tenho uma excep��o!
-		for (int i = enemies.size() - 1; i >= 0; --i) {
-			SpriteDef enemyActual = enemies.get(i);
-			if (enemyActual.isRemoveMe() || enemiesBody.get(i).isFlagRemove()) {
+		for (int i = inimigos.size() - 1; i >= 0; --i) {
+			Inimigo currentEnemy = inimigos.get(i);
+			if (currentEnemy.isFlagRemove()) {
+				/*
 				enemies.remove(enemyActual);
 				enemiesBody.remove(i); // added
+				*/
+				inimigos.remove(currentEnemy);
+			}
+		}
+		
+		for (int i = ossos.size() - 1; i >= 0; --i) {
+			Osso currentOsso = ossos.get(i);
+			if (currentOsso.isFlagRemove()) {
+				/*
+				enemies.remove(enemyActual);
+				enemiesBody.remove(i); // added
+				*/
+				ossos.remove(currentOsso);
 			}
 		}
 
 	}
-
-	public void makeBodyFollowAnimation(Body body, SpriteDef spriteDef) {
+	
+	public void makeBodyFollowAnimation(Body body, SpriteDef spriteDef, SubPlot plt) {
 		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX(), (float) spriteDef.getY());
-		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
-	}
-
-	public void makeBodyFollowAnimationBone(Body body, SpriteDef spriteDef) {
-		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX() - 5, (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
 
@@ -249,17 +243,10 @@ public class Jogo implements InterfaceProcessingApp {
 
 	public void loadShootBoneAnimation(PApplet p) {
 		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
-		Animador mcBoneAttackUp = new Animador(p, resources + "bone.json", resources + "boneR.png", MCStartingPos,
-				new PVector(attackVel, 0));
-		SpriteDef boneSpriteToAdd = new SpriteDef(mcBoneAttackUp.getAnimation(), MC.getPos(), new PVector(0, attackVel),
-				p);
-
-		double[] temp = plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY());
-		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);
-		Body boneBody = new Body(worldCoordToPlt, new PVector(attackVel, 0), 1f, boneColisionBox[0], boneColisionBox[1],
-				p.color(255, 0, 0));
-		bonesBody.add(boneBody);
-		bones.add(boneSpriteToAdd);
+		Osso osso = new Osso(p, MC.getPos(), new PVector(0,attackVel), 10, 20);
+		osso.criarAnimador(p);
+		osso.criarBody(p);
+		ossos.add(osso);
 		// System.out.println("Bones body size--->"+bonesBody.size());
 	}
 
