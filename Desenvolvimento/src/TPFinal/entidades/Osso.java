@@ -7,8 +7,6 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Osso extends Entidade {
-	private float width, height;		//boucing boxes dos ossos
-
 	public Osso(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
 		super(p, startingPos, startingVel, width, height);
 		// TODO Auto-generated constructor stub
@@ -21,9 +19,9 @@ public class Osso extends Entidade {
 	}
 
 	@Override
-	public Body criarBody(PApplet p, float width, float height) {
+	public Body criarBody(PApplet p) {
 		// TODO Auto-generated method stub
-		return new Body(super.getPos(), super.getVel(), 1f, width, height, p.color(255, 128, 0));
+		return new Body(super.getPos(), super.getVel(), 1f, super.getWidth(), super.getHeight(), p.color(255, 128, 0));
 	}
 
 	@Override

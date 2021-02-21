@@ -73,8 +73,8 @@ public class Jogo implements InterfaceProcessingApp {
 		 * < framesBone.size(); i++) { //
 		 * System.out.println("frames size --->"+frames.size()); JSONObject frame =
 		 * framesBone.getJSONObject(i); JSONObject pos =
-		 * frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta
-		 * no JSON sobre cada // frame PImage imgBone =
+		 * frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta no
+		 * JSON sobre cada // frame PImage imgBone =
 		 * spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"),
 		 * pos.getInt("h")); animationBone.add(imgBone);
 		 * 
@@ -173,23 +173,24 @@ public class Jogo implements InterfaceProcessingApp {
 					ParticleSystem ps = enemyBody.explodeMe();
 					pss.add(ps);
 
-					boneBody.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto tenho piercing bones !
-					enemyBody.setFlagRemove(true);// inimigop tamb�m tem que ser removido no proximo draw!
+					boneBody.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto
+													// tenho piercing bones !
+					enemyBody.setFlagRemove(true);// inimigop tamb�m tem que ser removido no proximo draw!
 
 				}
 			}
 		}
-		
-		//mostrar os particle Systems
-		for(ParticleSystem ps : pss) {
+
+		// mostrar os particle Systems
+		for (ParticleSystem ps : pss) {
 			ps.move(dt);
-			ps.displayParticleSystem(p, plt);	//usar o displayParticle de ParticleSystem!
+			ps.displayParticleSystem(p, plt); // usar o displayParticle de ParticleSystem!
 		}
-		
-		//remover os particle Systems se j� tiver passado o seu tempo:
-		for(int i = pss.size()-1; i >= 0; i--) {
+
+		// remover os particle Systems se j� tiver passado o seu tempo:
+		for (int i = pss.size() - 1; i >= 0; i--) {
 			ParticleSystem psActual = pss.get(i);
-			if(psActual.isDead()) {
+			if (psActual.isDead()) {
 				pss.remove(psActual);
 			}
 		}
@@ -251,8 +252,7 @@ public class Jogo implements InterfaceProcessingApp {
 		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
 		Animador mcBoneAttackUp = new Animador(p, resources + "bone.json", resources + "boneR.png", MCStartingPos,
 				new PVector(attackVel, 0));
-		SpriteDef boneSpriteToAdd = new SpriteDef(mcBoneAttackUp.getAnimation(), MC.getPos(), new PVector(0, attackVel),
-				p);
+		SpriteDef boneSpriteToAdd = mcBoneAttackUp.getSpriteDef();
 
 		double[] temp = plt.getWorldCoord(boneSpriteToAdd.getX(), boneSpriteToAdd.getY());
 		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);

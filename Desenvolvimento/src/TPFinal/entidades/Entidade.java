@@ -11,15 +11,17 @@ public abstract class Entidade {
 	private PVector vel;
 	private Animador anim;
 	private Body body;
-	private float width, height;		//altura e largura da bouding box
+	private float width, height; // altura e largura da bouding box
 
 	public static final String resources = "resources/";
 
 	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
 		pos = startingPos;
 		vel = startingVel;
+		this.width = width;
+		this.height = height;
 		anim = criarAnimador(p);
-		body = criarBody(p, width, height);
+		body = criarBody(p);
 	}
 
 	public PVector getPos() {
@@ -32,7 +34,7 @@ public abstract class Entidade {
 
 	public abstract Animador criarAnimador(PApplet p);
 
-	public abstract Body criarBody(PApplet p, float width, float height);
+	public abstract Body criarBody(PApplet p);
 
 	public abstract void draw(PApplet p, SubPlot plt, boolean drawBoundingBox);
 
@@ -44,10 +46,11 @@ public abstract class Entidade {
 		return this.body;
 	}
 
+	public float getWidth() {
+		return width;
+	}
+
+	public float getHeight() {
+		return height;
+	}
 }
-
-
-
-
-
-
