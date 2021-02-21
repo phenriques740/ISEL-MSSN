@@ -142,4 +142,9 @@ public class SpriteDef {
 		return new PVector(getX(), getY());
 	}
 
+	public void setPos(PVector pos) {
+		this.x = pos.x;
+		this.y = pos.y;
+	}
+
 }

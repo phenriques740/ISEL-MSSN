@@ -55,33 +55,12 @@ public class Jogo implements InterfaceProcessingApp {
 			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0),
 					enemiesCollisionBox[0], enemiesCollisionBox[1]);
 			inimigos.add(temp);
-
-			enemies.add(temp.getSpriteDef());
-			enemiesBody.add(temp.getBody());
-
 		}
 
 		Animador mcAanimRight = new Animador(p, resources + "skeletonRun.json", resources + "skeleton.png",
 				MCStartingPos, MCStartingVel);
 		Animador mcAnimLeft = new Animador(p, resources + "skeletonLRun.json", resources + "skeleton.png",
 				MCStartingPos, MCStartingVel);
-		/*
-		 * animationBone = new ArrayList<PImage>(); spritedataBone =
-		 * p.loadJSONObject("resources/bone.json"); spritesheetBone =
-		 * p.loadImage("resources/boneR.png"); JSONArray framesBone =
-		 * spritedataBone.getJSONArray("frames"); //
-		 * System.out.println("framesMC size---->"+framesMC.size() ); for (int i = 0; i
-		 * < framesBone.size(); i++) { //
-		 * System.out.println("frames size --->"+frames.size()); JSONObject frame =
-		 * framesBone.getJSONObject(i); JSONObject pos =
-		 * frame.getJSONObject("position"); // tem toda a informaï¿½ï¿½o que esta
-		 * no JSON sobre cada // frame PImage imgBone =
-		 * spritesheetBone.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"),
-		 * pos.getInt("h")); animationBone.add(imgBone);
-		 * 
-		 * }
-		 */
-
 		mcRight = mcAanimRight.getSpriteDef();
 		mcLeft = mcAnimLeft.getSpriteDef();
 
@@ -97,16 +76,12 @@ public class Jogo implements InterfaceProcessingApp {
 		pss = new ArrayList<ParticleSystem>();
 
 		// mainMenu:
-		ms = new mainScreen(p,resources + "mainScreen.json", resources + "mainScreen.png" , "Play", "How to Play");
+		ms = new mainScreen(p, resources + "mainScreen.json", resources + "mainScreen.png", "Play", "How to Play");
 	}
 
 	@Override
 	public void draw(PApplet p, float dt) {
-//		MC.draw();
-//		for (Inimigo inimigo : inimigos) {
-//			inimigo.draw();
-//		}
-		if ( !ms.isStartGame()) {
+		if (ms.isStartGame()) {
 			ms.drawMenu(p);
 		}
 
@@ -114,35 +89,31 @@ public class Jogo implements InterfaceProcessingApp {
 			p.background(127);
 
 			MCBody.setVel(MCStartingVel);
-			MCBody.move(dt * 15); // este * 15 e porque na classe da sprite multiplico por 10 para ser mais
-									// r�pido, para acompanhar a anima��o ponho 15
+			MCBody.move(dt * 15);
+			// este * 15 e porque na classe da sprite multiplico por 10 para ser mais
+			// rapido, para acompanhar a animacao ponho 15
 			// fazer animacao do personagem principal
 			if (MC != null) {
 				MCBody.display(p, plt);
 				MC.animateHorizontal();
 				MC.show();
 
-				mcLeft.setX(MC.getX());
-				mcLeft.setY(MC.getY());
-				mcRight.setX(MC.getX());
-				mcRight.setY(MC.getY());
+				mcLeft.setPos(MC.getPos());
+				mcRight.setPos(MC.getPos());
 				makeBodyFollowAnimation(MCBody, MC, plt);
 			}
 
 			// para remover os ossos da lista, nao posso usar for-each e tenho que come�ar
 			// do fim! caso contr�rio tenho uma excep��o!
 			for (int i = inimigos.size() - 1; i >= 0; --i) {
-
 				Inimigo inimigo = inimigos.get(i);
 				if (inimigo.isFlagRemove()) {
 					inimigos.remove(inimigo);
-
 				}
 			}
 
 			// mostrar ossos, caso existam
 			if (!ossos.isEmpty()) {
-				// System.out.println("Entrei no nao empty!");
 				for (Osso osso : ossos) {
 					osso.draw(p, plt, true, dt);
 				}
@@ -150,17 +121,11 @@ public class Jogo implements InterfaceProcessingApp {
 
 			for (Inimigo inimigo : inimigos) {
 				inimigo.draw(p, plt, true, dt);
-				;
-
 			}
 
 			for (Osso osso : ossos) {
 				for (Inimigo inimigo : inimigos) {
-					// System.out.println("entrei");
 					if (osso.getBody().collision(inimigo.getBody(), plt)) {
-						// System.out.println("Colisao detectada!");
-						// enemyBody.setColor(255);
-
 						ParticleSystem ps = inimigo.getBody().explodeMe();
 						pss.add(ps);
 
@@ -178,7 +143,7 @@ public class Jogo implements InterfaceProcessingApp {
 				ps.displayParticleSystem(p, plt); // usar o displayParticle de ParticleSystem!
 			}
 
-			// remover os particle Systems se j� tiver passado o seu tempo:
+			// remover os particle Systems se ja tiver passado o seu tempo:
 			for (int i = pss.size() - 1; i >= 0; i--) {
 				ParticleSystem psActual = pss.get(i);
 				if (psActual.isDead()) {
@@ -201,9 +166,6 @@ public class Jogo implements InterfaceProcessingApp {
 			for (int i = ossos.size() - 1; i >= 0; --i) {
 				Osso currentOsso = ossos.get(i);
 				if (currentOsso.isFlagRemove()) {
-					/*
-					 * enemies.remove(enemyActual); enemiesBody.remove(i); // added
-					 */
 					ossos.remove(currentOsso);
 				}
 			}
@@ -211,7 +173,7 @@ public class Jogo implements InterfaceProcessingApp {
 
 	}
 
-	public void makeBodyFollowAnimation(Body body, SpriteDef spriteDef, SubPlot plt) {
+	private void makeBodyFollowAnimation(Body body, SpriteDef spriteDef, SubPlot plt) {
 		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX(), (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
@@ -239,20 +201,12 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 
 		}
-		if (p.key == ' ') {
-			loadShootBoneAnimation(p);
-			// System.out.println("value da p.key d --->"+p.keyCode);
-		}
 
 	}
 
 	public void loadShootBoneAnimation(PApplet p) {
-		// System.out.println("MC.getX--->"+MC.getX()+" MCgetY--->"+MC.getY());
 		Osso osso = new Osso(p, MC.getPos(), new PVector(0, attackVel), 10, 20);
-		osso.criarAnimador(p);
-		osso.criarBody(p);
 		ossos.add(osso);
-		// System.out.println("Bones body size--->"+bonesBody.size());
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {
@@ -271,7 +225,6 @@ public class Jogo implements InterfaceProcessingApp {
 
 	@Override
 	public void keyReleased(PApplet p) {
-		// TODO Auto-generated method stubdddd
 		if (p.key == 'd') {
 			MC.setSpeed(new PVector());
 			amIMoving = false;
