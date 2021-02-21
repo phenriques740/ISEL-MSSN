@@ -1,0 +1,36 @@
+{
+	"frames": [
+		{
+			"filename": "dKey.png",
+			"position": {
+				"x": 1,
+				"y": 1,
+				"w": 534,
+				"h": 508
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 534,
+				"h": 508
+			},
+			"sourceSize": {
+				"w": 534,
+				"h": 508
+			}
+		}
+	],
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 536,
+			"h": 510
+		},
+		"scale": "1"
+	}
+}

@@ -1,7 +1,18 @@
 package TPFinal;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
-import java.util.Iterator;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import TPFinal.entidades.Inimigo;
 import TPFinal.entidades.Osso;
@@ -12,7 +23,6 @@ import processing.core.PApplet;
 import processing.core.PConstants;
 import processing.core.PImage;
 import processing.core.PVector;
-import processing.data.JSONArray;
 import processing.data.JSONObject;
 import setup.InterfaceProcessingApp;
 
@@ -49,6 +59,7 @@ public class Jogo implements InterfaceProcessingApp {
 	
 	private int[] startGameRect;
 	private int[] showTipsRect;
+	Audio mainMenuMusic, fightMusic, boneAttackMusic;
 
 	@Override
 	public void setup(PApplet p) {
@@ -85,19 +96,67 @@ public class Jogo implements InterfaceProcessingApp {
 		showTipsRect = ms.getShowTipsRect();
 
 		//som:
-		
+		// resources + "mainMenuMusic.wav"
+		try {
+			mainMenuMusic = new Audio(resources + "mainMenuMusic.wav");
+			fightMusic = new Audio(resources + "normalMusic.wav");
+		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
+	public void startMenuMusic() {
+		if( fightMusic.isPlaying()) {
+			fightMusic.stopAudio();
+		}
+		if(!mainMenuMusic.isPlaying()) {
+			try {
+				mainMenuMusic = new Audio(resources + "mainMenuMusic.wav");
+				mainMenuMusic.startAudio();
+			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void startFightMusic() {
+		if(mainMenuMusic.isPlaying()) {
+			mainMenuMusic.stopAudio();
+		}
+		if(!fightMusic.isPlaying()) {		
+			try {
+				fightMusic = new Audio(resources + "normalMusic.wav");
+				fightMusic.startAudio();
+			} catch (LineUnavailableException | IOException | UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public void boneSoundEffect() throws UnsupportedAudioFileException {
+		try {
+			boneAttackMusic = new Audio(resources + "boneAttack.wav");
+			boneAttackMusic.startAudio();
+		} catch (LineUnavailableException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 	@Override
 	public void draw(PApplet p, float dt) {
 		if (!ms.isStartGame()) {
+			startMenuMusic();
 			ms.drawMenu(p);
 		}
-
+		
 		else {
+			startFightMusic();
 			p.background(127);
 
 			MCBody.setVel(MCStartingVel);
@@ -241,6 +300,14 @@ public class Jogo implements InterfaceProcessingApp {
 	public void loadShootBoneAnimation(PApplet p) {
 		Osso osso = new Osso(p, MC.getPos(), new PVector(0, attackVel), 10, 20);
 		ossos.add(osso);
+		if( ms.isStartGame() ) {
+			try {
+				boneSoundEffect();
+			} catch (UnsupportedAudioFileException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void loadRunLeftAnimation(PApplet p) {

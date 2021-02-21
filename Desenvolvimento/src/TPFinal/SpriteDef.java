@@ -79,9 +79,9 @@ public class SpriteDef {
 		indexF += speed.x;
 		this.x += speed.x * speedUpFactor;
 		if (x > p.width) {
-			x = 0;
+			x = -this.getW();
 		}
-		if (x < 0) {
+		if (x < -this.getW()) {
 			x = p.width;
 		}
 
