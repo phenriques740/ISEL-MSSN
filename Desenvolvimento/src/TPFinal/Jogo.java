@@ -296,6 +296,7 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 
 	}
+	
 
 	public void loadShootBoneAnimation(PApplet p) {
 		Osso osso = new Osso(p, MC.getPos(), new PVector(0, attackVel), 10, 20);
@@ -309,6 +310,7 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 		}
 	}
+	
 
 	public void loadRunLeftAnimation(PApplet p) {
 		MC = mcLeft;
@@ -316,6 +318,7 @@ public class Jogo implements InterfaceProcessingApp {
 			MC.setSpeedUpFactor(MC.getSpeedUpFactor() * -1);
 		}
 	}
+	
 
 	public void loadRunRightAnimation(PApplet p) {
 		MC = mcRight;
@@ -323,6 +326,7 @@ public class Jogo implements InterfaceProcessingApp {
 			MC.setSpeedUpFactor(MC.getSpeedUpFactor() * -1);
 		}
 	}
+	
 
 	@Override
 	public void keyReleased(PApplet p) {
