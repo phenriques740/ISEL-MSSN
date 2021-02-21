@@ -12,10 +12,12 @@ public abstract class Entidade {
 	private Animador anim;
 	private Body body;
 	private float width, height;		//altura e largura da bouding box
+	private boolean flagRemove = false;
 
 	public static final String resources = "resources/";
 
 	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
+		this.flagRemove = false;
 		pos = startingPos;
 		vel = startingVel;
 		anim = criarAnimador(p);
@@ -28,6 +30,14 @@ public abstract class Entidade {
 
 	public PVector getVel() {
 		return vel;
+	}
+	
+	public boolean isFlagRemove() {
+		return flagRemove;
+	}
+
+	public void setFlagRemove(boolean flagRemove) {
+		this.flagRemove = flagRemove;
 	}
 
 	public abstract Animador criarAnimador(PApplet p);

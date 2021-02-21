@@ -9,7 +9,6 @@ import processing.core.PVector;
 public class Body extends Mover {
 	// public static final double G = 1e-4f;
 	protected int color;
-	private boolean flagRemove = false;
 	protected float radius;
 	float[] boudingBox;
 	private float width, height;
@@ -26,7 +25,6 @@ public class Body extends Mover {
 		this.width = width;
 		this.color = color;
 		this.radius = radius;
-		this.flagRemove = false;
 		psc = new PSControl(velParams, lifetimeParams, radiusParams, flow, this.color);
 	}
 	
@@ -119,17 +117,21 @@ public class Body extends Mover {
 		return boudingBox;
 	}
 
-	public boolean isFlagRemove() {
-		return flagRemove;
-	}
-
-	public void setFlagRemove(boolean flagRemove) {
-		this.flagRemove = flagRemove;
-	}
-
 	// para a parte do pedro funcionar:
 	public boolean isInside(PVector pos) {
 		return PVector.dist(pos, this.pos) <= getRadius();
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
