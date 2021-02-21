@@ -20,8 +20,8 @@ public class mainScreen {
 		this.pathToImage = pathToImage;
 		this.option1 = option1;
 		this.option2 = option2;
-		backGround = new Animador(p, pathToJson, pathToImage, new PVector(0,50), new PVector(0.2f,0f)  );
-		backGround2 = new Animador(p, pathToJson, pathToImage, new PVector(p.width,p.height-250), new PVector(0.2f,0f)  );
+		backGround = new Animador(p, pathToJson, pathToImage, new PVector(0,50), new PVector(0.1f,0f)  );
+		backGround2 = new Animador(p, pathToJson, pathToImage, new PVector(p.width,p.height-250), new PVector(0.15f,0f)  );
 		//System.out.println("Check!");
 	}
 	
