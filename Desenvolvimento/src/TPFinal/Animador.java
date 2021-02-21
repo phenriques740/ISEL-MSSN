@@ -50,7 +50,7 @@ public class Animador {
 		for (int i = 0; i < frames.size(); i++) {
 			JSONObject frame = frames.getJSONObject(i);
 			JSONObject pos = frame.getJSONObject("position");
-
+			//System.out.println("pos---->"+pos);
 			// Corta a imagem JPEG para obter a informacao de 1 frame
 			PImage img = spritesheet.get(pos.getInt("x"), pos.getInt("y"), pos.getInt("w"), pos.getInt("h"));
 			animation.add(img);
