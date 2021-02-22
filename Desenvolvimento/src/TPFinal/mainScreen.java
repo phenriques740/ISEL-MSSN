@@ -28,8 +28,20 @@ public class mainScreen {
 	private final PApplet p;
 	private int[] startGameRect = {150, 275, 190, 310};
 	private int[] showTipsRect = {450, 275, 500, 310};
+	private int[] gameOverRetryAgainButton = {275, 400, 280, 425};
+	private int[] showTipsBackButton = {275, 525, 280, 550};
 	
 		
+	public int[] getShowTipsBackButton() {
+		return showTipsBackButton;
+	}
+
+
+	public int[] getGameOverRetryAgainButton() {
+		return gameOverRetryAgainButton;
+	}
+
+
 	public mainScreen(PApplet p, String pathToJson, String pathToImage, String option1, String option2, String aKeyJson, String aKey, String dKeyJson, String dKey,  String LMBKeyJson, String LMBKey, String gameOverJson, String gameOver) {
 		this.p = p;
 		this.pathToJson = pathToJson;
@@ -57,9 +69,10 @@ public class mainScreen {
 	
 	public void gameOverScreen() {
 		p.background(255);
+		this.showGameOver = true;
 		gameOverAnimation();
 		drawGameOverText("Game Over", 125, 300);
-		drawButton("Back to Main Menu", 275, 400, 280, 425  );
+		drawButton("Back to Main Menu", gameOverRetryAgainButton[0], gameOverRetryAgainButton[1], gameOverRetryAgainButton[2], gameOverRetryAgainButton[3]);
 		
 	}
 	
@@ -83,6 +96,7 @@ public class mainScreen {
 	}
 	
 	private void tipsMenu() {
+		setShowTips(true);
 		p.background(128);
 		backGroundAnimation();
 		A = new Animador(p, aKeyJson, aKey, new PVector(100,100), new PVector(0.1f,0f)  );
@@ -103,6 +117,9 @@ public class mainScreen {
 		Asprite.show();
 		Dsprite.show();
 		LMBsprite.show();
+		
+		drawButton("Back to Main Menu", showTipsBackButton[0], showTipsBackButton[1], showTipsBackButton[2], showTipsBackButton[3]);
+
 		
 	}
 	
@@ -154,6 +171,7 @@ public class mainScreen {
 	}
 
 	public void drawGameOverText(String string, int textX, int textY) {
+		//diferente do outro método por causa do tamanho e a cor da letra!
 		p.textSize(100);
 		p.fill(255,0,0);
 		p.text(string, textX, textY);

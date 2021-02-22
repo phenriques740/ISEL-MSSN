@@ -59,6 +59,8 @@ public class Jogo implements InterfaceProcessingApp {
 	
 	private int[] startGameRect;
 	private int[] showTipsRect;
+	private int[] gameOverRetryAgainButton;
+	private int[] showTipsRectBackButton;
 	private Audio mainMenuMusic, fightMusic, boneAttackMusic,gameOverMusic;
 
 	@Override
@@ -94,6 +96,8 @@ public class Jogo implements InterfaceProcessingApp {
 								resources + "LMB.json", resources + "LMB.png", resources + "gameOver.json", resources+"gameOver.png");
 		startGameRect = ms.getStartGameRect();
 		showTipsRect = ms.getShowTipsRect();
+		gameOverRetryAgainButton = ms.getGameOverRetryAgainButton();
+		showTipsRectBackButton = ms.getShowTipsBackButton();
 
 		//som:
 		// resources + "mainMenuMusic.wav"
@@ -281,19 +285,32 @@ public class Jogo implements InterfaceProcessingApp {
 		if (p.mouseButton == PConstants.LEFT) {
 			loadShootBoneAnimation(p);
 		}
-		
-		if( isInsideRect(p.mouseX, p.mouseY, startGameRect[0], startGameRect[2], startGameRect[1], startGameRect[3] ) ) {
+		//botoes do menu principal:
+		if( isInsideRect(p.mouseX, p.mouseY, startGameRect[0], 200, startGameRect[1], 50) && !ms.isStartGame() && !ms.isShowTips() && !ms.isShowGameOver() ) {
 			ms.setStartGame(true);
 		}
 		
-		if( isInsideRect(p.mouseX, p.mouseY, showTipsRect[0], showTipsRect[2], showTipsRect[1], showTipsRect[3] ) ) {
+		else if( isInsideRect(p.mouseX, p.mouseY, showTipsRect[0], 200, showTipsRect[1], 50 ) && !ms.isStartGame() && !ms.isShowTips() && !ms.isShowGameOver() ) {
 			ms.setShowTips(true);
+		}
+
+		//botao de voltar atras no game over
+		else if( isInsideRect(p.mouseX, p.mouseY, gameOverRetryAgainButton[0], 200, gameOverRetryAgainButton[1], 50) && ms.isStartGame() && !ms.isShowTips() && ms.isShowGameOver() ) {
+			//voltar ao main screen, ja que tive trabalho a por a animacao e a musica, o utilizador vê isso mais vezes!
+			ms.setShowTips(false);
+			ms.setStartGame(false);
+		}		
+		
+		//botao do voltar para tras nas tips
+		else if(isInsideRect(p.mouseX, p.mouseY, showTipsRectBackButton[0], 200, showTipsRectBackButton[1], 50 ) && ms.isShowTips() &&!ms.isShowGameOver() && !ms.isStartGame()  ) {
+			ms.setShowTips(false);
+			ms.setStartGame(false);
 		}
 
 	}
 	
 	public boolean isInsideRect(int mouseX, int mouseY, int rectX, int rectWidth, int rectY, int rectHeight) {
-		if (mouseX > rectX && mouseX < rectX +rectWidth && mouseY > rectY && mouseY < rectY +rectHeight){
+		if ( (mouseX > rectX) && (mouseX < (rectX +rectWidth)) && (mouseY > rectY) && (mouseY < (rectY +rectHeight))){
 			return true;
 		}
 		return false;
