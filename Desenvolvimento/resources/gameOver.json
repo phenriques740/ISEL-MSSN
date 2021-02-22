@@ -1,0 +1,99 @@
+{
+	"frames": [
+		{
+			"filename": "gameOver1.png",
+			"position": {
+				"x": 1,
+				"y": 1,
+				"w": 229,
+				"h": 204
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 229,
+				"h": 204
+			},
+			"sourceSize": {
+				"w": 229,
+				"h": 204
+			}
+		},
+		{
+			"filename": "gameOver2.png",
+			"position": {
+				"x": 232,
+				"y": 1,
+				"w": 194,
+				"h": 206
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 194,
+				"h": 206
+			},
+			"sourceSize": {
+				"w": 194,
+				"h": 206
+			}
+		},
+		{
+			"filename": "gameOver3.png",
+			"position": {
+				"x": 428,
+				"y": 1,
+				"w": 160,
+				"h": 208
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 160,
+				"h": 208
+			},
+			"sourceSize": {
+				"w": 160,
+				"h": 208
+			}
+		},
+		{
+			"filename": "gameOver4.png",
+			"position": {
+				"x": 590,
+				"y": 1,
+				"w": 167,
+				"h": 208
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 167,
+				"h": 208
+			},
+			"sourceSize": {
+				"w": 167,
+				"h": 208
+			}
+		}
+	],
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 758,
+			"h": 210
+		},
+		"scale": "1"
+	}
+}
