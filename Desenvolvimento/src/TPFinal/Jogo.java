@@ -16,6 +16,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import TPFinal.entidades.Inimigo;
 import TPFinal.entidades.Osso;
+import TPFinal.entidades.PowerUp;
 import graph.SubPlot;
 import particleSystems.ParticleSystem;
 import physics.Body;
@@ -54,7 +55,7 @@ public class Jogo implements InterfaceProcessingApp {
 	private ArrayList<Osso> ossos = new ArrayList<Osso>();
 	private ArrayList<SpriteDef> enemies = new ArrayList<SpriteDef>();
 	private ArrayList<Body> enemiesBody = new ArrayList<>();
-
+	private ArrayList<PowerUp> powerUps = new ArrayList<>();
 	private ArrayList<ParticleSystem> pss;
 	
 	private int[] startGameRect;
@@ -62,6 +63,11 @@ public class Jogo implements InterfaceProcessingApp {
 	private int[] gameOverRetryAgainButton;
 	private int[] showTipsRectBackButton;
 	private Audio mainMenuMusic, fightMusic, boneAttackMusic,gameOverMusic;
+	private boolean debugBoxes = true;
+	
+	//variavais que sao afectadas por powerup:
+	private int numberOfOssosPerPress = 1;
+	private int spaceBetWeenBoneSpawns = 10;
 
 	@Override
 	public void setup(PApplet p) {
@@ -90,6 +96,7 @@ public class Jogo implements InterfaceProcessingApp {
 
 		ossos = new ArrayList<Osso>();
 		pss = new ArrayList<ParticleSystem>();
+		powerUps = new ArrayList<PowerUp>();
 
 		// mainMenu:
 		ms = new mainScreen(p, resources + "mainScreen.json", resources + "mainScreen.png", "Play", "How to Play", resources + "aKey.json", resources + "aKey.png", resources+"dKey.json", resources+"dKey.png", 
@@ -195,13 +202,16 @@ public class Jogo implements InterfaceProcessingApp {
 			// rapido, para acompanhar a animacao ponho 15
 			// fazer animacao do personagem principal
 			if (MC != null) {
-				MCBody.display(p, plt);
+				if(debugBoxes) {
+					MCBody.display(p, plt);
+				}
 				MC.animateHorizontal();
 				MC.show();
 
 				mcLeft.setPos(MC.getPos());
 				mcRight.setPos(MC.getPos());
 				makeBodyFollowAnimation(MCBody, MC, plt);
+				
 			}
 
 			// para remover os ossos da lista, nao posso usar for-each e tenho que comeï¿½ar
@@ -212,16 +222,21 @@ public class Jogo implements InterfaceProcessingApp {
 					inimigos.remove(inimigo);
 				}
 			}
+			
+			for(PowerUp powerUp : powerUps) {
+				powerUp.draw(p, plt, debugBoxes, dt);
+				//System.out.println("Pos---->"+powerUp.getPos());
+			}
 
 			// mostrar ossos, caso existam
 			if (!ossos.isEmpty()) {
 				for (Osso osso : ossos) {
-					osso.draw(p, plt, true, dt);
+					osso.draw(p, plt, debugBoxes, dt);
 				}
 			}
 
 			for (Inimigo inimigo : inimigos) {
-				inimigo.draw(p, plt, true, dt);
+				inimigo.draw(p, plt, debugBoxes, dt);
 			}
 
 			for (Osso osso : ossos) {
@@ -230,6 +245,16 @@ public class Jogo implements InterfaceProcessingApp {
 						ParticleSystem ps = inimigo.getBody().explodeMe();
 						pss.add(ps);
 
+						//quando acerto num inimigo, faço spawn do tal power up e adiciono-o a uma lista para depois poder fazer display facilmente:
+						System.out.println("inimigo Pos que vou por--->"+inimigo.getBody().getPos() );
+						
+						float min = 0, max = 1;
+						double chance =  (Math.random() * (max - min)) + min;
+						if(chance>0 && chance <0.7) {
+							PowerUp pwr = new PowerUp(p, inimigo.getBody().getPos(), new PVector(), 50, 70 );
+							powerUps.add(pwr);
+						}
+						
 						osso.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto
 													// tenho piercing bones !
 						inimigo.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
@@ -271,8 +296,34 @@ public class Jogo implements InterfaceProcessingApp {
 				}
 			}
 			
+			
+			collisionBetweenPlayerAndPWR();
+			
 		}
 
+	}
+	
+	//este P so serve para a outra classe. era isso ou importar uma biblioteca tipo Random mesmo do java
+	public void collisionBetweenPlayerAndPWR() {
+		//colisao entre PowerUps e player. Para isso, NÂO posso usar for-each e tenho que começar do fim:
+		for(int i = powerUps.size()-1; i >= 0; --i) {
+			if(MCBody.collision(powerUps.get(i).getBody(), plt)){
+				powerUps.remove(powerUps.get(i));
+				decideWhatPRW();
+			}
+		}
+	}
+	
+	public void decideWhatPRW() {
+		float min = 0, max = 1;
+		double chance =  (Math.random() * (max - min)) + min;
+		if(chance>0 && chance< 1) {
+			numberOfOssosPerPress++;
+		}
+	}
+
+	public PVector getMCStartingPos() {
+		return MCStartingPos;
 	}
 
 	private void makeBodyFollowAnimation(Body body, SpriteDef spriteDef, SubPlot plt) {
@@ -347,8 +398,11 @@ public class Jogo implements InterfaceProcessingApp {
 	
 
 	public void loadShootBoneAnimation(PApplet p) {
-		Osso osso = new Osso(p, MC.getPos(), new PVector(0, attackVel), 10, 20);
-		ossos.add(osso);
+		for(int i = 1; i < numberOfOssosPerPress+1; ++i) {
+			PVector posToSpawnBoneIn = new PVector( MC.getPos().x+spaceBetWeenBoneSpawns*i, MC.getPos().y );
+			Osso osso = new Osso(p, posToSpawnBoneIn, new PVector(0, attackVel), 10, 20);
+			ossos.add(osso);
+		}
 		if( ms.isStartGame() && !ms.isShowGameOver() ) {
 			try {
 				boneSoundEffect();

@@ -9,9 +9,9 @@ import processing.core.PVector;
 
 public class Jogador extends Entidade {
 	private String resources = "resources/";
-	private float MCStartingVel = 0f;
 	private SpriteDef mcRight;
 	private SpriteDef mcLeft;
+	private PVector MCStartingVel = new PVector();
 
 	public Jogador(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
 		super(p, startingPos, startingVel, width, height);
@@ -35,10 +35,39 @@ public class Jogador extends Entidade {
 	}
 
 	@Override
-	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox,float dt) {
+	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox, float dt) {
+		Body MCBody = this.getBody();
+		SpriteDef MC = this.getAnimator().getSpriteDef();
+		
+		this.getBody().setVel(MCStartingVel);
+		this.getBody().move(dt * 15);
 		if (drawBoundingBox) {
-			super.getBody().display(p, plt);
+			MCBody.display(p, plt);
 		}
+		MC.animateHorizontal();
+		MC.show();
+
+		mcLeft.setPos(MC.getPos());
+		mcRight.setPos(MC.getPos());
+		makeBodyFollowAnimation(MCBody, MC, plt);
+
 	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

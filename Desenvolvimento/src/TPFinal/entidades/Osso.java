@@ -53,6 +53,11 @@ public class Osso extends Entidade {
 
 	}
 
+	public Entidade getSpriteDef() {
+		// TODO Auto-generated method stub
+		return this.getSpriteDef();
+	}
+
 }
 
 

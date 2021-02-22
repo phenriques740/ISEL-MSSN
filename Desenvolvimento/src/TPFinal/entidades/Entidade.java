@@ -78,11 +78,19 @@ public abstract class Entidade {
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
 
+	
 	public void makeBodyFollowAnimationBone(Body body, SpriteDef spriteDef, SubPlot plt) {
 		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX() - 5, (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
 	}
 	
+	
+	
+	public void makeAnimationFollowBodyAccordingToPhysics(Body body, SpriteDef spriteDef, SubPlot plt) {
+		float[] coordConverted = plt.getPixelCoord((float) body.getPos().x, (float) body.getPos().y);
+		spriteDef.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
+		
+	}
 	
 }
 

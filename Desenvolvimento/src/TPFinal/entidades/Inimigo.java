@@ -38,14 +38,12 @@ public class Inimigo extends Entidade {
 		// TODO Auto-generated method stub
 		Body enemieBody = this.getBody();
 		
+		enemieBody.move(dt * 15);
 		if(drawBoundingBox) {
-			enemieBody.setVel(new PVector(enemiesStartingVel, 0));
-			enemieBody.move(dt * 15);
 			enemieBody.display(p, plt, enemiesCollisionBox[0], enemiesCollisionBox[1]);
-			makeBodyFollowAnimation(enemieBody, this.getSpriteDef(), plt);
 		}
 		
-		
+		super.makeBodyFollowAnimation(enemieBody, this.getSpriteDef(), plt);		
 		SpriteDef enemieSprite = this.getSpriteDef();
 		enemieSprite.show();
 		enemieSprite.animateHorizontal();
