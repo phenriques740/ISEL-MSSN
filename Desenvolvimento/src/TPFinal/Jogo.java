@@ -59,7 +59,7 @@ public class Jogo implements InterfaceProcessingApp {
 	
 	private int[] startGameRect;
 	private int[] showTipsRect;
-	Audio mainMenuMusic, fightMusic, boneAttackMusic;
+	private Audio mainMenuMusic, fightMusic, boneAttackMusic,gameOverMusic;
 
 	@Override
 	public void setup(PApplet p) {
@@ -91,7 +91,7 @@ public class Jogo implements InterfaceProcessingApp {
 
 		// mainMenu:
 		ms = new mainScreen(p, resources + "mainScreen.json", resources + "mainScreen.png", "Play", "How to Play", resources + "aKey.json", resources + "aKey.png", resources+"dKey.json", resources+"dKey.png", 
-								resources + "LMB.json", resources + "LMB.png");
+								resources + "LMB.json", resources + "LMB.png", resources + "gameOver.json", resources+"gameOver.png");
 		startGameRect = ms.getStartGameRect();
 		showTipsRect = ms.getShowTipsRect();
 
@@ -100,6 +100,7 @@ public class Jogo implements InterfaceProcessingApp {
 		try {
 			mainMenuMusic = new Audio(resources + "mainMenuMusic.wav");
 			fightMusic = new Audio(resources + "normalMusic.wav");
+			gameOverMusic = new Audio(resources+"gameOverMusic.wav");
 		} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,6 +111,9 @@ public class Jogo implements InterfaceProcessingApp {
 	public void startMenuMusic() {
 		if( fightMusic.isPlaying()) {
 			fightMusic.stopAudio();
+		}
+		if(gameOverMusic.isPlaying()) {
+			gameOverMusic.stopAudio();
 		}
 		if(!mainMenuMusic.isPlaying()) {
 			try {
@@ -125,6 +129,9 @@ public class Jogo implements InterfaceProcessingApp {
 	public void startFightMusic() {
 		if(mainMenuMusic.isPlaying()) {
 			mainMenuMusic.stopAudio();
+		}
+		if(gameOverMusic.isPlaying()) {
+			gameOverMusic.stopAudio();
 		}
 		if(!fightMusic.isPlaying()) {		
 			try {
@@ -146,6 +153,18 @@ public class Jogo implements InterfaceProcessingApp {
 			e.printStackTrace();
 		}
 	}
+	
+	public void startGameOverMusic() {
+		if(!gameOverMusic.isPlaying()) {
+			try {
+				gameOverMusic = new Audio(resources+"gameOverMusic.wav");
+				gameOverMusic.startAudio();
+			} catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 
 
 	@Override
@@ -153,6 +172,13 @@ public class Jogo implements InterfaceProcessingApp {
 		if (!ms.isStartGame()) {
 			startMenuMusic();
 			ms.drawMenu(p);
+		}
+		
+		else if(ms.isShowGameOver()) {
+			fightMusic.stopAudio();
+			mainMenuMusic.stopAudio();
+			ms.gameOverScreen();
+			startGameOverMusic();
 		}
 		
 		else {
@@ -240,6 +266,7 @@ public class Jogo implements InterfaceProcessingApp {
 					ossos.remove(currentOsso);
 				}
 			}
+			
 		}
 
 	}
@@ -262,7 +289,6 @@ public class Jogo implements InterfaceProcessingApp {
 		if( isInsideRect(p.mouseX, p.mouseY, showTipsRect[0], showTipsRect[2], showTipsRect[1], showTipsRect[3] ) ) {
 			ms.setShowTips(true);
 		}
-		
 
 	}
 	
@@ -294,6 +320,11 @@ public class Jogo implements InterfaceProcessingApp {
 			ms.setShowTips(false);
 			ms.setStartGame(false);
 		}
+		
+		if (p.key == 't') {
+			//apenas para testar o game over screen:
+			ms.setShowGameOver(true);
+		}
 
 	}
 	
@@ -301,7 +332,7 @@ public class Jogo implements InterfaceProcessingApp {
 	public void loadShootBoneAnimation(PApplet p) {
 		Osso osso = new Osso(p, MC.getPos(), new PVector(0, attackVel), 10, 20);
 		ossos.add(osso);
-		if( ms.isStartGame() ) {
+		if( ms.isStartGame() && !ms.isShowGameOver() ) {
 			try {
 				boneSoundEffect();
 			} catch (UnsupportedAudioFileException e) {

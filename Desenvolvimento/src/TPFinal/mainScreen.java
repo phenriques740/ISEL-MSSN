@@ -1,19 +1,36 @@
 package TPFinal;
 
+import java.io.IOException;
+
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+
 import processing.core.PApplet;
 import processing.core.PVector;
 
 public class mainScreen {
 	
-	private String pathToImage, pathToJson, option1, option2, aKeyJson, aKey, dKeyJson, dKey, LMBKeyJson, LMBKey;
-	private boolean startGame, showTips;
-	private Animador backGround, backGround2, A, D, LMB;
+	private String pathToImage, pathToJson, option1, option2, aKeyJson, aKey, dKeyJson, dKey, LMBKeyJson, LMBKey, gameOverJson, gameOver;
+	private boolean startGame, showTips, showGameOver;
+	
+	
+	public boolean isShowGameOver() {
+		return showGameOver;
+	}
+
+
+	public void setShowGameOver(boolean showGameOver) {
+		this.showGameOver = showGameOver;
+	}
+	
+	
+	private Animador backGround, backGround2, A, D, LMB, gameOverAnim, gameOverAnim2, gameOverAnim3;
 	private final PApplet p;
 	private int[] startGameRect = {150, 275, 190, 310};
 	private int[] showTipsRect = {450, 275, 500, 310};
 	
 		
-	public mainScreen(PApplet p, String pathToJson, String pathToImage, String option1, String option2, String aKeyJson, String aKey, String dKeyJson, String dKey,  String LMBKeyJson, String LMBKey) {
+	public mainScreen(PApplet p, String pathToJson, String pathToImage, String option1, String option2, String aKeyJson, String aKey, String dKeyJson, String dKey,  String LMBKeyJson, String LMBKey, String gameOverJson, String gameOver) {
 		this.p = p;
 		this.pathToJson = pathToJson;
 		this.pathToImage = pathToImage;
@@ -26,10 +43,24 @@ public class mainScreen {
 		this.dKey = dKey;
 		this.LMBKeyJson = LMBKeyJson;
 		this.LMBKey = LMBKey;
+		this.gameOverJson = gameOverJson;
+		this.gameOver = gameOver;
 		
 		backGround = new Animador(p, pathToJson, pathToImage, new PVector(0,50), new PVector(0.1f,0f)  );
 		backGround2 = new Animador(p, pathToJson, pathToImage, new PVector(p.width,p.height-250), new PVector(0.15f,0f)  );
+		gameOverAnim = new Animador(p, gameOverJson, gameOver, new PVector(0,200), new PVector(0.1f,0f)  );
+		gameOverAnim2 = new Animador(p, gameOverJson, gameOver, new PVector(p.width,000), new PVector(0.1f,0f)  );
+		gameOverAnim3 = new Animador(p, gameOverJson, gameOver, new PVector(p.width,400), new PVector(0.1f,0f)  );
+		
 		//System.out.println("Check!");
+	}
+	
+	public void gameOverScreen() {
+		p.background(255);
+		gameOverAnimation();
+		drawGameOverText("Game Over", 125, 300);
+		drawButton("Back to Main Menu", 275, 400, 280, 425  );
+		
 	}
 	
 
@@ -39,6 +70,11 @@ public class mainScreen {
 		if(!this.showTips) {
 			normalMenu();
 		}
+		
+		else if(this.showGameOver && this.startGame) {
+			gameOverScreen();
+		}
+		
 		else {
 			//neste caso o menu com tips:
 			tipsMenu();
@@ -48,6 +84,7 @@ public class mainScreen {
 	
 	private void tipsMenu() {
 		p.background(128);
+		backGroundAnimation();
 		A = new Animador(p, aKeyJson, aKey, new PVector(100,100), new PVector(0.1f,0f)  );
 		D = new Animador(p, dKeyJson, dKey, new PVector(100,250), new PVector(0.1f,0f)  );
 		LMB = new Animador(p, LMBKeyJson, LMBKey, new PVector(50,400), new PVector(0.1f,0f) );
@@ -69,17 +106,39 @@ public class mainScreen {
 		
 	}
 	
-	private void normalMenu() {
+	
+	public void gameOverAnimation() {
+		SpriteDef gameOverSprite = gameOverAnim.getSpriteDef();
+		gameOverSprite.show();
+		gameOverSprite.animateHorizontal();
+		
+		SpriteDef gameOverSprite2 = gameOverAnim2.getSpriteDef();
+		gameOverSprite2.setSpeedUpFactor(-10);
+		gameOverSprite2.show();
+		gameOverSprite2.animateHorizontal();
+		
+		SpriteDef gameOverSprite3 = gameOverAnim3.getSpriteDef();
+		gameOverSprite3.setSpeedUpFactor(-10);
+		gameOverSprite3.show();
+		gameOverSprite3.animateHorizontal();
+	}
+	
+	public void backGroundAnimation() {
 		SpriteDef backGorundSPrite = backGround.getSpriteDef();
 		//System.out.println("Check 2");
 		backGorundSPrite.show();
 		backGorundSPrite.animateHorizontal();
 		
 		SpriteDef backGroundSprite2  = backGround2.getSpriteDef();
-		backGroundSprite2.show();
 		backGroundSprite2.setSpeedUpFactor( -10 );
+		backGroundSprite2.show();
 		backGroundSprite2.animateHorizontal();
-		
+	}
+	
+	
+	private void normalMenu() {
+		backGroundAnimation();
+		this.setShowGameOver(false);
 		drawButton("Start Game!", startGameRect[0], startGameRect[1], startGameRect[2], startGameRect[3] );
 		drawButton("Show Tips", showTipsRect[0], showTipsRect[1], showTipsRect[2], showTipsRect[3]);
 	}
@@ -94,6 +153,12 @@ public class mainScreen {
 		return showTipsRect;
 	}
 
+	public void drawGameOverText(String string, int textX, int textY) {
+		p.textSize(100);
+		p.fill(255,0,0);
+		p.text(string, textX, textY);
+	}
+	
 
 	public void drawText(String string, int textX, int textY) {
 		p.fill(0);		//para alterar a cor do texto
