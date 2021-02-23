@@ -45,8 +45,8 @@ public class Osso extends Entidade {
 		// System.out.println("index---->"+index);
 		if(drawBoundingBox) {
 			currentBone.display(p, plt, boneColisionBox[0], boneColisionBox[1]);
-			currentBone.move(dt * 15);
 		}
+		currentBone.move(dt * 15);
 		super.makeBodyFollowAnimationBone(currentBone, currentBoneSprite, plt);
 		currentBoneSprite.show();
 		currentBoneSprite.animateVertical();

@@ -8,9 +8,18 @@ import processing.core.PApplet;
 import processing.core.PVector;
 
 public class Inimigo extends Entidade {
+	
+	public boolean isShouldIDropBomb() {
+		return shouldIDropBomb;
+	}
+
+	public void setShouldIDropBomb(boolean shouldIDropBomb) {
+		this.shouldIDropBomb = shouldIDropBomb;
+	}
 
 	private float enemiesStartingVel = 0.5f;
 	private float[] enemiesCollisionBox = { 60, 50 };
+	private boolean shouldIDropBomb = false;
 
 	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
 		super(p, startingPos, startingVel, width, height);
@@ -35,7 +44,7 @@ public class Inimigo extends Entidade {
 
 	@Override
 	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox, float dt) {
-		// TODO Auto-generated method stub
+		
 		Body enemieBody = this.getBody();
 		
 		enemieBody.move(dt * 15);

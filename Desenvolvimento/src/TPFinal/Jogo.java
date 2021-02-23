@@ -1,19 +1,13 @@
 package TPFinal;
 
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import TPFinal.entidades.Bomb;
 import TPFinal.entidades.Inimigo;
 import TPFinal.entidades.Osso;
 import TPFinal.entidades.PowerUp;
@@ -57,7 +51,9 @@ public class Jogo implements InterfaceProcessingApp {
 	private ArrayList<Body> enemiesBody = new ArrayList<>();
 	private ArrayList<PowerUp> powerUps = new ArrayList<>();
 	private ArrayList<ParticleSystem> pss;
+	private ArrayList<Bomb> bombs;
 	
+	private int MCHealth = 3;
 	private int[] startGameRect;
 	private int[] showTipsRect;
 	private int[] gameOverRetryAgainButton;
@@ -68,6 +64,8 @@ public class Jogo implements InterfaceProcessingApp {
 	//variavais que sao afectadas por powerup:
 	private int numberOfOssosPerPress = 1;
 	private int spaceBetWeenBoneSpawns = 10;
+	
+	private float enemyDropBombChance = 1f;	//quanto maior, mais frequentemente o inimigo irá deixar cair bombas!
 
 	@Override
 	public void setup(PApplet p) {
@@ -97,6 +95,7 @@ public class Jogo implements InterfaceProcessingApp {
 		ossos = new ArrayList<Osso>();
 		pss = new ArrayList<ParticleSystem>();
 		powerUps = new ArrayList<PowerUp>();
+		bombs = new ArrayList<Bomb>();
 
 		// mainMenu:
 		ms = new mainScreen(p, resources + "mainScreen.json", resources + "mainScreen.png", "Play", "How to Play", resources + "aKey.json", resources + "aKey.png", resources+"dKey.json", resources+"dKey.png", 
@@ -135,6 +134,12 @@ public class Jogo implements InterfaceProcessingApp {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public void drawAccurateNumberOfHearts(PApplet p) {
+		Animador heart1 = new Animador(p, resources+"heart.json", resources+"heart.png", 50, 80);
+		SpriteDef heartSprite = heart1.getSpriteDef();
+		heartSprite.show();
 	}
 	
 	public void startFightMusic() {
@@ -176,6 +181,16 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 		}
 	}
+	
+	public boolean shouldEnemyDropBomb() {
+		double chance = Math.random();
+		//System.out.println("Chance---->"+chance);
+		if( chance < enemyDropBombChance) {
+			System.out.println("return true do souldDrop bomb!");
+			return true;
+		}
+		return false;
+	}
 
 
 	@Override
@@ -196,6 +211,8 @@ public class Jogo implements InterfaceProcessingApp {
 			startFightMusic();
 			p.background(127);
 
+			drawAccurateNumberOfHearts(p);
+			
 			MCBody.setVel(MCStartingVel);
 			MCBody.move(dt * 15);
 			// este * 15 e porque na classe da sprite multiplico por 10 para ser mais
@@ -238,6 +255,7 @@ public class Jogo implements InterfaceProcessingApp {
 			for (Inimigo inimigo : inimigos) {
 				inimigo.draw(p, plt, debugBoxes, dt);
 			}
+			
 
 			for (Osso osso : ossos) {
 				for (Inimigo inimigo : inimigos) {
@@ -255,12 +273,24 @@ public class Jogo implements InterfaceProcessingApp {
 							powerUps.add(pwr);
 						}
 						
+						if(shouldEnemyDropBomb()) {
+							Bomb bomb = new Bomb(p, inimigo.getBody().getPos(), new PVector(), 50, 50);
+							bombs.add(bomb);
+						}
+						
+						
 						osso.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto
 													// tenho piercing bones !
 						inimigo.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
 
 					}
 				}
+			}
+			
+			//AS bombas têm que ficar a frente dos power Ups
+			//mostrar as bombas que cairam e foram adicionadas do ciclo anterior:
+			for(Bomb bomb : bombs) {
+				bomb.draw(p, plt, debugBoxes, dt);
 			}
 
 			// mostrar os particle Systems
@@ -298,6 +328,11 @@ public class Jogo implements InterfaceProcessingApp {
 			
 			
 			collisionBetweenPlayerAndPWR();
+			collisionBetweenPlayerAndBomb();
+			
+			if(MCHealth <= 0) {
+				ms.setShowGameOver(true);
+			}
 			
 		}
 
@@ -313,6 +348,18 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 		}
 	}
+	
+	public void collisionBetweenPlayerAndBomb() {
+		//colisao entre PowerUps e player. Para isso, NÂO posso usar for-each e tenho que começar do fim:
+		for(int i = bombs.size()-1; i >= 0; --i) {
+			if(MCBody.collision(bombs.get(i).getBody(), plt)){
+				bombs.remove(bombs.get(i));
+				MCHealth--;
+			}
+		}
+	}
+	
+	
 	
 	public void decideWhatPRW() {
 		float min = 0, max = 1;
@@ -389,10 +436,12 @@ public class Jogo implements InterfaceProcessingApp {
 			ms.setStartGame(false);
 		}
 		
+		/*
 		if (p.key == 't') {
 			//apenas para testar o game over screen:
 			ms.setShowGameOver(true);
 		}
+		*/
 
 	}
 	
