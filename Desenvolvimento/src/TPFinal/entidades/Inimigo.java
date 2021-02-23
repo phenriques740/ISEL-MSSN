@@ -17,14 +17,17 @@ public class Inimigo extends Entidade {
 		this.shouldIDropBomb = shouldIDropBomb;
 	}
 
-	private float enemiesStartingVel = 0.5f;
+	
 	private float[] enemiesCollisionBox = { 60, 50 };
 	private boolean shouldIDropBomb = false;
+	private int HP = 0;
 
 	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
 		super(p, startingPos, startingVel, width, height);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 	@Override
 	public Animador criarAnimador(PApplet p) {
