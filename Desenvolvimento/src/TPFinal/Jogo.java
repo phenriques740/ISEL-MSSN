@@ -34,7 +34,12 @@ public class Jogo implements InterfaceProcessingApp {
 	private SubPlot plt;
 	private mainScreen ms;
 	SpriteDef MC, bone; // MC = main Character
-	private float enemiesStartingVel = 0.5f;
+	private PVector[] enemiesStartingVels = new PVector[] { new PVector(0.5f, 0), new PVector(1.0f, 0),
+			new PVector(0.75f, 0) };
+	private PVector[] enemiesStartingPos = new PVector[] { new PVector(50f, 0),
+			// Fica aqui com o 0 no eixo dos Y porque depois quero meter a variar no
+			// construtor
+			new PVector(100f, 0), new PVector(150f, 0) };
 	private float[] enemiesCollisionBox = { 60, 50 };
 	private PVector MCStartingPos = new PVector(20, 520);
 	private PVector MCStartingVel = new PVector();
@@ -69,10 +74,12 @@ public class Jogo implements InterfaceProcessingApp {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 
 		for (int i = 0; i < numberOfEnemies; i++) {
-			Inimigo temp = new Inimigo(p, new PVector(50f, 75 * i), new PVector(enemiesStartingVel, 0),
+			PVector startVel = enemiesStartingVels[PApplet.floor(p.random(enemiesStartingVels.length * 1.0f))];
+			PVector startPos = enemiesStartingPos[PApplet.floor(p.random(enemiesStartingPos.length * 1.0f))];
+
+			Inimigo temp = new Inimigo(p, PVector.add(startPos, new PVector(0, 75f * i)), startVel,
 					enemiesCollisionBox[0], enemiesCollisionBox[1]);
 			inimigos.add(temp);
-
 		}
 
 		Animador mcAanimRight = new Animador(p, resources + "skeletonRun.json", resources + "skeleton.png",
