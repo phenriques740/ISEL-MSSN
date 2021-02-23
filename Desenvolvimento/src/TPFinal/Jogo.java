@@ -235,6 +235,7 @@ public class Jogo implements InterfaceProcessingApp {
 		//
 		timeBetweenShots = 300f;
 		spaceBetWeenBoneSpawns = 10;
+		lastPowerupReceived = "";
 		
 	}
 
@@ -429,7 +430,7 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 		else if(chance>= 0.65 && chance <0.80) {
 			lastPowerupReceived = "Player Speed Increased!";
-			MC.setSpeedUpFactor( MC.getSpeedUpFactor() - 20);
+			MC.setSpeedUpFactor( -20);
 		}
 		
 		//25% de chance para os ossos irem mais dispersos. so faz sentido existir se disparar mais que um osso, dai o if extra!
