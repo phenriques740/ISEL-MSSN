@@ -135,7 +135,7 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 	public void drawAccurateNumberOfHearts(PApplet p) {
-		Animador heart1 = new Animador(p, resources + "heart.json", resources + "heart.png", 50, 80);
+		Animador heart1 = new Animador(p, resources + "heart.json", resources + "heart.png", 10, 20);
 		SpriteDef heartSprite = heart1.getSpriteDef();
 		heartSprite.show();
 	}
