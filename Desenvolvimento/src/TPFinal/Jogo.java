@@ -133,10 +133,10 @@ public class Jogo implements InterfaceProcessingApp {
 		showTipsRectBackButton = ms.getShowTipsBackButton();
 		
 		//tratar dos WP e do Eye do Boid Boss
-		b = new Boid(new PVector(), 1, 20, 50, 10, p, plt);
+		b = new Boid(p, new PVector(), 220, 250, p.color(255, 0, 0), 10);
 		Waypoints = new ArrayList<Body>();
-		Body bodyWP1 = new Body(new PVector(5,5), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
-		Body bodyWP2 = new Body(new PVector(-8,5), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
+		Body bodyWP1 = new Body(new PVector(3,3), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
+		Body bodyWP2 = new Body(new PVector(-8,0), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
 		Waypoints.add(bodyWP1);
 		Waypoints.add(bodyWP2);
 		b.addBehavior(new Patrol(1f, Waypoints));
@@ -303,10 +303,13 @@ public class Jogo implements InterfaceProcessingApp {
 			
 			//parte do boid:
 			b.applySingleBehavior(0, dt);
-			b.display(p, plt);
+			if(b.getBody()!= null) {
+				//System.out.println("boid display!");
+				b.draw(p, plt, debugBoxes, dt);
+			}
 			
 			for(Body body : Waypoints) {
-				//body.display(p, plt);
+				body.display(p, plt, 50, 50);
 			}
 
 			drawAccurateNumberOfHearts(p);
@@ -489,19 +492,19 @@ public class Jogo implements InterfaceProcessingApp {
 				ms.setShowGameOver(true);
 			}
 
-//			// System.out.println("inimigos size--->"+inimigos.size()); if
-//			if (inimigos.size() <= 0 || numberOfTimesISpawnedEnemies == 0) {
-//				if (numberOfTimesISpawnedEnemies == 0) {
-//					spawnStrongerEnemies(p, HPEasyEnemies);
-//					numberOfTimesISpawnedEnemies++;
-//				} else if (numberOfTimesISpawnedEnemies >= 1 && numberOfTimesISpawnedEnemies < 3) {
-//					spawnStrongerEnemies(p, HPMediumEnemies);
-//					numberOfTimesISpawnedEnemies++;
-//				} else if (HPMediumEnemies >= 3) {
-//					spawnStrongerEnemies(p, HPHardEnemies);
-//					numberOfTimesISpawnedEnemies++;
-//				}
-//			}
+			// System.out.println("inimigos size--->"+inimigos.size()); if
+			if (inimigos.size() <= 3 || numberOfTimesISpawnedEnemies == 0) {
+				if (numberOfTimesISpawnedEnemies == 0) {
+					spawnStrongerEnemies(p, HPEasyEnemies);
+					numberOfTimesISpawnedEnemies++;
+				} else if (numberOfTimesISpawnedEnemies >= 1 && numberOfTimesISpawnedEnemies < 3) {
+					spawnStrongerEnemies(p, HPMediumEnemies);
+					numberOfTimesISpawnedEnemies++;
+				} else if (HPMediumEnemies >= 3) {
+					spawnStrongerEnemies(p, HPHardEnemies);
+					numberOfTimesISpawnedEnemies++;
+				}
+			}
 
 			showLastPowerUpReceived(p);
 

@@ -1,0 +1,36 @@
+{
+	"frames": [
+		{
+			"filename": "backGround.png",
+			"position": {
+				"x": 1,
+				"y": 1,
+				"w": 1280,
+				"h": 720
+			},
+			"rotated": false,
+			"trimmed": false,
+			"spriteSourceSize": {
+				"x": 0,
+				"y": 0,
+				"w": 1280,
+				"h": 720
+			},
+			"sourceSize": {
+				"w": 1280,
+				"h": 720
+			}
+		}
+	],
+	"meta": {
+		"app": "http://www.codeandweb.com/texturepacker",
+		"version": "1.0",
+		"image": "spritesheet.png",
+		"format": "RGBA8888",
+		"size": {
+			"w": 1282,
+			"h": 722
+		},
+		"scale": "1"
+	}
+}

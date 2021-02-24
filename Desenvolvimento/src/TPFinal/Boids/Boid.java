@@ -5,15 +5,18 @@ import java.util.ArrayList;
 
 
 import java.util.List;
+
+import TPFinal.Animador;
+import TPFinal.SpriteDef;
+import TPFinal.entidades.Entidade;
 import graph.SubPlot;
 import physics.Body;
 import processing.core.PApplet;
-import processing.core.PConstants;
 import processing.core.PShape;
 import processing.core.PVector;
 
 
-public class Boid extends Body {
+public class Boid extends Entidade {
 
 	private SubPlot plt;
 	private PShape shape;
@@ -24,20 +27,10 @@ public class Boid extends Body {
 	private double[] window;
 	private float sumWeights;
 
-	public Boid(PVector pos, float mass, float width, float height, int color, PApplet p, SubPlot plt) {
-		super(pos, new PVector(), mass, width, height, color);
+	public Boid(PApplet p,PVector pos, float width, float height, int color, int HP) {
+		super(p, pos, new PVector(), width, height, HP);
 		dna = new DNA(); // fica com as caracteristicas random!
 		behaviors = new ArrayList<Behavior>();
-		this.plt = plt;
-		window = plt.getWindow();
-		setShape(p, plt);
-	}
-
-	public void setShape(PApplet p, SubPlot plt, float radius, int color) {
-		// para mudar de cor em runtime!
-		this.radius = radius;
-		this.color = color;
-		setShape(p, plt);
 	}
 
 	public void setEye(Eye eye) {
@@ -86,6 +79,7 @@ public class Boid extends Body {
 			velocidadeDesejadaDeCadaComportamento.mult(behavior.getWeight() / sumWeights);
 			velocidadeDesejada.add(velocidadeDesejadaDeCadaComportamento);
 		}
+		//System.out.println("velolcidade Desejada!!--->"+velocidadeDesejada.x+" ---->"+velocidadeDesejada.y);
 		move(dt, velocidadeDesejada);
 	}
 
@@ -95,47 +89,9 @@ public class Boid extends Body {
 
 	private void move(float dt, PVector velocidadeDesejada) {
 		velocidadeDesejada.normalize().mult(dna.maxSpeed);
-		PVector forceSterring = PVector.sub(velocidadeDesejada, vel);
-		applyForce(forceSterring.limit(dna.maxForce));
-		super.move(dt);//
-		if (pos.x < window[0]) {
-			pos.x += window[1] - window[0];
-		}
-		if (pos.y < window[2]) {
-			pos.y += window[3] - window[2];
-		}
-
-		if (pos.x >= window[1]) {
-			pos.x -= window[1] - window[0];
-		}
-		if (pos.y >= window[3]) {
-			pos.y -= window[3] - window[2];
-		}
-	}
-
-	public void setShape(PApplet p, SubPlot plt) { // posso importar uma imagem SVG
-		float[] rr = plt.getDimInPixel(1, 1);
-
-		shape = p.createShape();
-		shape.beginShape();
-		shape.noStroke();
-		shape.fill(color);
-		shape.vertex(-rr[0], rr[0] / 2);
-		shape.vertex(rr[0], 0);
-		shape.vertex(-rr[0], -rr[0] / 2);
-		shape.vertex(-rr[0] / 2, 0);
-		shape.endShape(PConstants.CLOSE);
-
-	}
-
-	@Override
-	public void display(PApplet p, SubPlot plt) {
-		p.pushMatrix();
-		float[] pp = plt.getPixelCoord(pos.x, pos.y);
-		p.translate(pp[0], pp[1]);
-		p.rotate(-vel.heading());
-		p.shape(shape);
-		p.popMatrix();
+		PVector forceSterring = PVector.sub(velocidadeDesejada, getVel());
+		this.getBody().applyForce(forceSterring.limit(dna.maxForce));
+		
 	}
 
 	public DNA getDna() {
@@ -154,4 +110,65 @@ public class Boid extends Body {
 		this.phiWander = phiWander;
 	}
 
+	@Override
+	public Animador criarAnimador(PApplet p) {
+		// TODO Auto-generated method stub
+		return new Animador(p, Entidade.resources + "boss.json", Entidade.resources + "boss.png", super.getPos(),
+				super.getVel());
+	}
+
+	@Override
+	public Body criarBody(PApplet p) {
+		// TODO Auto-generated method stub
+		return new Body(super.getPos(), super.getVel(), 1f, super.getWidth(), super.getHeight(), p.color(255, 128, 0));
+	}
+
+	@Override
+	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox, float dt) {
+		// TODO Auto-generated method stub
+		Body bombBody = this.getBody();
+		SpriteDef bombSprite = this.getSpriteDef();
+		//System.out.println("good coord--->"+pixelCoordFromBody[0] +" ----->"+pixelCoordFromBody[1]);
+		applyBehaviors(dt);
+		if (drawBoundingBox) {
+			bombBody.display(p, plt, super.getWidth(), super.getHeight());
+		}
+		
+		bombBody.move(dt * 1);
+		window = plt.getWindow();
+		if (this.getBody().getPos().x < window[0]) {
+			this.getBody().getPos().x += window[1] - window[0];
+		}
+		if (this.getBody().getPos().y < window[2]) {
+			this.getBody().getPos().y += window[3] - window[2];
+		}
+
+		if (this.getBody().getPos().x >= window[1]) {
+			this.getBody().getPos().x -= window[1] - window[0];
+		}
+		if (this.getBody().getPos().y >= window[3]) {
+			this.getBody().getPos().y -= window[3] - window[2];
+		}
+		makeAnimationFollowBodyAccordingToPhysics(bombBody, bombSprite, plt);
+		bombSprite.show();
+		
+		System.out.println("Boid em draw---->"+getPos().x +" y-->"+getPos().y );
+		
+	}
+	
+	public PVector getPos() {
+		return super.getBody().getPos();
+	}
+
+	public SpriteDef getSpriteDef() {
+		// TODO Auto-generated method stub
+		return super.getAnimator().getSpriteDef();
+	}
+
 }
+
+
+
+
+
+
