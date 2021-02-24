@@ -7,6 +7,8 @@ public class mainScreen {
 	
 	private String pathToImage, pathToJson, option1, option2, aKeyJson, aKey, dKeyJson, dKey, LMBKeyJson, LMBKey, gameOverJson, gameOver;
 	private boolean startGame, showTips, showGameOver;
+	private String resources = "resources/";
+	private Animador backGroundStatic, GameOverBackGroundStatic;
 	
 	
 	public boolean isShowGameOver() {
@@ -58,6 +60,8 @@ public class mainScreen {
 		gameOverAnim = new Animador(p, gameOverJson, gameOver, new PVector(0,200), new PVector(0.1f,0f)  );
 		gameOverAnim2 = new Animador(p, gameOverJson, gameOver, new PVector(p.width,000), new PVector(0.1f,0f)  );
 		gameOverAnim3 = new Animador(p, gameOverJson, gameOver, new PVector(p.width,400), new PVector(0.1f,0f)  );
+		backGroundStatic = new Animador(p, resources+"mainScreenStatic.json", resources+"mainScreenStatic.jpg", new PVector(), new PVector()  );
+		GameOverBackGroundStatic = new Animador(p, resources+"gameOverBackground.json", resources+"gameOverBackground.jpg", new PVector(), new PVector()  );
 		
 		//System.out.println("Check!");
 	}
@@ -99,11 +103,11 @@ public class mainScreen {
 		LMB = new Animador(p, LMBKeyJson, LMBKey, new PVector(50,400), new PVector(0.1f,0f) );
 		
 		//texto por baixo de cada imagem a explicar:
-		drawText("Quando os inimigos sï¿½o destruidos, existe uma chance de cair um powerup", 30, 30 );
+		drawText("Quando os inimigos são destruidos, existe uma chance de cair um powerup", 30, 30 );
 		drawText("Posso premir a tecla b para voltar ao menu principal", 30, 70);
 		drawText("Tecla A serve para andar para a Esquerda.", 220, 150 );
 		drawText("Tecla D serve para andar para a Direita.", 220, 300 );
-		drawText("Botï¿½o Esquerdo do Rato serve para Disparar.", 200, 500 );
+		drawText("Botão Esquerdo do Rato serve para Disparar.", 200, 500 );
 		
 		SpriteDef Asprite = A.getSpriteDef();
 		SpriteDef Dsprite = D.getSpriteDef();
@@ -120,6 +124,9 @@ public class mainScreen {
 	
 	
 	public void gameOverAnimation() {
+		SpriteDef GameOverBackGroundStaticSprite = GameOverBackGroundStatic.getSpriteDef();
+		GameOverBackGroundStaticSprite.show();
+		
 		SpriteDef gameOverSprite = gameOverAnim.getSpriteDef();
 		gameOverSprite.show();
 		gameOverSprite.animateHorizontal();
@@ -136,6 +143,10 @@ public class mainScreen {
 	}
 	
 	public void backGroundAnimation() {
+		
+		SpriteDef backGroundStaticSprite = backGroundStatic.getSpriteDef();
+		backGroundStaticSprite.show();
+		
 		SpriteDef backGorundSPrite = backGround.getSpriteDef();
 		//System.out.println("Check 2");
 		backGorundSPrite.show();
@@ -145,6 +156,7 @@ public class mainScreen {
 		backGroundSprite2.setSpeedUpFactor( -10 );
 		backGroundSprite2.show();
 		backGroundSprite2.animateHorizontal();
+		
 	}
 	
 	

@@ -2,6 +2,7 @@ package TPFinal;
 
 import java.util.ArrayList;
 
+import TPFinal.Boids.Boid;
 import processing.core.PApplet;
 import processing.core.PImage;
 import processing.core.PVector;
@@ -71,11 +72,13 @@ public class SpriteDef {
 	 */
 	public void show() {
 		indexF = (this.indexF) % this.len;
+		if(indexF<0) {
+			indexF = Math.abs(indexF);
+		}
 		p.image(animation.get(PApplet.floor(indexF)), x, y);
 	}
 
 	public void animateHorizontal() {
-//		System.out.println("speed---->" + speed);
 		indexF += speed.x;
 		this.x += speed.x * speedUpFactor;
 		if (x > p.width) {
@@ -84,8 +87,8 @@ public class SpriteDef {
 		if (x < -this.getW()) {
 			x = p.width;
 		}
-
 	}
+	
 
 	public void animateVertical() {
 		// System.out.println("speed---->"+speed);

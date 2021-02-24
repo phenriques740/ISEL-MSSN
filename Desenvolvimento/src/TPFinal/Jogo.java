@@ -207,7 +207,7 @@ public class Jogo implements InterfaceProcessingApp {
 		
 		// tratar dos WP e do Eye do Boid Boss
 		MCHealth = 5;
-		boss = new Boid(p, new PVector(), bossCollisionBox[0], bossCollisionBox[1], bossHP , p.color(128, 128, 128));
+		boss = new Boid(p, new PVector(), bossCollisionBox[0], bossCollisionBox[1], bossHP , p.color(128, 0, 128));
 		Waypoints = new ArrayList<Body>();
 		Body bodyWP1 = new Body(new PVector(-8, 8), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
 		Body bodyWP2 = new Body(new PVector(6, 4), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
@@ -306,6 +306,7 @@ public class Jogo implements InterfaceProcessingApp {
 		spaceBetWeenBoneSpawns = 10;
 		lastPowerupReceived = "";
 		numberOfTimesISpawnedEnemies = 0;
+		boss = null;
 		bossFight = false;
 
 	}
@@ -359,7 +360,7 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 
 			//de 5 em 5 waves, falo spawn de um boss! dai o resto da divisao por 5
-			if (boss == null && !bossFight && (numberOfTimesISpawnedEnemies%5==0 && numberOfTimesISpawnedEnemies!=0) ) {
+			if (boss == null && !bossFight && (numberOfTimesISpawnedEnemies%2==0 && numberOfTimesISpawnedEnemies!=0) ) {
 				//System.out.println("if spawn Boss");
 				inimigos.clear();
 				spawnBoss(p);
@@ -460,7 +461,7 @@ public class Jogo implements InterfaceProcessingApp {
 				// caso de o osso encontrar o boss:
 				if (boss != null && osso.getBody().collision(boss.getBody(), plt)) {
 					// System.out.println("Colisão osso Boss!");
-					ParticleSystem ps = osso.getBody().explodeMe();
+					ParticleSystem ps = boss.getBody().explodeMe();
 					pss.add(ps);
 
 					int currentBossHP = boss.getHP();

@@ -83,6 +83,7 @@ public class Boid extends Entidade {
 		}
 		//System.out.println("velolcidade Desejada!!--->"+velocidadeDesejada.x+" ---->"+velocidadeDesejada.y);
 		move(dt, velocidadeDesejada);
+		
 	}
 
 	public Eye getEye() {
@@ -122,14 +123,13 @@ public class Boid extends Entidade {
 	@Override
 	public Body criarBody(PApplet p) {
 		// TODO Auto-generated method stub
-		return new Body(super.getPos(), super.getVel(), 1f, super.getWidth(), super.getHeight(), p.color(255, 128, 0));
+		return new Body(super.getPos(), super.getVel(), 1f, super.getWidth(), super.getHeight(), super.getColor());
 	}
 
 	@Override
 	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox, float dt) {
 		// TODO Auto-generated method stub
 		Body bombBody = this.getBody();
-		SpriteDef bombSprite = this.getSpriteDef();
 		//System.out.println("good coord--->"+pixelCoordFromBody[0] +" ----->"+pixelCoordFromBody[1]);
 		applyBehaviors(dt);
 		if (drawBoundingBox) {
@@ -151,10 +151,12 @@ public class Boid extends Entidade {
 		if (this.getBody().getPos().y >= window[3]) {
 			this.getBody().getPos().y -= window[3] - window[2];
 		}
-		makeAnimationFollowBodyAccordingToPhysics(bombBody, bombSprite, plt);
-		bombSprite.show();
 		
-		//System.out.println("Boid em draw---->"+getPos().x +" y-->"+getPos().y );
+		super.makeAnimationFollowBodyAccordingToPhysics(bombBody, this.getSpriteDef(), plt);
+		SpriteDef spriteDef = this.getSpriteDef();
+		spriteDef.show();
+		spriteDef.animateHorizontal();
+		
 		
 	}
 	
