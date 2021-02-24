@@ -360,7 +360,7 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 
 			//de 5 em 5 waves, falo spawn de um boss! dai o resto da divisao por 5
-			if (boss == null && !bossFight && (numberOfTimesISpawnedEnemies%2==0 && numberOfTimesISpawnedEnemies!=0) ) {
+			if (boss == null && !bossFight && (numberOfTimesISpawnedEnemies%5==0 && numberOfTimesISpawnedEnemies!=0) ) {
 				//System.out.println("if spawn Boss");
 				inimigos.clear();
 				spawnBoss(p);
