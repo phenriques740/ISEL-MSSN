@@ -2,7 +2,7 @@
 	"frames": [
 		{
 			"filename": "tile000.png",
-			"position": {
+			"frame": {
 				"x": 1,
 				"y": 1,
 				"w": 101,
@@ -23,7 +23,7 @@
 		},
 		{
 			"filename": "tile001.png",
-			"position": {
+			"frame": {
 				"x": 104,
 				"y": 1,
 				"w": 101,
@@ -44,7 +44,7 @@
 		},
 		{
 			"filename": "tile002.png",
-			"position": {
+			"frame": {
 				"x": 207,
 				"y": 1,
 				"w": 101,

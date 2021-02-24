@@ -34,7 +34,7 @@ public class Boss extends Entidade {
 
 	@Override
 	public Animador criarAnimador(PApplet p) {
-		return new Animador(p, Entidade.resources + "boss.json", Entidade.resources + "boss.png", super.getPos(), super.getVel());
+		return new Animador(p, Entidade.resources + "bossV1.json", Entidade.resources + "bossV1.png", super.getPos(), super.getVel());
 	}
 
 	@Override
