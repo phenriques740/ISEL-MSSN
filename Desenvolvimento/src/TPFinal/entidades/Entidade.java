@@ -88,8 +88,7 @@ public abstract class Entidade {
 	
 	public void makeAnimationFollowBodyAccordingToPhysics(Body body, SpriteDef spriteDef, SubPlot plt) {
 		float[] coordConverted = plt.getPixelCoord((float) body.getPos().x, (float) body.getPos().y);
-		spriteDef.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
-		
+		spriteDef.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));	
 	}
 	
 }

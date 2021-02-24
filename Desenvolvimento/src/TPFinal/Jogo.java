@@ -314,9 +314,6 @@ public class Jogo implements InterfaceProcessingApp {
 			for (int i = inimigos.size() - 1; i >= 0; --i) {
 				Inimigo currentEnemy = inimigos.get(i);
 				if (currentEnemy.isFlagRemove()) {
-					/*
-					 * enemies.remove(enemyActual); enemiesBody.remove(i); // added
-					 */
 					inimigos.remove(currentEnemy);
 				}
 			}
@@ -339,8 +336,6 @@ public class Jogo implements InterfaceProcessingApp {
 
 	}
 
-	// este P so serve para a outra classe. era isso ou importar uma biblioteca tipo
-	// Random mesmo do java
 	public void collisionBetweenPlayerAndPWR() {
 		// colisao entre PowerUps e player. Para isso, N�O posso usar for-each e tenho
 		// que come�ar do fim:
@@ -445,11 +440,6 @@ public class Jogo implements InterfaceProcessingApp {
 		if (p.key == 't') {
 			debugBoxes = !debugBoxes;
 		}
-
-		/*
-		 * if (p.key == 't') { //apenas para testar o game over screen:
-		 * ms.setShowGameOver(true); }
-		 */
 
 	}
 
