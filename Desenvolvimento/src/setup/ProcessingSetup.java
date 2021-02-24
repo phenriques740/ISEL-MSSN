@@ -1,6 +1,7 @@
 package setup;
 
 import TPFinal.Jogo;
+import aulas.aa.BoidApp;
 import processing.core.PApplet;
 
 public class ProcessingSetup extends PApplet {
@@ -48,6 +49,17 @@ public class ProcessingSetup extends PApplet {
 
 	public static void main(String[] args) {
 		app = new Jogo();
+		//app = new BoidApp();
 		PApplet.main(ProcessingSetup.class);
 	}
 }
+
+
+
+
+
+
+
+
+
+

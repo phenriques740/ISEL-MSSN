@@ -3,9 +3,7 @@ package aulas.aa;
 import java.util.ArrayList;
 import java.util.List;
 
-import aulas.aa.behaviors.Flee;
-import aulas.aa.behaviors.Seek;
-import aulas.aa.behaviors.Wander;
+import aulas.aa.behaviors.Patrol;
 import aulas.graph.SubPlot;
 import aulas.physics.Body;
 import processing.core.PApplet;
@@ -19,21 +17,23 @@ public class BoidApp implements InterfaceProcessingApp {
 	private SubPlot plt;
 	private Body target;
 	private List<Body> allTrackingBodies;
-	private int index = 2;
+	private int index = 0;
+	private ArrayList<Body> Waypoints;
 
 	@Override
 	public void setup(PApplet p) {
 		plt = new SubPlot(window, viewport, p.width, p.height);
 		b = new Boid(new PVector(), 1, 0.5f, p.color(0), p, plt);
-		b.addBehavior(new Seek(1f));
-		b.addBehavior(new Flee(1f));
-		b.addBehavior(new Wander(1f));
-		// b.addBehavior(new Patrol(1f, null));
-
-		target = new Body(new PVector(), new PVector(), 1f, 0.2f, p.color(255, 0, 0));
-		allTrackingBodies = new ArrayList<Body>();
-		allTrackingBodies.add(target);
-		Eye eye = new Eye(b, allTrackingBodies);
+		Waypoints = new ArrayList<Body>();
+		
+		Body bodyWP1 = new Body(new PVector(5,5), new PVector(), 1f, 0.2f, p.color(255, 0, 0));
+		Body bodyWP2 = new Body(new PVector(-8,5), new PVector(), 1f, 0.2f, p.color(255, 0, 0));
+		Waypoints.add(bodyWP1);
+		Waypoints.add(bodyWP2);
+		
+		b.addBehavior(new Patrol(1f, Waypoints));
+		
+		Eye eye = new Eye(b, Waypoints);
 		b.setEye(eye);
 	}
 
@@ -42,13 +42,14 @@ public class BoidApp implements InterfaceProcessingApp {
 		p.background(255);
 		b.applySingleBehavior(index, dt);
 		b.display(p, plt);
+		
+		for(Body body : Waypoints) {
+			body.display(p, plt);
+		}
 	}
 
 	@Override
 	public void mousePressed(PApplet p) {
-		double[] ww = plt.getWorldCoord(p.mouseX, p.mouseY);
-		target.setPos(new PVector((float) ww[0], (float) ww[1]));
-
 	}
 
 	@Override

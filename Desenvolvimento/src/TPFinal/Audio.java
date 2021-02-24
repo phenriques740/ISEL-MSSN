@@ -7,6 +7,7 @@ import java.net.MalformedURLException;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
@@ -25,6 +26,11 @@ public class Audio {
 	
 	public void startAudio() throws LineUnavailableException, IOException {
 	    this.clip.start();
+	}
+	
+	public void regulateVolume(float DecibelsToChance) {
+		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+		gainControl.setValue(DecibelsToChance); // Reduce volume by 10 decibels.
 	}
 	
 	public void stopAudio() {

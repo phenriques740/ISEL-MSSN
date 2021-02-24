@@ -1,24 +1,24 @@
 {
 	"frames": [
 		{
-			"filename": "boss.png",
+			"filename": "bossLow.png",
 			"position": {
 				"x": 1,
 				"y": 1,
-				"w": 900,
-				"h": 801
+				"w": 511,
+				"h": 721
 			},
 			"rotated": false,
 			"trimmed": false,
 			"spriteSourceSize": {
 				"x": 0,
 				"y": 0,
-				"w": 900,
-				"h": 801
+				"w": 511,
+				"h": 721
 			},
 			"sourceSize": {
-				"w": 900,
-				"h": 801
+				"w": 511,
+				"h": 721
 			}
 		}
 	],
@@ -28,8 +28,8 @@
 		"image": "spritesheet.png",
 		"format": "RGBA8888",
 		"size": {
-			"w": 902,
-			"h": 803
+			"w": 513,
+			"h": 723
 		},
 		"scale": "1"
 	}
