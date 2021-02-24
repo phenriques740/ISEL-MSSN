@@ -133,7 +133,7 @@ public class Jogo implements InterfaceProcessingApp {
 		showTipsRectBackButton = ms.getShowTipsBackButton();
 		
 		//tratar dos WP e do Eye do Boid Boss
-		b = new Boid(new PVector(), 1, 20, 50, p.color(0), p, plt);
+		b = new Boid(new PVector(), 1, 20, 50, 10, p, plt);
 		Waypoints = new ArrayList<Body>();
 		Body bodyWP1 = new Body(new PVector(5,5), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
 		Body bodyWP2 = new Body(new PVector(-8,5), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
