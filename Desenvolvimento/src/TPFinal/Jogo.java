@@ -10,6 +10,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import TPFinal.Boids.Boid;
 import TPFinal.Boids.Eye;
 import TPFinal.Boids.Patrol;
+import TPFinal.entidades.BackGround;
 import TPFinal.entidades.Bomb;
 import TPFinal.entidades.Boss;
 import TPFinal.entidades.Inimigo;
@@ -55,14 +56,16 @@ public class Jogo implements InterfaceProcessingApp {
 	private boolean amIMoving = false;
 	private int numberOfEnemies = 5;
 	private String resources = "resources/";
-	private SpriteDef mcRight, mcLeft;
+	private SpriteDef mcRight, mcLeft, backGroundSprite;
 
 	private ArrayList<Inimigo> inimigos = new ArrayList<Inimigo>();
 	private ArrayList<Osso> ossos = new ArrayList<Osso>();
 	private ArrayList<PowerUp> powerUps = new ArrayList<>();
 	private ArrayList<ParticleSystem> pss;
 	private ArrayList<Bomb> bombs;
-
+	
+	private boolean bossFight = false;
+	
 	private int bossHP = 100;
 	private int MCHealth = 3;
 	private int[] startGameRect;
@@ -88,11 +91,12 @@ public class Jogo implements InterfaceProcessingApp {
 	private int numberOfTimesISpawnedEnemies = 0;
 	
 	//definicao do boss e dos seus WP:
-	private Boss boss;
 	private ArrayList<Body> Waypoints;
-	private Boid b;
+	private Boid boss;
 
 	private String lastPowerupReceived = "";
+	
+	private BackGround backGround;
 
 	@Override
 	public void setup(PApplet p) {
@@ -110,6 +114,9 @@ public class Jogo implements InterfaceProcessingApp {
 		mcLeft.setSpeedUpFactor(-15);
 
 		MC = mcRight;
+		
+		//background:
+		backGround = new BackGround(p,  new PVector(), new PVector(),0,0);
 
 		double[] temp = plt.getWorldCoord(MCStartingPos.x, MCStartingPos.y);
 		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);
@@ -131,17 +138,6 @@ public class Jogo implements InterfaceProcessingApp {
 		showTipsRect = ms.getShowTipsRect();
 		gameOverRetryAgainButton = ms.getGameOverRetryAgainButton();
 		showTipsRectBackButton = ms.getShowTipsBackButton();
-		
-		//tratar dos WP e do Eye do Boid Boss
-		b = new Boid(p, new PVector(), 220, 250, p.color(255, 0, 0), 10);
-		Waypoints = new ArrayList<Body>();
-		Body bodyWP1 = new Body(new PVector(3,3), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
-		Body bodyWP2 = new Body(new PVector(-8,0), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
-		Waypoints.add(bodyWP1);
-		Waypoints.add(bodyWP2);
-		b.addBehavior(new Patrol(1f, Waypoints));
-		Eye eye = new  Eye(b, Waypoints);
-		b.setEye(eye);
 
 		// som:
 		// resources + "mainMenuMusic.wav"
@@ -176,6 +172,17 @@ public class Jogo implements InterfaceProcessingApp {
 	public void spawnStrongerEnemies(PApplet p, int HP) {
 		// System.out.println("fiz o spawStringer");
 		int min = 1, max = 10;
+		int chosenColor = 0;
+		if(HP <= 1) {
+			chosenColor = p.color(0,255,0);
+		}
+		if(HP > 1 && HP <= 3) {
+			chosenColor = p.color(0,0,255);
+		}
+		if(HP > 3 && HP <= 5) {
+			chosenColor = p.color(255,0,0);
+		}
+			
 		// int min = 1, max = 1;
 		int enemiesToSpawn = (int) ((Math.random() * (max - min)) + min);
 		for (int i = 0; i < enemiesToSpawn; i++) {
@@ -184,17 +191,37 @@ public class Jogo implements InterfaceProcessingApp {
 				// for (int j = 0; j < 1; j++) {
 				PVector startVel = enemiesStartingVels[PApplet.floor(p.random(enemiesStartingVels.length * 1.0f))];
 				Inimigo temp = new Inimigo(p, PVector.add(startPos, new PVector(100 * j, 40f * i)), startVel,
-						enemiesCollisionBox[0], enemiesCollisionBox[1], HP);
+						enemiesCollisionBox[0], enemiesCollisionBox[1], HP, chosenColor);
 				inimigos.add(temp);
 			}
 		}
 	}
 
 	public void spawnBoss(PApplet p) {
+		/*
 		PVector startPos = enemiesStartingPos[PApplet.floor(p.random(enemiesStartingPos.length * 1.0f))];
 		PVector startVel = enemiesStartingVels[PApplet.floor(p.random(enemiesStartingVels.length * 1.0f))];
 		boss = new Boss(p, PVector.add(startPos, new PVector(100, 40f)), startVel, bossCollisionBox[0],
 				bossCollisionBox[1], bossHP);
+		 */
+		
+		// tratar dos WP e do Eye do Boid Boss
+		MCHealth = 5;
+		boss = new Boid(p, new PVector(), bossCollisionBox[0], bossCollisionBox[1], bossHP , p.color(128, 128, 128));
+		Waypoints = new ArrayList<Body>();
+		Body bodyWP1 = new Body(new PVector(-8, 8), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
+		Body bodyWP2 = new Body(new PVector(6, 4), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
+		Body bodyWP3 = new Body(new PVector(-8, 0), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
+		Body bodyWP4 = new Body(new PVector(6, 8), new PVector(), 1f, 20f, 30f, p.color(255, 0, 0));
+		Waypoints.add(bodyWP1);
+		Waypoints.add(bodyWP2);
+		Waypoints.add(bodyWP3);
+		Waypoints.add(bodyWP4);
+		boss.addBehavior(new Patrol(1f, Waypoints));
+		Eye eye = new Eye(boss, Waypoints);
+		boss.setEye(eye);
+		//System.out.println("Boss Spawn!");
+		
 	}
 
 	public void drawAccurateNumberOfHearts(PApplet p) {
@@ -279,8 +306,10 @@ public class Jogo implements InterfaceProcessingApp {
 		spaceBetWeenBoneSpawns = 10;
 		lastPowerupReceived = "";
 		numberOfTimesISpawnedEnemies = 0;
+		bossFight = false;
 
 	}
+	
 
 	@Override
 	public void draw(PApplet p, float dt) {
@@ -299,17 +328,14 @@ public class Jogo implements InterfaceProcessingApp {
 
 		else {
 			startFightMusic();
-			p.background(127);
+			p.background(128);
 			
-			//parte do boid:
-			b.applySingleBehavior(0, dt);
-			if(b.getBody()!= null) {
-				//System.out.println("boid display!");
-				b.draw(p, plt, debugBoxes, dt);
-			}
+			backGround.draw(p, plt, false, dt);
 			
-			for(Body body : Waypoints) {
-				body.display(p, plt, 50, 50);
+			if(debugBoxes && Waypoints!=null) {
+				for(Body body : Waypoints) {
+					body.display(p, plt, 50, 50);
+				}
 			}
 
 			drawAccurateNumberOfHearts(p);
@@ -332,8 +358,20 @@ public class Jogo implements InterfaceProcessingApp {
 
 			}
 
-			if (boss == null) {
+			//de 5 em 5 waves, falo spawn de um boss! dai o resto da divisao por 5
+			if (boss == null && !bossFight && (numberOfTimesISpawnedEnemies%5==0 && numberOfTimesISpawnedEnemies!=0) ) {
+				//System.out.println("if spawn Boss");
+				inimigos.clear();
 				spawnBoss(p);
+				bossFight = true;
+				numberOfTimesISpawnedEnemies=0;
+			}
+			
+			//parte do boos boid:
+			if(boss != null) {
+				//System.out.println("boid display!");
+				boss.applySingleBehavior(0, dt);
+				boss.draw(p, plt, debugBoxes, dt);
 			}
 
 			for (PowerUp powerUp : powerUps) {
@@ -426,11 +464,12 @@ public class Jogo implements InterfaceProcessingApp {
 					pss.add(ps);
 
 					int currentBossHP = boss.getHP();
-					// System.out.println("current inimigo HP --->"+currentInimigoHP);
+					System.out.println("current inimigo HP --->"+currentBossHP);
 					boss.setHP(currentBossHP - 1);
 
 					if (currentBossHP <= 1) { // por alguma razão se for 0 ele dá mais 1 de vida aos inimigo
 						boss.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
+						bossFight = false;
 					}
 
 					// como as bombas estao fora do IF, cada vez que acerto num inimigo ele deixa
@@ -490,7 +529,7 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 
 			// System.out.println("inimigos size--->"+inimigos.size()); if
-			if (inimigos.size() <= 3 || numberOfTimesISpawnedEnemies == 0) {
+			if ( (inimigos.size() <= 3 || numberOfTimesISpawnedEnemies == 0) && !bossFight) {
 				if (numberOfTimesISpawnedEnemies == 0) {
 					spawnStrongerEnemies(p, HPEasyEnemies);
 					numberOfTimesISpawnedEnemies++;
@@ -526,7 +565,7 @@ public class Jogo implements InterfaceProcessingApp {
 		boolean didICollide = false;
 		for (int i = bombs.size() - 1; i >= 0; --i) {
 			if (MCBody.collision(bombs.get(i).getBody(), plt)) {
-				System.out.println("Entrei na collision!");
+				//System.out.println("Entrei na collision!");
 				bombs.remove(bombs.get(i));
 				MCHealth--;
 				// se houver colisao, vou tirar todas as bombas do ecra para dar hipotese ao

@@ -15,10 +15,12 @@ public abstract class Entidade {
 	private float width, height;		//altura e largura da bouding box
 	protected boolean flagRemove = false;
 	private int HP = 0;
+	private int color;
 
 	public static final String resources = "resources/";
 
-	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
+	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP, int color) {
+		this.color = color;
 		this.HP = HP;
 		this.flagRemove = false;
 		pos = startingPos;
@@ -29,6 +31,14 @@ public abstract class Entidade {
 		body = criarBody(p);
 	}
 	
+	public int getColor() {
+		return color;
+	}
+
+	public void setColor(int color) {
+		this.color = color;
+	}
+
 	public int getHP() {
 		return HP;
 	}

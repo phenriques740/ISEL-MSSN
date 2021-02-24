@@ -26,7 +26,7 @@ public class Boss extends Entidade {
 	
 	
 	public Boss(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
-		super(p, startingPos, startingVel, width, height, HP);
+		super(p, startingPos, startingVel, width, height, HP, 0);
 		// TODO Auto-generated constructor stub
 	}
 	

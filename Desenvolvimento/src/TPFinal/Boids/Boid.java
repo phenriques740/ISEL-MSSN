@@ -26,9 +26,11 @@ public class Boid extends Entidade {
 	private float phiWander; //
 	private double[] window;
 	private float sumWeights;
+	private int color;
 
-	public Boid(PApplet p,PVector pos, float width, float height, int color, int HP) {
-		super(p, pos, new PVector(), width, height, HP);
+	public Boid(PApplet p,PVector pos, float width, float height, int HP, int color) {
+		super(p, pos, new PVector(), width, height, HP, color );
+		System.out.println("HP---->"+HP);
 		dna = new DNA(); // fica com as caracteristicas random!
 		behaviors = new ArrayList<Behavior>();
 	}
@@ -113,7 +115,7 @@ public class Boid extends Entidade {
 	@Override
 	public Animador criarAnimador(PApplet p) {
 		// TODO Auto-generated method stub
-		return new Animador(p, Entidade.resources + "boss.json", Entidade.resources + "boss.png", super.getPos(),
+		return new Animador(p, Entidade.resources + "bossV1.json", Entidade.resources + "bossV1.png", super.getPos(),
 				super.getVel());
 	}
 
@@ -152,7 +154,7 @@ public class Boid extends Entidade {
 		makeAnimationFollowBodyAccordingToPhysics(bombBody, bombSprite, plt);
 		bombSprite.show();
 		
-		System.out.println("Boid em draw---->"+getPos().x +" y-->"+getPos().y );
+		//System.out.println("Boid em draw---->"+getPos().x +" y-->"+getPos().y );
 		
 	}
 	

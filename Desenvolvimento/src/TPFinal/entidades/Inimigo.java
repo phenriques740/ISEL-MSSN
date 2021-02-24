@@ -24,8 +24,8 @@ public class Inimigo extends Entidade {
 
 	
 	
-	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
-		super(p, startingPos, startingVel, width, height, HP);
+	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP, int color) {
+		super(p, startingPos, startingVel, width, height, HP, color);
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -33,7 +33,7 @@ public class Inimigo extends Entidade {
 
 	@Override
 	public Animador criarAnimador(PApplet p) {
-		System.out.println("super.getHP()---->"+this.HP );
+		//System.out.println("super.getHP()---->"+this.HP );
 		if(super.getHP() <= 1) {
 			return new Animador(p, Entidade.resources + "slimeIdle.json", Entidade.resources + "slimeIdle.png", super.getPos(), super.getVel());
 		}
@@ -48,7 +48,7 @@ public class Inimigo extends Entidade {
 
 	@Override
 	public Body criarBody(PApplet p) {
-		return new Body(super.getPos(), super.getVel(), 1f, super.getWidth(), super.getHeight(), p.color(255, 128, 0));
+		return new Body(super.getPos(), super.getVel(), 1f, super.getWidth(), super.getHeight(), super.getColor() );
 	}
 
 	public SpriteDef getSpriteDef() {
