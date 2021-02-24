@@ -17,19 +17,33 @@ public class Inimigo extends Entidade {
 		this.shouldIDropBomb = shouldIDropBomb;
 	}
 
-	private float enemiesStartingVel = 0.5f;
+	
 	private float[] enemiesCollisionBox = { 60, 50 };
 	private boolean shouldIDropBomb = false;
+	private int HP = 0;
 
-	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
-		super(p, startingPos, startingVel, width, height);
+	
+	
+	public Inimigo(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
+		super(p, startingPos, startingVel, width, height, HP);
 		// TODO Auto-generated constructor stub
 	}
+	
+	
 
 	@Override
 	public Animador criarAnimador(PApplet p) {
-		return new Animador(p, Entidade.resources + "slimeIdle.json", Entidade.resources + "slimeIdle.png",
-				super.getPos(), super.getVel());
+		System.out.println("super.getHP()---->"+this.HP );
+		if(super.getHP() <= 1) {
+			return new Animador(p, Entidade.resources + "slimeIdle.json", Entidade.resources + "slimeIdle.png", super.getPos(), super.getVel());
+		}
+		if(super.getHP() <= 3) {
+			return new Animador(p, Entidade.resources + "slimeIdle.json", Entidade.resources + "slimeIdleMedium.png", super.getPos(), super.getVel());
+		}
+		if(super.getHP() <= 5) {
+			return new Animador(p, Entidade.resources + "slimeIdle.json", Entidade.resources + "slimeIdleHard.png", super.getPos(), super.getVel());
+		}
+		return null;
 	}
 
 	@Override

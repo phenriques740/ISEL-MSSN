@@ -12,7 +12,7 @@ public class Osso extends Entidade {
 	private float[] boneColisionBox = { 20, 30 };
 	
 	public Osso(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
-		super(p, startingPos, startingVel, width, height);
+		super(p, startingPos, startingVel, width, height, 0);
 		// TODO Auto-generated constructor stub
 	}
 

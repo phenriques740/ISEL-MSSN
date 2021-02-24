@@ -19,6 +19,15 @@ public class Body extends Mover {
 	private float[] radiusParams = {0.3f, 0.5f};
 	private float flow = 20f;
 
+	/**
+	 * Esta width e height são em coordenadas plt (do viewport);
+	 * @param pos
+	 * @param vel
+	 * @param mass
+	 * @param width
+	 * @param height
+	 * @param color
+	 */
 	public Body(PVector pos, PVector vel, float mass, float width, float height, int color) {
 		super(pos, vel, mass);
 		this.height = height;
@@ -49,6 +58,7 @@ public class Body extends Mover {
 	 * @return
 	 */
 	
+	
 	public boolean collision(Body body, SubPlot plt) {
 		float[] bodyCoordPix = plt.getPixelCoord(body.getPos().x, body.getPos().y); // rect1
 		float[] bodyCoordPixMyself = plt.getPixelCoord(this.getPos().x, this.getPos().y); // rect2
@@ -63,6 +73,7 @@ public class Body extends Mover {
 
 		return false;
 	}
+	 
 
 	public void setWidth(float width) {
 		this.width = width;
@@ -104,6 +115,13 @@ public class Body extends Mover {
 		// p.circle(pp[0], pp[1], 2*r[0]);
 	}
 
+	/**
+	 * Posso passar a width e a height em coordenadas pixeis, se usar o constructor tem que ser em coordenadas PLT!
+	 * @param p
+	 * @param plt
+	 * @param width
+	 * @param height
+	 */
 	public void display(PApplet p, SubPlot plt, float width, float height) {
 		float[] pp = plt.getPixelCoord(pos.x, pos.y);
 
@@ -113,7 +131,17 @@ public class Body extends Mover {
 		p.rect(boudingBox[0], boudingBox[1], boudingBox[2], boudingBox[3]);
 	}
 
-	public float[] getBoudingBox() {
+	/**
+	 * devolve as coordenadas em pixeis em relacao ao plt
+	 * 
+	 * as duas primeiras coordenadas sao o canto superior esquerdo e as ultimas sao as dimensoes
+	 * @param plt
+	 * @return
+	 */
+	public float[] getBoudingBox(SubPlot plt) {
+		float[] pp = plt.getPixelCoord(pos.x, pos.y);
+		float[] r = plt.getDimInPixel(width, height);
+		boudingBox = new float[] { pp[0], pp[1], r[0], r[1] };
 		return boudingBox;
 	}
 

@@ -14,10 +14,12 @@ public abstract class Entidade {
 	private Body body;
 	private float width, height;		//altura e largura da bouding box
 	protected boolean flagRemove = false;
+	private int HP = 0;
 
 	public static final String resources = "resources/";
 
-	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
+	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
+		this.HP = HP;
 		this.flagRemove = false;
 		pos = startingPos;
 		vel = startingVel;
@@ -26,7 +28,15 @@ public abstract class Entidade {
 		anim = criarAnimador(p);
 		body = criarBody(p);
 	}
+	
+	public int getHP() {
+		return HP;
+	}
 
+	public void setHP(int hP) {
+		HP = hP;
+	}
+	
 	public PVector getPos() {
 		return pos;
 	}
@@ -73,6 +83,7 @@ public abstract class Entidade {
 		return height;
 	}
 
+	
 	public void makeBodyFollowAnimation(Body body, SpriteDef spriteDef, SubPlot plt) {
 		double[] coordConverted = plt.getWorldCoord((float) spriteDef.getX(), (float) spriteDef.getY());
 		body.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));
@@ -90,6 +101,8 @@ public abstract class Entidade {
 		float[] coordConverted = plt.getPixelCoord((float) body.getPos().x, (float) body.getPos().y);
 		spriteDef.setPos(new PVector((float) coordConverted[0], (float) coordConverted[1]));	
 	}
+	
+	
 	
 }
 

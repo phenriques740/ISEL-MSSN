@@ -36,11 +36,12 @@ public class Jogo implements InterfaceProcessingApp {
 	SpriteDef MC, bone; // MC = main Character
 	private PVector[] enemiesStartingVels = new PVector[] { new PVector(0.5f, 0), new PVector(1.0f, 0),
 			new PVector(0.75f, 0) };
-	private PVector[] enemiesStartingPos = new PVector[] { new PVector(50f, 0),
+	private PVector[] enemiesStartingPos = new PVector[] { new PVector(50f, 50),
 			// Fica aqui com o 0 no eixo dos Y porque depois quero meter a variar no
 			// construtor
-			new PVector(100f, 0), new PVector(150f, 0) };
+			new PVector(100f, 50), new PVector(150f, 50) };
 	private float[] enemiesCollisionBox = { 60, 50 };
+	private float[] MCCollisionBox = { 50, 70 };
 	private PVector MCStartingPos = new PVector(20, 520);
 	private PVector MCStartingVel = new PVector();
 	private float attackVel = 1f;
@@ -66,21 +67,23 @@ public class Jogo implements InterfaceProcessingApp {
 	// variavais que sao afectadas por powerup:
 	private int numberOfOssosPerPress = 1;
 	private int spaceBetWeenBoneSpawns = 10;
+	private float timeBetweenShots = 300f;
+	private long lastTimeIShot;
+	// a vida tambem pode ser afectada por power ups apesar de nao estar aqui!
 
-	private float enemyDropBombChance = 1f; // quanto maior, mais frequentemente o inimigo irï¿½ deixar cair bombas!
+	private float powerUpDropChance = 0.1f;
+
+	private int HPEasyEnemies = 1;
+	private int HPMediumEnemies = 3;
+	private int HPHardEnemies = 5;
+	private int numberOfTimesISpawnedEnemies = 0;
+
+	private String lastPowerupReceived = "";
 
 	@Override
 	public void setup(PApplet p) {
+		lastTimeIShot = System.nanoTime();
 		plt = new SubPlot(window, viewport, p.width, p.height);
-
-		for (int i = 0; i < numberOfEnemies; i++) {
-			PVector startVel = enemiesStartingVels[PApplet.floor(p.random(enemiesStartingVels.length * 1.0f))];
-			PVector startPos = enemiesStartingPos[PApplet.floor(p.random(enemiesStartingPos.length * 1.0f))];
-
-			Inimigo temp = new Inimigo(p, PVector.add(startPos, new PVector(0, 75f * i)), startVel,
-					enemiesCollisionBox[0], enemiesCollisionBox[1]);
-			inimigos.add(temp);
-		}
 
 		Animador mcAanimRight = new Animador(p, resources + "skeletonRun.json", resources + "skeleton.png",
 				MCStartingPos, MCStartingVel);
@@ -94,7 +97,8 @@ public class Jogo implements InterfaceProcessingApp {
 		double[] temp = plt.getWorldCoord(MCStartingPos.x, MCStartingPos.y);
 		PVector worldCoordToPlt = new PVector((float) temp[0], (float) temp[1]);
 
-		MCBody = new Body(worldCoordToPlt, MCStartingVel, 1f, 1f, 1f, p.color(255, 128, 0));
+		MCBody = new Body(worldCoordToPlt, MCStartingVel, 1f, MCCollisionBox[0], MCCollisionBox[1],
+				p.color(255, 128, 0));
 		// iniciar a lista que vai ter os ossos:
 
 		ossos = new ArrayList<Osso>();
@@ -141,10 +145,40 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 	}
 
+	public void spawnStrongerEnemies(PApplet p, int HP) {
+		//System.out.println("fiz o spawStringer");
+		//int min = 1, max = 10;
+		int min = 1, max = 1;
+		int enemiesToSpawn = (int) ((Math.random() * (max - min)) + min);
+		for (int i = 0; i < enemiesToSpawn; i++) {
+			PVector startPos = enemiesStartingPos[PApplet.floor(p.random(enemiesStartingPos.length * 1.0f))];
+			//for (int j = 0; j < 3; j++) {
+				for (int j = 0; j < 1; j++) {
+				PVector startVel = enemiesStartingVels[PApplet.floor(p.random(enemiesStartingVels.length * 1.0f))];
+				Inimigo temp = new Inimigo(p, PVector.add(startPos, new PVector(100 * j, 40f * i)), startVel, enemiesCollisionBox[0], enemiesCollisionBox[1], HP);
+				inimigos.add(temp);
+			}
+		}
+	}
+
 	public void drawAccurateNumberOfHearts(PApplet p) {
-		Animador heart1 = new Animador(p, resources + "heart.json", resources + "heart.png", 50, 80);
-		SpriteDef heartSprite = heart1.getSpriteDef();
-		heartSprite.show();
+		int MCHealthCopy = MCHealth;
+		// System.out.println("vida----->"+MCHealth);
+		for (int i = MCHealthCopy; i > 0; i--) {
+			// System.out.println("---->"+MCHealthCopy);
+			Animador heart = new Animador(p, resources + "heart.json", resources + "heart.png", 60 * i, 10);
+			SpriteDef heartSprite = heart.getSpriteDef();
+			heartSprite.show();
+		}
+		/*
+		 * Animador heart1 = new Animador(p, resources + "heart.json", resources +
+		 * "heart.png", 10, 10); SpriteDef heartSprite = heart1.getSpriteDef();
+		 * heartSprite.show();
+		 */
+	}
+
+	public void showLastPowerUpReceived(PApplet p) {
+		ms.drawText(lastPowerupReceived, 250 + (MCHealth + 1) * 30, 20);
 	}
 
 	public void startFightMusic() {
@@ -187,14 +221,27 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 	}
 
-	public boolean shouldEnemyDropBomb() {
-		double chance = Math.random();
-		// System.out.println("Chance---->"+chance);
-		if (chance < enemyDropBombChance) {
-			System.out.println("return true do souldDrop bomb!");
-			return true;
-		}
-		return false;
+	public void resetEverything() {
+		// no caso de haver gameOver, tenho que fazer reset a tudo!
+		MCHealth = 3;
+		// remover todos os inimigos:
+		inimigos.clear();
+		// remover todos os ossos:
+		ossos.clear();
+		// remover powerUps:
+		powerUps.clear();
+		// lkimpar bnombas:
+		bombs.clear();
+		// reset aos powerUps:
+		numberOfOssosPerPress = 1;
+		// limpar as explosoes
+		pss.clear();
+		//
+		timeBetweenShots = 300f;
+		spaceBetWeenBoneSpawns = 10;
+		lastPowerupReceived = "";
+		numberOfTimesISpawnedEnemies = 0;
+
 	}
 
 	@Override
@@ -205,6 +252,7 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 
 		else if (ms.isShowGameOver()) {
+			System.out.println("Game over do jogo draw--->");
 			fightMusic.stopAudio();
 			mainMenuMusic.stopAudio();
 			ms.gameOverScreen();
@@ -217,14 +265,14 @@ public class Jogo implements InterfaceProcessingApp {
 
 			drawAccurateNumberOfHearts(p);
 
-			MCBody.setVel(MCStartingVel);
+			// MCBody.setVel(MCStartingVel);
 			MCBody.move(dt * 15);
 			// este * 15 e porque na classe da sprite multiplico por 10 para ser mais
 			// rapido, para acompanhar a animacao ponho 15
 			// fazer animacao do personagem principal
 			if (MC != null) {
 				if (debugBoxes) {
-					MCBody.display(p, plt);
+					MCBody.display(p, plt, MCCollisionBox[0], MCCollisionBox[1]);
 				}
 				MC.animateHorizontal();
 				MC.show();
@@ -233,15 +281,6 @@ public class Jogo implements InterfaceProcessingApp {
 				mcRight.setPos(MC.getPos());
 				makeBodyFollowAnimation(MCBody, MC, plt);
 
-			}
-
-			// para remover os ossos da lista, nao posso usar for-each e tenho que comeï¿½ar
-			// do fim! caso contrï¿½rio tenho uma excepï¿½ï¿½o!
-			for (int i = inimigos.size() - 1; i >= 0; --i) {
-				Inimigo inimigo = inimigos.get(i);
-				if (inimigo.isFlagRemove()) {
-					inimigos.remove(inimigo);
-				}
 			}
 
 			for (PowerUp powerUp : powerUps) {
@@ -256,34 +295,51 @@ public class Jogo implements InterfaceProcessingApp {
 			}
 
 			for (Inimigo inimigo : inimigos) {
+				//System.out.println("entrei na lista de inimigos!");
 				inimigo.draw(p, plt, debugBoxes, dt);
 			}
 
+			// para remover os ossos da lista, nao posso usar for-each e tenho que comeï¿½ar
+			// do fim! caso contrï¿½rio tenho uma excepï¿½ï¿½o!
+			for (int i = inimigos.size() - 1; i >= 0; --i) {
+				Inimigo inimigo = inimigos.get(i);
+				if (inimigo.isFlagRemove()) {
+					inimigos.remove(inimigo);
+				}
+			}
+
 			for (Osso osso : ossos) {
+				// System.out.println("ossos---->"+ossos.size());
 				for (Inimigo inimigo : inimigos) {
 					if (osso.getBody().collision(inimigo.getBody(), plt)) {
+						// System.out.println("Osso colidiu com inimigo");
 						ParticleSystem ps = inimigo.getBody().explodeMe();
 						pss.add(ps);
 
-						// quando acerto num inimigo, faï¿½o spawn do tal power up e adiciono-o a uma
-						// lista para depois poder fazer display facilmente:
-						System.out.println("inimigo Pos que vou por--->" + inimigo.getBody().getPos());
+						// tirar 1 de vida ao inimigo:
+						int currentInimigoHP = inimigo.getHP();
+						// System.out.println("current inimigo HP --->"+currentInimigoHP);
+						inimigo.setHP(currentInimigoHP - 1);
 
-						float min = 0, max = 1;
-						double chance = (Math.random() * (max - min)) + min;
-						if (chance > 0 && chance < 0.7) {
-							PowerUp pwr = new PowerUp(p, inimigo.getBody().getPos(), new PVector(), 50, 70);
-							powerUps.add(pwr);
+						if (currentInimigoHP <= 1) {		//por alguma razão se for 0 ele dá mais 1 de vida aos inimigos
+							float min = 0, max = 1;
+							double chance = (Math.random() * (max - min)) + min;
+							if (chance > 0 && chance < powerUpDropChance) {
+								PowerUp pwr = new PowerUp(p, inimigo.getBody().getPos(), new PVector(), 50, 70);
+								powerUps.add(pwr);
+							}
+
+							inimigo.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
 						}
-
-						if (shouldEnemyDropBomb()) {
-							Bomb bomb = new Bomb(p, inimigo.getBody().getPos(), new PVector(), 50, 50);
-							bombs.add(bomb);
-						}
-
+						
+						//como as bombas estao fora do IF, cada vez que acerto num inimigo ele deixa cair um bomba. podia por apenas para a bomba cair se ele morrese, mas assim o gameplay e mais itneressante porque
+						//o jogado se tem que ir mexendo de um lado para outro ainda mais !
+						Bomb bomb = new Bomb(p, inimigo.getBody().getPos(), new PVector(), 50, 50);
+						bombs.add(bomb);
+						
+						// mesmo que o inimigo não desapareça, o osso é sempre removido!
 						osso.setFlagRemove(true); // marcar o osso para ser removido no proximo draw. //se retirar isto
-													// tenho piercing bones !
-						inimigo.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
+						// tenho piercing bones !
 
 					}
 				}
@@ -332,6 +388,24 @@ public class Jogo implements InterfaceProcessingApp {
 				ms.setShowGameOver(true);
 			}
 
+			//System.out.println("inimigos size--->"+inimigos.size());
+			if (inimigos.size()<=0 || numberOfTimesISpawnedEnemies==0 ) {
+				if(numberOfTimesISpawnedEnemies == 0) {
+					spawnStrongerEnemies(p, HPEasyEnemies);
+					numberOfTimesISpawnedEnemies++;
+				}
+				else if(numberOfTimesISpawnedEnemies>=1 && numberOfTimesISpawnedEnemies<3) {
+					spawnStrongerEnemies(p, HPMediumEnemies);
+					numberOfTimesISpawnedEnemies++;
+				}
+				else if(HPMediumEnemies >=3) {
+					spawnStrongerEnemies(p, HPHardEnemies);
+					numberOfTimesISpawnedEnemies++;
+				}
+			}
+
+			showLastPowerUpReceived(p);
+
 		}
 
 	}
@@ -352,6 +426,7 @@ public class Jogo implements InterfaceProcessingApp {
 		// que comeï¿½ar do fim:
 		for (int i = bombs.size() - 1; i >= 0; --i) {
 			if (MCBody.collision(bombs.get(i).getBody(), plt)) {
+				System.out.println("Entrei na collision!");
 				bombs.remove(bombs.get(i));
 				MCHealth--;
 			}
@@ -361,9 +436,36 @@ public class Jogo implements InterfaceProcessingApp {
 	public void decideWhatPRW() {
 		float min = 0, max = 1;
 		double chance = (Math.random() * (max - min)) + min;
-		if (chance > 0 && chance < 1) {
+		// double chance = 0.75;
+		// 50% de chance para aumentar o numero de ossos!
+		if (chance > 0 && chance < 0.5) {
+			lastPowerupReceived = "Number of Bones per Shoot Incresed!";
 			numberOfOssosPerPress++;
 		}
+		// 15% para diminuir o tempo entre disparos. tenho que garantir que o valor é
+		// sempre positivo!
+		else if (chance >= 0.5 && chance < 0.65) {
+			if (timeBetweenShots > 0) {
+				lastPowerupReceived = "Time Between Shots decreased!";
+				timeBetweenShots -= 50f;
+			}
+		} else if (chance >= 0.65 && chance < 0.80) {
+			lastPowerupReceived = "Extra Life Received!";
+			MCHealth = Math.min(++MCHealth, 5); // tem que ser pre-inc ! ++MCHealth
+		}
+
+		// 25% de chance para os ossos irem mais dispersos. so faz sentido existir se
+		// disparar mais que um osso, dai o if extra!
+		else {
+			if (numberOfOssosPerPress > 1) {
+				lastPowerupReceived = "Bones shoots are wider now!";
+				spaceBetWeenBoneSpawns += 5;
+			} else {
+				lastPowerupReceived = "Number of Bones per Shoot Incresed!";
+				numberOfOssosPerPress++;
+			}
+		}
+
 	}
 
 	public PVector getMCStartingPos() {
@@ -377,12 +479,13 @@ public class Jogo implements InterfaceProcessingApp {
 
 	@Override
 	public void mousePressed(PApplet p) {
-		if (p.mouseButton == PConstants.LEFT) {
+		if (p.mouseButton == PConstants.LEFT && ms.isStartGame()) {
 			loadShootBoneAnimation(p);
 		}
 		// botoes do menu principal:
 		if (isInsideRect(p.mouseX, p.mouseY, startGameRect[0], 200, startGameRect[1], 50) && !ms.isStartGame()
 				&& !ms.isShowTips() && !ms.isShowGameOver()) {
+			resetEverything(); // cada vez que carrego no start game, começo o jogo de novo!
 			ms.setStartGame(true);
 		}
 
@@ -444,18 +547,23 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 	public void loadShootBoneAnimation(PApplet p) {
-		for (int i = 1; i < numberOfOssosPerPress + 1; ++i) {
-			PVector posToSpawnBoneIn = new PVector(MC.getPos().x + spaceBetWeenBoneSpawns * i, MC.getPos().y);
-			Osso osso = new Osso(p, posToSpawnBoneIn, new PVector(0, attackVel), 10, 20);
-			ossos.add(osso);
-		}
-		if (ms.isStartGame() && !ms.isShowGameOver()) {
-			try {
-				boneSoundEffect();
-			} catch (UnsupportedAudioFileException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		long duration = (System.nanoTime() - lastTimeIShot); // divide by 1000000 to get milliseconds.
+		// System.out.println("Duration---->"+duration);
+		if (duration / 1000000f >= timeBetweenShots) {
+			for (int i = 1; i < numberOfOssosPerPress + 1; ++i) {
+				PVector posToSpawnBoneIn = new PVector(MC.getPos().x + spaceBetWeenBoneSpawns * i, MC.getPos().y);
+				Osso osso = new Osso(p, posToSpawnBoneIn, new PVector(0, attackVel), 10, 20);
+				ossos.add(osso);
 			}
+			if (ms.isStartGame() && !ms.isShowGameOver()) {
+				try {
+					boneSoundEffect();
+				} catch (UnsupportedAudioFileException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			lastTimeIShot = System.nanoTime();
 		}
 	}
 
