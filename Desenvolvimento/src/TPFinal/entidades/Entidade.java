@@ -18,7 +18,8 @@ public abstract class Entidade {
 
 	public static final String resources = "resources/";
 
-	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
+	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
+		this.HP = HP;
 		this.flagRemove = false;
 		pos = startingPos;
 		vel = startingVel;
@@ -28,11 +29,14 @@ public abstract class Entidade {
 		body = criarBody(p);
 	}
 	
-	public Entidade(PApplet p, PVector startingPos, PVector startingVel, float width, float height, int HP) {
-		this(p, startingPos, startingVel, width, height );	//chama o constructor de cima !
-		this.HP = HP;
+	public int getHP() {
+		return HP;
 	}
 
+	public void setHP(int hP) {
+		HP = hP;
+	}
+	
 	public PVector getPos() {
 		return pos;
 	}

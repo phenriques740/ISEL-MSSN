@@ -13,7 +13,7 @@ public class PowerUp extends Entidade {
 	private PVector gravity = new PVector(0, -10);
 
 	public PowerUp(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
-		super(p, startingPos, startingVel, width, height);
+		super(p, startingPos, startingVel, width, height,  0);
 		// TODO Auto-generated constructor stub
 	}
 

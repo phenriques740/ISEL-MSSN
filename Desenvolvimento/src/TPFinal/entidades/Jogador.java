@@ -14,7 +14,7 @@ public class Jogador extends Entidade {
 	private PVector MCStartingVel = new PVector();
 
 	public Jogador(PApplet p, PVector startingPos, PVector startingVel, float width, float height) {
-		super(p, startingPos, startingVel, width, height);
+		super(p, startingPos, startingVel, width, height, 0);
 	}
 
 	@Override
