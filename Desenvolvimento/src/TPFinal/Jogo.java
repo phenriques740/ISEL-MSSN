@@ -147,13 +147,13 @@ public class Jogo implements InterfaceProcessingApp {
 
 	public void spawnStrongerEnemies(PApplet p, int HP) {
 		//System.out.println("fiz o spawStringer");
-		//int min = 1, max = 10;
-		int min = 1, max = 1;
+		int min = 1, max = 10;
+		//int min = 1, max = 1;
 		int enemiesToSpawn = (int) ((Math.random() * (max - min)) + min);
 		for (int i = 0; i < enemiesToSpawn; i++) {
 			PVector startPos = enemiesStartingPos[PApplet.floor(p.random(enemiesStartingPos.length * 1.0f))];
-			//for (int j = 0; j < 3; j++) {
-				for (int j = 0; j < 1; j++) {
+			for (int j = 0; j < 3; j++) {
+				//for (int j = 0; j < 1; j++) {
 				PVector startVel = enemiesStartingVels[PApplet.floor(p.random(enemiesStartingVels.length * 1.0f))];
 				Inimigo temp = new Inimigo(p, PVector.add(startPos, new PVector(100 * j, 40f * i)), startVel, enemiesCollisionBox[0], enemiesCollisionBox[1], HP);
 				inimigos.add(temp);
