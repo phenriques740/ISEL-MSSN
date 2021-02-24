@@ -96,7 +96,9 @@ public class Jogo implements InterfaceProcessingApp {
 		Animador mcAnimLeft = new Animador(p, resources + "skeletonLRun.json", resources + "skeleton.png",
 				MCStartingPos, MCStartingVel);
 		mcRight = mcAanimRight.getSpriteDef();
+		mcRight.setSpeedUpFactor(15);
 		mcLeft = mcAnimLeft.getSpriteDef();
+		mcLeft.setSpeedUpFactor(-15);
 
 		MC = mcRight;
 
@@ -266,7 +268,7 @@ public class Jogo implements InterfaceProcessingApp {
 		}
 
 		else if (ms.isShowGameOver()) {
-			System.out.println("Game over do jogo draw--->");
+			//System.out.println("Game over do jogo draw--->");
 			fightMusic.stopAudio();
 			mainMenuMusic.stopAudio();
 			ms.gameOverScreen();
