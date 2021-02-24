@@ -1,10 +1,5 @@
 package TPFinal;
 
-import java.io.IOException;
-
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
 import processing.core.PApplet;
 import processing.core.PVector;
 
@@ -104,11 +99,11 @@ public class mainScreen {
 		LMB = new Animador(p, LMBKeyJson, LMBKey, new PVector(50,400), new PVector(0.1f,0f) );
 		
 		//texto por baixo de cada imagem a explicar:
-		drawText("Quando os inimigos são destruidos, existe uma chance de cair um powerup", 30, 30 );
+		drawText("Quando os inimigos sï¿½o destruidos, existe uma chance de cair um powerup", 30, 30 );
 		drawText("Posso premir a tecla b para voltar ao menu principal", 30, 70);
 		drawText("Tecla A serve para andar para a Esquerda.", 220, 150 );
 		drawText("Tecla D serve para andar para a Direita.", 220, 300 );
-		drawText("Botão Esquerdo do Rato serve para Disparar.", 200, 500 );
+		drawText("Botï¿½o Esquerdo do Rato serve para Disparar.", 200, 500 );
 		
 		SpriteDef Asprite = A.getSpriteDef();
 		SpriteDef Dsprite = D.getSpriteDef();
@@ -171,7 +166,7 @@ public class mainScreen {
 	}
 
 	public void drawGameOverText(String string, int textX, int textY) {
-		//diferente do outro método por causa do tamanho e a cor da letra!
+		//diferente do outro mï¿½todo por causa do tamanho e a cor da letra!
 		p.textSize(100);
 		p.fill(255,0,0);
 		p.text(string, textX, textY);
