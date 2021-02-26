@@ -9,6 +9,7 @@ public class mainScreen {
 	private boolean startGame, showTips, showGameOver;
 	private String resources = "resources/";
 	private Animador backGroundStatic, GameOverBackGroundStatic;
+	private int HS = 0;
 	
 	
 	public boolean isShowGameOver() {
@@ -66,11 +67,15 @@ public class mainScreen {
 		//System.out.println("Check!");
 	}
 	
-	public void gameOverScreen() {
+	public void gameOverScreen(int HS) {
+		this.HS = HS;
 		p.background(255);
 		this.showGameOver = true;
 		gameOverAnimation();
-		drawGameOverText("Game Over", 125, 300);
+		p.fill(255);
+		p.textSize(30);
+		p.text("Your Score: "+HS, 250, 350);
+		drawGameOverText("Game Over", 125, 250);
 		drawButton("Back to Main Menu", gameOverRetryAgainButton[0], gameOverRetryAgainButton[1], gameOverRetryAgainButton[2], gameOverRetryAgainButton[3]);
 		
 	}
@@ -84,7 +89,7 @@ public class mainScreen {
 		}
 		
 		else if(this.showGameOver && this.startGame) {
-			gameOverScreen();
+			gameOverScreen(HS);
 		}
 		
 		else {
@@ -96,11 +101,15 @@ public class mainScreen {
 	
 	private void tipsMenu() {
 		setShowTips(true);
-		p.background(128);
 		backGroundAnimation();
 		A = new Animador(p, aKeyJson, aKey, new PVector(100,100), new PVector(0.1f,0f)  );
 		D = new Animador(p, dKeyJson, dKey, new PVector(100,250), new PVector(0.1f,0f)  );
 		LMB = new Animador(p, LMBKeyJson, LMBKey, new PVector(50,400), new PVector(0.1f,0f) );
+		
+		//overlay acizentado por cima do background, mas por baixo das letras para melhorar contraste:
+		p.noStroke();
+		p.fill(255, 255, 255, 100);
+		p.rect(20, 10, 750, 580);
 		
 		//texto por baixo de cada imagem a explicar:
 		drawText("Quando os inimigos são destruidos, existe uma chance de cair um powerup", 30, 30 );

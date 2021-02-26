@@ -67,7 +67,7 @@ public class Jogo implements InterfaceProcessingApp {
 	private boolean bossFight = false;
 	
 	private int bossHP = 100;
-	private int MCHealth = 3;
+	private int MCHealth = 30;
 	private int[] startGameRect;
 	private int[] showTipsRect;
 	private int[] gameOverRetryAgainButton;
@@ -83,12 +83,14 @@ public class Jogo implements InterfaceProcessingApp {
 	private long lastTimeBossShot;
 	// a vida tambem pode ser afectada por power ups apesar de nao estar aqui!
 
-	private float powerUpDropChance = 0.1f;
+	private float powerUpDropChance = 0.5f;
 
 	private int HPEasyEnemies = 1;
 	private int HPMediumEnemies = 3;
 	private int HPHardEnemies = 5;
 	private int numberOfTimesISpawnedEnemies = 0;
+	
+	private int HS = 0;		//highSchore
 	
 	//definicao do boss e dos seus WP:
 	private ArrayList<Body> Waypoints;
@@ -225,11 +227,12 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 	public void drawAccurateNumberOfHearts(PApplet p) {
+		System.out.println("MCheatl---->"+MCHealth);
 		int MCHealthCopy = MCHealth;
 		// System.out.println("vida----->"+MCHealth);
 		for (int i = MCHealthCopy; i > 0; i--) {
 			// System.out.println("---->"+MCHealthCopy);
-			Animador heart = new Animador(p, resources + "heart.json", resources + "heart.png", 60 * i, 10);
+			Animador heart = new Animador(p, resources + "heart.json", resources + "heart.png", (i-1)*60, 10);
 			SpriteDef heartSprite = heart.getSpriteDef();
 			heartSprite.show();
 		}
@@ -241,7 +244,14 @@ public class Jogo implements InterfaceProcessingApp {
 	}
 
 	public void showLastPowerUpReceived(PApplet p) {
-		ms.drawText(lastPowerupReceived, 250 + (MCHealth + 1) * 30, 20);
+		ms.drawText(lastPowerupReceived, 150 + (MCHealth + 1) * 30, 45);
+		ms.drawText("HighScore "+HS, p.width-150, 20);
+	}
+	
+	public void drawRectOverlay(PApplet p) {
+		p.noStroke();
+		p.fill(255, 255, 255, 50);
+		p.rect(250, 0, 600, 50);
 	}
 
 	public void startFightMusic() {
@@ -308,9 +318,14 @@ public class Jogo implements InterfaceProcessingApp {
 		numberOfTimesISpawnedEnemies = 0;
 		boss = null;
 		bossFight = false;
+		HS = 0;
 
 	}
 	
+
+	public int getHS() {
+		return HS;
+	}
 
 	@Override
 	public void draw(PApplet p, float dt) {
@@ -323,7 +338,7 @@ public class Jogo implements InterfaceProcessingApp {
 			// System.out.println("Game over do jogo draw--->");
 			fightMusic.stopAudio();
 			mainMenuMusic.stopAudio();
-			ms.gameOverScreen();
+			ms.gameOverScreen(HS);
 			startGameOverMusic();
 		}
 
@@ -332,6 +347,7 @@ public class Jogo implements InterfaceProcessingApp {
 			p.background(128);
 			
 			backGround.draw(p, plt, false, dt);
+			drawRectOverlay(p);
 			
 			if(debugBoxes && Waypoints!=null) {
 				for(Body body : Waypoints) {
@@ -443,6 +459,7 @@ public class Jogo implements InterfaceProcessingApp {
 							}
 
 							inimigo.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
+							HS++;
 						}
 
 						// como as bombas estao fora do IF, cada vez que acerto num inimigo ele deixa
@@ -471,6 +488,7 @@ public class Jogo implements InterfaceProcessingApp {
 					if (currentBossHP <= 1) { // por alguma razão se for 0 ele dá mais 1 de vida aos inimigo
 						boss.setFlagRemove(true);// inimigop tambï¿½m tem que ser removido no proximo draw!
 						bossFight = false;
+						HS = HS + 50;
 					}
 
 					// como as bombas estao fora do IF, cada vez que acerto num inimigo ele deixa
@@ -568,11 +586,13 @@ public class Jogo implements InterfaceProcessingApp {
 			if (MCBody.collision(bombs.get(i).getBody(), plt)) {
 				//System.out.println("Entrei na collision!");
 				bombs.remove(bombs.get(i));
+				//System.out.println("currentHP--->"+MCHealth);
 				MCHealth--;
 				// se houver colisao, vou tirar todas as bombas do ecra para dar hipotese ao
 				// player e dar um feedback visual:
 				p.background(255, 0, 0);
 				didICollide = true;
+				break;
 			}
 		}
 		if (didICollide) {
@@ -583,19 +603,23 @@ public class Jogo implements InterfaceProcessingApp {
 
 	public void decideWhatPRW() {
 		float min = 0, max = 1;
-		double chance = (Math.random() * (max - min)) + min;
-		// double chance = 0.75;
+		//double chance = (Math.random() * (max - min)) + min;
+		double chance = 0.75;
 		// 50% de chance para aumentar o numero de ossos!
 		if (chance > 0 && chance < 0.5) {
 			lastPowerupReceived = "Number of Bones per Shoot Incresed!";
-			numberOfOssosPerPress++;
+			//numberOfOssosPerPress++;
+			numberOfOssosPerPress = Math.min(++numberOfOssosPerPress, 5);
 		}
 		// 15% para diminuir o tempo entre disparos. tenho que garantir que o valor é
 		// sempre positivo!
 		else if (chance >= 0.5 && chance < 0.65) {
 			if (timeBetweenShots > 0) {
 				lastPowerupReceived = "Time Between Shots decreased!";
-				timeBetweenShots -= 50f;
+				//timeBetweenShots -= 50f;
+				float decreasedTime = timeBetweenShots - 50f;
+				timeBetweenShots = Math.max(decreasedTime, 0);
+				//System.out.println("decreasedime------>"+decreasedTime+" timeBetweenShots--->"+timeBetweenShots);
 			}
 		} else if (chance >= 0.65 && chance < 0.80) {
 			lastPowerupReceived = "Extra Life Received!";
@@ -607,7 +631,10 @@ public class Jogo implements InterfaceProcessingApp {
 		else {
 			if (numberOfOssosPerPress > 1) {
 				lastPowerupReceived = "Bones shoots are wider now!";
-				spaceBetWeenBoneSpawns += 5;
+				//spaceBetWeenBoneSpawns += 5;
+				int space = spaceBetWeenBoneSpawns + 5;
+				spaceBetWeenBoneSpawns = Math.min(space, 30);
+				System.out.println("spaceBetWeenBoneSpawns------>"+spaceBetWeenBoneSpawns+" space--->"+space);
 			} else {
 				lastPowerupReceived = "Number of Bones per Shoot Incresed!";
 				numberOfOssosPerPress++;
