@@ -19,7 +19,6 @@ public class Patrol extends Behavior {
 	public PVector getDesiredVelocity(Boid me) {
 		Body bodyTarget = me.getEye().getTarget();
 		PVector out = PVector.sub(bodyTarget.getPos(), me.getPos());
-		//System.out.println("me---->"+me.getPos().x+" bodyTarget.getPos().x"+bodyTarget.getPos().x+" bodyTarget.getPos(.y)"+bodyTarget.getPos().y);
 		if (out.mag() <= 0.1f) {
 			me.getEye().setTarget(patrolPoints.get(++index % patrolPoints.size()));
 		}

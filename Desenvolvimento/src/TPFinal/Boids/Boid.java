@@ -2,8 +2,6 @@ package TPFinal.Boids;
 
 import java.util.ArrayList;
 
-
-
 import java.util.List;
 
 import TPFinal.Animador;
@@ -14,7 +12,6 @@ import physics.Body;
 import processing.core.PApplet;
 import processing.core.PShape;
 import processing.core.PVector;
-
 
 public class Boid extends Entidade {
 
@@ -28,9 +25,9 @@ public class Boid extends Entidade {
 	private float sumWeights;
 	private int color;
 
-	public Boid(PApplet p,PVector pos, float width, float height, int HP, int color) {
-		super(p, pos, new PVector(), width, height, HP, color );
-		System.out.println("HP---->"+HP);
+	public Boid(PApplet p, PVector pos, float width, float height, int HP, int color) {
+		super(p, pos, new PVector(), width, height, HP, color);
+		System.out.println("HP---->" + HP);
 		dna = new DNA(); // fica com as caracteristicas random!
 		behaviors = new ArrayList<Behavior>();
 	}
@@ -81,9 +78,10 @@ public class Boid extends Entidade {
 			velocidadeDesejadaDeCadaComportamento.mult(behavior.getWeight() / sumWeights);
 			velocidadeDesejada.add(velocidadeDesejadaDeCadaComportamento);
 		}
-		//System.out.println("velolcidade Desejada!!--->"+velocidadeDesejada.x+" ---->"+velocidadeDesejada.y);
+		// System.out.println("velolcidade Desejada!!--->"+velocidadeDesejada.x+"
+		// ---->"+velocidadeDesejada.y);
 		move(dt, velocidadeDesejada);
-		
+
 	}
 
 	public Eye getEye() {
@@ -94,7 +92,7 @@ public class Boid extends Entidade {
 		velocidadeDesejada.normalize().mult(dna.maxSpeed);
 		PVector forceSterring = PVector.sub(velocidadeDesejada, getVel());
 		this.getBody().applyForce(forceSterring.limit(dna.maxForce));
-		
+
 	}
 
 	public DNA getDna() {
@@ -130,12 +128,13 @@ public class Boid extends Entidade {
 	public void draw(PApplet p, SubPlot plt, boolean drawBoundingBox, float dt) {
 		// TODO Auto-generated method stub
 		Body bombBody = this.getBody();
-		//System.out.println("good coord--->"+pixelCoordFromBody[0] +" ----->"+pixelCoordFromBody[1]);
+		// System.out.println("good coord--->"+pixelCoordFromBody[0] +"
+		// ----->"+pixelCoordFromBody[1]);
 		applyBehaviors(dt);
 		if (drawBoundingBox) {
 			bombBody.display(p, plt, super.getWidth(), super.getHeight());
 		}
-		
+
 		bombBody.move(dt * 1);
 		window = plt.getWindow();
 		if (this.getBody().getPos().x < window[0]) {
@@ -151,28 +150,20 @@ public class Boid extends Entidade {
 		if (this.getBody().getPos().y >= window[3]) {
 			this.getBody().getPos().y -= window[3] - window[2];
 		}
-		
+
 		super.makeAnimationFollowBodyAccordingToPhysics(bombBody, this.getSpriteDef(), plt);
 		SpriteDef spriteDef = this.getSpriteDef();
 		spriteDef.show();
 		spriteDef.animateHorizontal();
-		
-		
+
 	}
-	
+
 	public PVector getPos() {
 		return super.getBody().getPos();
 	}
 
 	public SpriteDef getSpriteDef() {
-		// TODO Auto-generated method stub
 		return super.getAnimator().getSpriteDef();
 	}
 
 }
-
-
-
-
-
-
